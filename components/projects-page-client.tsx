@@ -174,12 +174,12 @@ export function ProjectsPageClient({
               </Card>
             </div>
 
-            {userTier === "free" && (
+            {userTier === "starter" && (
               <Alert className="mb-8 bg-amber-50 border-2 border-amber-200">
                 <Info className="h-5 w-5 text-amber-600" />
                 <AlertDescription className="text-amber-900 ml-2">
-                  <strong>Free Plan:</strong> You have {auditsRemaining} of {monthlyAuditsLimit} free audits remaining
-                  this month.
+                  <strong>Starter Plan:</strong> You have {auditsRemaining} of {monthlyAuditsLimit} free audits
+                  remaining this month.
                   <Link href="/pricing" className="text-primary font-semibold hover:underline ml-2">
                     Upgrade for unlimited audits →
                   </Link>
@@ -354,7 +354,7 @@ export function ProjectsPageClient({
             </Card>
           </div>
 
-          {auditsRemaining === 0 && userTier === "free" && (
+          {auditsRemaining === 0 && userTier === "starter" && (
             <Alert className="mb-8 bg-amber-50 border-2 border-amber-300">
               <AlertCircle className="h-5 w-5 text-amber-600" />
               <AlertDescription className="text-amber-900 ml-2">
