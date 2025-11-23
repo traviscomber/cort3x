@@ -1,10 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { createServerClient } from "@/lib/supabase/server"
 import { logger } from "@/lib/logger"
-import { rateLimit } from "@/lib/rate-limit"
+import { rateLimit, RATE_LIMITS } from "@/lib/rate-limit"
 
 export async function GET(request: NextRequest) {
-  const rateLimitResult = await rateLimit(request, "email-tracking")
+  const identifier = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "unknown"
+  const rateLimitResult = await rateLimit(`email-tracking:${identifier}`, RATE_LIMITS.PUBLIC)
   if (!rateLimitResult.success) {
     return new NextResponse("Rate limit exceeded", { status: 429 })
   }
