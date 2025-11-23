@@ -5,8 +5,8 @@ interface LogContext {
 }
 
 class Logger {
-  private isDev = process.env.NODE_ENV === "development"
-  private isProduction = process.env.NODE_ENV === "production"
+  private isDev = typeof window === "undefined" ? process.env.NODE_ENV === "development" : false
+  private isProduction = typeof window === "undefined" ? process.env.NODE_ENV === "production" : true
 
   private log(level: LogLevel, message: string, context?: LogContext) {
     // In development, use console

@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import { Scale } from "lucide-react"
 
 import { useState, useMemo, useEffect } from "react"
 import Link from "next/link"
@@ -52,6 +53,19 @@ export function DocsPageClient() {
       category: "Platform Documentation",
       status: "Published",
       lastUpdated: "December 2024",
+      isPublic: true,
+    },
+    {
+      code: "DOC-005",
+      title: "Terms of Service",
+      description:
+        "Legal agreement governing the use of the Impax Cort3x platform, user responsibilities, and liability limitations.",
+      href: "/docs/terms-of-service",
+      icon: Scale,
+      tags: ["Platform", "Legal", "Terms", "Compliance"],
+      category: "Platform Documentation",
+      status: "Published",
+      lastUpdated: "January 2025",
       isPublic: true,
     },
     {

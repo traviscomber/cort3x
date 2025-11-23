@@ -43,16 +43,6 @@ BLOB_READ_WRITE_TOKEN=vercel_blob_rw_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ## Important - Strongly Recommended
 
-### Monitoring & Alerts
-\`\`\`bash
-# Slack Webhook for production alerts (OPTIONAL)
-SLACK_WEBHOOK_URL=https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
-
-# Set to 'production' for production environment
-NODE_ENV=production
-NEXT_PUBLIC_VERCEL_ENV=production
-\`\`\`
-
 ### Security
 \`\`\`bash
 # Secret for cron job authentication
@@ -65,17 +55,11 @@ NEXT_PUBLIC_SITE_URL=https://your-production-domain.com
 NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=http://localhost:3000
 \`\`\`
 
-### OAuth Providers (if using social login)
-\`\`\`bash
-GOOGLE_CLIENT_ID=xxxxx.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=GOCSPX-xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-\`\`\`
-
-## Optional - Feature Specific
-
 ### Rate Limiting (already configured with Upstash Redis)
 - Uses existing `KV_REST_API_URL` and `KV_REST_API_TOKEN`
 - Tier limits configured in code
+
+## Optional - Feature Specific
 
 ### Feature Flags
 \`\`\`bash
@@ -156,7 +140,7 @@ Add these in Vercel Dashboard → Settings → Environment Variables
 - ✅ KV_REST_API_TOKEN
 
 ### Production Monitoring
-- ⚠️ SLACK_WEBHOOK_URL (optional - for Slack alerts)
+- ✅ Monitoring via logs (no external dependencies)
 
 ### User Authentication
 - ✅ NEXTAUTH_SECRET
@@ -182,15 +166,6 @@ Add these in Vercel Dashboard → Settings → Environment Variables
 
 ### "Cron job not running"
 - Verify `CRON_SECRET` matches in Vercel cron config
-- Check Vercel Cron Logs for errors
-- Ensure timezone is UTC
-
-### "Slack alerts not working"
-**This is expected if SLACK_WEBHOOK_URL is not configured.**
-- Alerts will be logged instead of sent to Slack
-- Check webhook URL format is correct if you want to enable it
-- Verify the Slack app has permission to post to the channel
-- Test the webhook manually with curl
 
 ## Getting Help
 

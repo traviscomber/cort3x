@@ -5,6 +5,7 @@ let client: ReturnType<typeof createBrowserClient> | undefined
 /**
  * Client-side Supabase client for use in Client Components.
  * Uses singleton pattern to prevent multiple instances.
+ * Added storage key namespace to prevent GoTrue client conflicts
  */
 export function createClient() {
   if (client) {
@@ -22,7 +23,14 @@ export function createClient() {
     )
   }
 
-  client = createBrowserClient(supabaseUrl, supabaseAnonKey)
+  client = createBrowserClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      storageKey: "impax-cort3x-auth",
+      persistSession: true,
+      detectSessionInUrl: true,
+      flowType: "pkce",
+    },
+  })
 
   return client
 }

@@ -7,7 +7,6 @@ Complete checklist before deploying Impax Cort3x to production.
 ### 1. Environment Variables
 - [ ] All critical env vars set in Vercel (see ENVIRONMENT_VARIABLES.md)
 - [ ] `NODE_ENV=production`
-- [ ] `SLACK_WEBHOOK_URL` configured for alerts
 - [ ] `CRON_SECRET` set and documented securely
 - [ ] All API keys are production keys (not dev/test)
 
@@ -49,7 +48,7 @@ Complete checklist before deploying Impax Cort3x to production.
 
 ### 7. Monitoring Setup
 - [ ] `/api/health` endpoint returns 200
-- [ ] Slack webhook receiving test alerts
+- [ ] Logging system working (check Vercel logs)
 - [ ] Error tracking working (trigger test error)
 - [ ] Performance monitoring active
 
@@ -95,7 +94,7 @@ Complete checklist before deploying Impax Cort3x to production.
 
 ### Daily
 - [ ] Check `/api/health` endpoint
-- [ ] Review Slack alerts for critical errors
+- [ ] Review Vercel logs for critical errors
 - [ ] Monitor Vercel error rate
 
 ### Weekly
@@ -123,7 +122,6 @@ If issues arise after deployment:
 2. **Identify Issue**
    - Check `/api/health` for service status
    - Review Vercel deployment logs
-   - Check Slack alerts for errors
    - Review Supabase logs
 
 3. **Fix Forward**

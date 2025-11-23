@@ -35,13 +35,88 @@ export async function createClient() {
 }
 
 function createMockClient() {
-  return {
-    from: () => ({
-      select: () => ({ data: null, error: new Error("Supabase not configured") }),
-      insert: () => ({ data: null, error: new Error("Supabase not configured") }),
-      update: () => ({ data: null, error: new Error("Supabase not configured") }),
-      delete: () => ({ data: null, error: new Error("Supabase not configured") }),
+  // Create a chainable query builder that returns itself for all methods
+  const createQueryBuilder = () => {
+    const builder = {
+      select: function () {
+        return this
+      },
+      insert: function () {
+        return this
+      },
+      update: function () {
+        return this
+      },
+      delete: function () {
+        return this
+      },
       eq: function () {
+        return this
+      },
+      neq: function () {
+        return this
+      },
+      gt: function () {
+        return this
+      },
+      gte: function () {
+        return this
+      },
+      lt: function () {
+        return this
+      },
+      lte: function () {
+        return this
+      },
+      like: function () {
+        return this
+      },
+      ilike: function () {
+        return this
+      },
+      is: function () {
+        return this
+      },
+      in: function () {
+        return this
+      },
+      contains: function () {
+        return this
+      },
+      containedBy: function () {
+        return this
+      },
+      rangeGt: function () {
+        return this
+      },
+      rangeGte: function () {
+        return this
+      },
+      rangeLt: function () {
+        return this
+      },
+      rangeLte: function () {
+        return this
+      },
+      rangeAdjacent: function () {
+        return this
+      },
+      overlaps: function () {
+        return this
+      },
+      textSearch: function () {
+        return this
+      },
+      match: function () {
+        return this
+      },
+      not: function () {
+        return this
+      },
+      or: function () {
+        return this
+      },
+      filter: function () {
         return this
       },
       order: function () {
@@ -50,18 +125,44 @@ function createMockClient() {
       limit: function () {
         return this
       },
-      in: function () {
+      range: function () {
         return this
       },
-      single: () => ({ data: null, error: new Error("Supabase not configured") }),
-    }),
+      abortSignal: function () {
+        return this
+      },
+      single: () => Promise.resolve({ data: null, error: null }),
+      maybeSingle: () => Promise.resolve({ data: null, error: null }),
+      then: (resolve: any) => {
+        // Make the builder thenable so it can be awaited
+        return resolve({ data: null, error: null })
+      },
+      catch: function (reject: any) {
+        return this
+      },
+    }
+    return builder
+  }
+
+  return {
+    from: () => createQueryBuilder(),
     auth: {
-      getUser: async () => ({ data: { user: null }, error: new Error("Supabase not configured") }),
+      getUser: async () => ({ data: { user: null }, error: null }),
       signInWithPassword: async () => ({ data: null, error: new Error("Supabase not configured") }),
       signUp: async () => ({ data: null, error: new Error("Supabase not configured") }),
-      signOut: async () => ({ error: new Error("Supabase not configured") }),
+      signOut: async () => ({ error: null }),
+      getSession: async () => ({ data: { session: null }, error: null }),
     },
-    rpc: () => ({ data: null, error: new Error("Supabase not configured") }),
+    rpc: () => createQueryBuilder(),
+    storage: {
+      from: () => ({
+        upload: async () => ({ data: null, error: new Error("Supabase not configured") }),
+        download: async () => ({ data: null, error: new Error("Supabase not configured") }),
+        list: async () => ({ data: null, error: new Error("Supabase not configured") }),
+        remove: async () => ({ data: null, error: new Error("Supabase not configured") }),
+        getPublicUrl: () => ({ data: { publicUrl: "" } }),
+      }),
+    },
   } as any
 }
 

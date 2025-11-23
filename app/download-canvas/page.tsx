@@ -1,11 +1,10 @@
-import { Suspense } from "react"
 import { createServerClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Download, CheckCircle2 } from "lucide-react"
 
-async function CanvasDownloadContent({
+export default async function CanvasDownloadPage({
   searchParams,
 }: {
   searchParams: { lead_id?: string }
@@ -63,17 +62,5 @@ async function CanvasDownloadContent({
         </div>
       </Card>
     </div>
-  )
-}
-
-export default function CanvasDownloadPage({
-  searchParams,
-}: {
-  searchParams: { lead_id?: string }
-}) {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <CanvasDownloadContent searchParams={searchParams} />
-    </Suspense>
   )
 }

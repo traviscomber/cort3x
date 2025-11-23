@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next"
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://green-industrial-innovation.vercel.app"
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://impax-cort3x.vercel.app"
 
   // Define all static routes
   const routes = [
@@ -44,7 +44,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
         },
       },
     },
-  ]
+    "",
+    "/features",
+    "/journey",
+    "/about",
+    "/docs",
+    "/login",
+    "/signup",
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: route === "" ? 1 : 0.8,
+  }))
 
-  return routes
+  const docs = [
+    "/docs/whitepaper",
+    "/docs/one-pager",
+    "/docs/privacy-security",
+    "/docs/agents-summary",
+    "/docs/terms-of-service",
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.5,
+  }))
+
+  return [...routes, ...docs]
 }

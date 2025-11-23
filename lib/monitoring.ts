@@ -9,6 +9,8 @@ export interface MonitoringEvent {
   timestamp: string
 }
 
+const isProduction = typeof window === "undefined" && process.env.NODE_ENV === "production"
+
 class MonitoringService {
   private events: MonitoringEvent[] = []
   private readonly MAX_EVENTS = 1000
@@ -125,7 +127,7 @@ class MonitoringService {
 
   private shouldAlert(event: MonitoringEvent): boolean {
     // Only alert on critical and high severity in production
-    if (process.env.NODE_ENV === "production") {
+    if (isProduction) {
       return event.severity === "critical" || event.severity === "high"
     }
     return false
