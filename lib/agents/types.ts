@@ -31,6 +31,7 @@ export interface AgentPlan {
     params: Record<string, any>
   }>
   reasoning: string
+  subGoals?: string[]
 }
 
 export interface AgentResponse {
@@ -38,4 +39,12 @@ export interface AgentResponse {
   data?: any
   confidence: number
   nextSteps?: string[]
+  explanation?: string
+}
+
+export interface Tool {
+  name: string
+  description: string
+  parameters: Record<string, any>
+  execute: (params: Record<string, any>) => Promise<any>
 }

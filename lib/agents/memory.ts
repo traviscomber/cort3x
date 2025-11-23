@@ -15,7 +15,6 @@ export class EpisodicMemory {
   async store(state: string, action: string, outcome: string) {
     const supabase = await createClient()
 
-    // Generate embedding for the episode
     const { embedding } = await embed({
       model: openai.embedding("text-embedding-3-small"),
       value: `${state} ${action} ${outcome}`,
@@ -37,20 +36,17 @@ export class EpisodicMemory {
       console.error("[v0] Error storing episode:", error)
     }
 
-    // Maintain capacity by deleting old episodes
     await this.pruneOldEpisodes()
   }
 
   async retrieveSimilar(query: string, k = 3) {
     const supabase = await createClient()
 
-    // Generate embedding for query
     const { embedding: queryEmbedding } = await embed({
       model: openai.embedding("text-embedding-3-small"),
       value: query,
     })
 
-    // Use pgvector similarity search
     const { data, error } = await supabase.rpc("match_episodes", {
       query_embedding: queryEmbedding,
       match_threshold: 0.7,
@@ -89,7 +85,6 @@ export class EpisodicMemory {
   private async pruneOldEpisodes() {
     const supabase = await createClient()
 
-    // Keep only the most recent episodes within capacity
     const { data: episodes } = await supabase
       .from("agent_episodic_memory")
       .select("id")
@@ -116,7 +111,6 @@ export class SemanticMemory {
   async updatePreference(key: string, value: number, weight = 1.0) {
     const supabase = await createClient()
 
-    // Get current preference
     const { data: current } = await supabase
       .from("agent_semantic_memory")
       .select("value")
@@ -125,11 +119,9 @@ export class SemanticMemory {
       .eq("key", key)
       .single()
 
-    // Apply exponential moving average
     const currentValue = current?.value || 0
     const newValue = 0.9 * currentValue + 0.1 * weight * value
 
-    // Upsert preference
     await supabase.from("agent_semantic_memory").upsert({
       user_id: this.userId,
       agent_type: this.agentType,
@@ -143,7 +135,6 @@ export class SemanticMemory {
     const supabase = await createClient()
     const patternKey = `${context}_${action}`
 
-    // Get current pattern stats
     const { data: current } = await supabase
       .from("agent_patterns")
       .select("*")
@@ -155,7 +146,6 @@ export class SemanticMemory {
     const successCount = (current?.success_count || 0) + (success ? 1 : 0)
     const totalCount = (current?.total_count || 0) + 1
 
-    // Upsert pattern
     await supabase.from("agent_patterns").upsert({
       user_id: this.userId,
       agent_type: this.agentType,
@@ -197,5 +187,39 @@ export class SemanticMemory {
       .single()
 
     return data?.value || 0
+  }
+
+  async getSuccessPatterns(context: string, limit = 5) {
+    const supabase = await createClient()
+
+    const { data } = await supabase
+      .from("agent_patterns")
+      .select("*")
+      .eq("user_id", this.userId)
+      .eq("agent_type", this.agentType)
+      .eq("context", context)
+      .gte("success_rate", 0.6)
+      .order("success_rate", { ascending: false })
+      .limit(limit)
+
+    return data || []
+  }
+
+  async getSuccessRate(context: string): Promise<number> {
+    const supabase = await createClient()
+
+    const { data } = await supabase
+      .from("agent_patterns")
+      .select("success_count, total_count")
+      .eq("user_id", this.userId)
+      .eq("agent_type", this.agentType)
+      .eq("context", context)
+
+    if (!data || data.length === 0) return 0
+
+    const totalSuccess = data.reduce((sum, p) => sum + p.success_count, 0)
+    const totalAttempts = data.reduce((sum, p) => sum + p.total_count, 0)
+
+    return totalAttempts > 0 ? totalSuccess / totalAttempts : 0
   }
 }
