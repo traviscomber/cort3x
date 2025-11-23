@@ -328,7 +328,7 @@ export default async function DocumentPage({
                     <div key={idx} className="border-l-2 border-gray-300 pl-4">
                       <p className="text-sm font-medium text-gray-900 mb-1">{formatDate(log.date)}</p>
                       <ul className="text-sm text-gray-600 space-y-1">
-                        {log.changes.map((change, changeIdx) => (
+                        {log.changes.map((change: string, changeIdx: number) => (
                           <li key={changeIdx}>• {change}</li>
                         ))}
                       </ul>
