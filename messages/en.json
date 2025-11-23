@@ -1,6 +1,6 @@
 {
   "header": {
-    "title": "Impax Cort3x",
+    "title": "Cort3x powered by n3uralia",
     "subtitle": "Innovation Platform",
     "admin": "Admin",
     "getStarted": "Get Started"
@@ -101,11 +101,11 @@
   },
   "faq": {
     "title": "Frequently Asked Questions",
-    "description": "Everything you need to know about Impax Cort3x",
+    "description": "Everything you need to know about Cort3x powered by n3uralia",
     "questions": {
       "whatIs": {
-        "question": "What is Impax Cort3x?",
-        "answer": "Impax Cort3x is a super accelerator that combines AI-powered research with expert coaching. We deliver deep market intelligence that would take months to compile, then pair you with coaches who challenge your thinking and guide you through a structured innovation process. It's research meets mentorship for faster, smarter innovation."
+        "question": "What is Cort3x powered by n3uralia?",
+        "answer": "Cort3x powered by n3uralia (www.n3uralia.com) is a super accelerator that combines AI-powered research with expert coaching. We deliver deep market intelligence that would take months to compile, then pair you with coaches who challenge your thinking and guide you through a structured innovation process. It's research meets mentorship for faster, smarter innovation."
       },
       "howAI": {
         "question": "How does the AI research work?",
@@ -134,8 +134,8 @@
     "imageAlt": "AI Innovation Lightbulb"
   },
   "footer": {
-    "brand": "Impax Cort3x",
-    "tagline": "AI-powered innovation development platform transforming research into reality.",
+    "brand": "Cort3x",
+    "tagline": "Powered by n3uralia (www.n3uralia.com) | AI-powered innovation development platform transforming research into reality.",
     "platform": {
       "title": "Platform",
       "features": "Features",
@@ -154,6 +154,6 @@
       "blog": "Blog",
       "support": "Support"
     },
-    "copyright": "© 2025 Impax Cort3x. All rights reserved. | Transforming Research into Deployed Initiatives"
+    "copyright": "© 2025 Cort3x powered by n3uralia. All rights reserved. | Transforming Research into Deployed Initiatives"
   }
 }

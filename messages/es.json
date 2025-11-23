@@ -1,6 +1,6 @@
 {
   "header": {
-    "title": "Impax Cort3x",
+    "title": "Cort3x powered by n3uralia",
     "subtitle": "Plataforma de Innovación",
     "admin": "Admin",
     "getStarted": "Comenzar"
@@ -101,11 +101,11 @@
   },
   "faq": {
     "title": "Preguntas Frecuentes",
-    "description": "Todo lo que necesitas saber sobre Impax Cort3x",
+    "description": "Todo lo que necesitas saber sobre Cort3x powered by n3uralia",
     "questions": {
       "whatIs": {
-        "question": "¿Qué es Impax Cort3x?",
-        "answer": "Impax Cort3x es un súper acelerador que combina investigación impulsada por IA con coaching experto. Entregamos inteligencia de mercado profunda que tomaría meses compilar, luego te emparejamos con coaches que desafían tu pensamiento y te guían a través de un proceso de innovación estructurado. Es investigación que se encuentra con mentoría para una innovación más rápida e inteligente."
+        "question": "¿Qué es Cort3x powered by n3uralia?",
+        "answer": "Cort3x powered by n3uralia (www.n3uralia.com) es un súper acelerador que combina investigación impulsada por IA con coaching experto. Entregamos inteligencia de mercado profunda que tomaría meses compilar, luego te emparejamos con coaches que desafían tu pensamiento y te guían a través de un proceso de innovación estructurado. Es investigación que se encuentra con mentoría para una innovación más rápida e inteligente."
       },
       "howAI": {
         "question": "¿Cómo funciona la investigación de IA?",
@@ -134,8 +134,8 @@
     "imageAlt": "Bombilla de Innovación IA"
   },
   "footer": {
-    "brand": "Impax Cort3x",
-    "tagline": "Plataforma de desarrollo de innovación impulsada por IA transformando investigación en realidad.",
+    "brand": "Cort3x",
+    "tagline": "Powered by n3uralia (www.n3uralia.com) | Plataforma de desarrollo de innovación impulsada por IA transformando investigación en realidad.",
     "platform": {
       "title": "Plataforma",
       "features": "Características",
@@ -154,6 +154,6 @@
       "blog": "Blog",
       "support": "Soporte"
     },
-    "copyright": "© 2025 Impax Cort3x. Todos los derechos reservados. | Transformando Investigación en Iniciativas Desplegadas"
+    "copyright": "© 2025 Cort3x powered by n3uralia. Todos los derechos reservados. | Transformando Investigación en Iniciativas Desplegadas"
   }
 }

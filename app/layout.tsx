@@ -50,8 +50,8 @@ const getMetadataBase = () => {
 export const metadata: Metadata = {
   metadataBase: getMetadataBase(),
   title: {
-    default: "Impax Cort3x | AI-Powered Innovation Accelerator with Expert Coaching",
-    template: "%s | Impax Cort3x",
+    default: "Cort3x powered by n3uralia | AI-Powered Innovation Accelerator with Expert Coaching",
+    template: "%s | Cort3x powered by n3uralia",
   },
   description:
     "Transform innovation with AI-powered research insights and expert coaching. Get comprehensive market intelligence in weeks, then work with coaches who challenge your thinking and guide you through structured innovation. Accelerate from concept to market launch.",
@@ -97,9 +97,9 @@ export const metadata: Metadata = {
     "aceleradora de innovación Chile",
     "akselerator inovasi Indonesia",
   ],
-  authors: [{ name: "Impax Cort3x Innovation Accelerator" }],
-  creator: "Impax Cort3x Innovation Accelerator",
-  publisher: "Impax Cort3x Innovation Accelerator",
+  authors: [{ name: "Cort3x powered by n3uralia (www.n3uralia.com)" }],
+  creator: "Cort3x powered by n3uralia",
+  publisher: "Cort3x powered by n3uralia",
   formatDetection: {
     email: false,
     address: false,
@@ -110,8 +110,8 @@ export const metadata: Metadata = {
     locale: "en_US",
     alternateLocale: ["es_CL", "id_ID"],
     url: "/",
-    siteName: "Impax Cort3x | AI Research + Expert Coaching for Innovation",
-    title: "Impax Cort3x | AI-Powered Research + Expert Coaching for Innovation",
+    siteName: "Cort3x powered by n3uralia | AI Research + Expert Coaching for Innovation",
+    title: "Cort3x powered by n3uralia | AI-Powered Research + Expert Coaching for Innovation",
     description:
       "Accelerate innovation with AI-powered market intelligence and expert coaching that challenges your thinking. Get months of research in weeks, then work with coaches who guide you through structured, high-impact innovation.",
     images: [
@@ -119,17 +119,17 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Impax Cort3x | AI-Powered Innovation Accelerator with Expert Coaching",
+        alt: "Cort3x powered by n3uralia | AI-Powered Innovation Accelerator with Expert Coaching",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Impax Cort3x | AI Research + Expert Coaching for Innovation",
+    title: "Cort3x powered by n3uralia | AI Research + Expert Coaching for Innovation",
     description:
       "Transform innovation with AI-powered market intelligence and expert coaching. Get comprehensive research in weeks, then work with coaches who challenge and guide you to market launch.",
     images: ["/og-image.png"],
-    creator: "@impaxcort3x",
+    creator: "@n3uralia",
   },
   robots: {
     index: true,
@@ -163,11 +163,11 @@ export const metadata: Metadata = {
     "geo.placename": "Santiago, Chile; San Francisco, USA; Jakarta, Indonesia",
     "geo.position": "-33.4489;-70.6693;37.7749;-122.4194;-6.2088;106.8456",
     // LLMO optimization tags
-    "article:publisher": "Impax Cort3x Innovation Accelerator",
-    "article:author": "Impax Cort3x Team",
+    "article:publisher": "Cort3x powered by n3uralia",
+    "article:author": "Cort3x Team at n3uralia",
     // Additional semantic tags for LLMs
-    "application-name": "Impax Cort3x",
-    "apple-mobile-web-app-title": "Impax Cort3x",
+    "application-name": "Cort3x powered by n3uralia",
+    "apple-mobile-web-app-title": "Cort3x",
     "theme-color": "#10b981",
   },
     generator: 'v0.app'

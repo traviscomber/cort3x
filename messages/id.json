@@ -1,6 +1,6 @@
 {
   "header": {
-    "title": "Impax Cort3x",
+    "title": "Cort3x powered by n3uralia",
     "subtitle": "Platform Inovasi",
     "admin": "Admin",
     "getStarted": "Mulai"
@@ -101,11 +101,11 @@
   },
   "faq": {
     "title": "Pertanyaan yang Sering Diajukan",
-    "description": "Semua yang perlu Anda ketahui tentang Impax Cort3x",
+    "description": "Semua yang perlu Anda ketahui tentang Cort3x powered by n3uralia",
     "questions": {
       "whatIs": {
-        "question": "Apa itu Impax Cort3x?",
-        "answer": "Impax Cort3x adalah akselerator super yang menggabungkan riset bertenaga AI dengan pelatihan ahli. Kami memberikan intelijen pasar mendalam yang akan memakan waktu berbulan-bulan untuk dikompilasi, lalu memasangkan Anda dengan pelatih yang menantang pemikiran Anda dan membimbing Anda melalui proses inovasi terstruktur. Ini adalah riset bertemu mentoring untuk inovasi yang lebih cepat dan cerdas."
+        "question": "Apa itu Cort3x powered by n3uralia?",
+        "answer": "Cort3x powered by n3uralia (www.n3uralia.com) adalah akselerator super yang menggabungkan riset bertenaga AI dengan pelatihan ahli. Kami memberikan intelijen pasar mendalam yang akan memakan waktu berbulan-bulan untuk dikompilasi, lalu memasangkan Anda dengan pelatih yang menantang pemikiran Anda dan membimbing Anda melalui proses inovasi terstruktur. Ini adalah riset bertemu mentoring untuk inovasi yang lebih cepat dan cerdas."
       },
       "howAI": {
         "question": "Bagaimana cara kerja riset AI?",
@@ -134,8 +134,8 @@
     "imageAlt": "Bola Lampu Inovasi AI"
   },
   "footer": {
-    "brand": "Impax Cort3x",
-    "tagline": "Platform pengembangan inovasi bertenaga AI yang mengubah riset menjadi kenyataan.",
+    "brand": "Cort3x",
+    "tagline": "Powered by n3uralia (www.n3uralia.com) | Platform pengembangan inovasi bertenaga AI yang mengubah riset menjadi kenyataan.",
     "platform": {
       "title": "Platform",
       "features": "Fitur",
@@ -154,6 +154,6 @@
       "blog": "Blog",
       "support": "Dukungan"
     },
-    "copyright": "© 2025 Impax Cort3x. Hak cipta dilindungi. | Mengubah Riset menjadi Inisiatif yang Diterapkan"
+    "copyright": "© 2025 Cort3x powered by n3uralia. Hak cipta dilindungi. | Mengubah Riset menjadi Inisiatif yang Diterapkan"
   }
 }

@@ -10,14 +10,14 @@ export function StructuredData({ locale = "en" }: StructuredDataProps) {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": "https://green-industrial-innovation.vercel.app/#organization",
-    name: "Impax Cort3x",
-    alternateName: "Impax Cort3x Innovation Accelerator",
+    name: "Cort3x powered by n3uralia",
+    alternateName: "Cort3x Innovation Accelerator by n3uralia",
     url: "https://green-industrial-innovation.vercel.app",
     logo: "https://green-industrial-innovation.vercel.app/logo.png",
     description:
-      "AI-powered innovation accelerator combining deep market research with expert coaching to transform ideas into market-ready solutions across Chile, USA, and Indonesia.",
+      "AI-powered innovation accelerator combining deep market research with expert coaching to transform ideas into market-ready solutions across Chile, USA, and Indonesia. Powered by n3uralia (www.n3uralia.com).",
     foundingDate: "2024",
-    slogan: "AI Research + Expert Coaching for Innovation",
+    slogan: "AI Research + Expert Coaching for Innovation | Powered by n3uralia",
     knowsAbout: [
       "Artificial Intelligence",
       "Innovation Acceleration",
@@ -60,7 +60,7 @@ export function StructuredData({ locale = "en" }: StructuredDataProps) {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "@id": "https://green-industrial-innovation.vercel.app/#chile",
-    name: "Impax Cort3x Chile",
+    name: "Cort3x Chile powered by n3uralia",
     parentOrganization: {
       "@id": "https://green-industrial-innovation.vercel.app/#organization",
     },
@@ -86,7 +86,7 @@ export function StructuredData({ locale = "en" }: StructuredDataProps) {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "@id": "https://green-industrial-innovation.vercel.app/#usa",
-    name: "Impax Cort3x USA",
+    name: "Cort3x USA powered by n3uralia",
     parentOrganization: {
       "@id": "https://green-industrial-innovation.vercel.app/#organization",
     },
@@ -112,7 +112,7 @@ export function StructuredData({ locale = "en" }: StructuredDataProps) {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "@id": "https://green-industrial-innovation.vercel.app/#indonesia",
-    name: "Impax Cort3x Indonesia",
+    name: "Cort3x Indonesia powered by n3uralia",
     parentOrganization: {
       "@id": "https://green-industrial-innovation.vercel.app/#organization",
     },
@@ -176,8 +176,8 @@ export function StructuredData({ locale = "en" }: StructuredDataProps) {
     "@type": "WebSite",
     "@id": "https://green-industrial-innovation.vercel.app/#website",
     url: "https://green-industrial-innovation.vercel.app",
-    name: "Impax Cort3x",
-    description: "AI-Powered Innovation Accelerator with Expert Coaching",
+    name: "Cort3x powered by n3uralia",
+    description: "AI-Powered Innovation Accelerator with Expert Coaching | Powered by n3uralia (www.n3uralia.com)",
     publisher: {
       "@id": "https://green-industrial-innovation.vercel.app/#organization",
     },
