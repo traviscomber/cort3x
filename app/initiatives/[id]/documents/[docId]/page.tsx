@@ -300,7 +300,7 @@ export default async function DocumentPage({
             {document.tags && document.tags.length > 0 && (
               <div className="flex flex-wrap items-center gap-2 mt-4">
                 <Tag className="h-4 w-4 text-muted-foreground" />
-                {document.tags.map((tag) => (
+                {document.tags.map((tag: string) => (
                   <Badge key={tag} variant="outline">
                     {tag}
                   </Badge>
