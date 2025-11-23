@@ -10,10 +10,10 @@ importers:
     dependencies:
       '@ai-sdk/openai':
         specifier: latest
-        version: 2.0.71(zod@4.0.2)
+        version: 2.0.71(zod@4.1.12)
       '@ai-sdk/react':
         specifier: latest
-        version: 2.0.100(react@19.0.0)(zod@4.0.2)
+        version: 2.0.100(react@19.0.0)(zod@4.1.12)
       '@hookform/resolvers':
         specifier: ^3.9.1
         version: 3.9.1(react-hook-form@7.54.1(react@19.0.0))
@@ -112,7 +112,7 @@ importers:
         version: 1.3.1(next@14.2.25(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       ai:
         specifier: latest
-        version: 5.0.100(zod@4.0.2)
+        version: 5.0.100(zod@4.1.12)
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.5.0)
@@ -170,9 +170,6 @@ importers:
       recharts:
         specifier: 2.15.0
         version: 2.15.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      some-module:
-        specifier: 0.0.3
-        version: 0.0.3
       sonner:
         specifier: ^1.7.1
         version: 1.7.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -186,8 +183,8 @@ importers:
         specifier: ^0.9.6
         version: 0.9.6(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       zod:
-        specifier: ^4.0.2
-        version: 4.0.2
+        specifier: latest
+        version: 4.1.12
     devDependencies:
       '@types/node':
         specifier: ^22
@@ -1675,10 +1672,6 @@ packages:
   server-only@0.0.1:
     resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
 
-  some-module@0.0.3:
-    resolution: {integrity: sha512-Ek6uk9umSl84zS9J7gmh9Ub0soPuq87/IyOqyRT+iecSO3af8oJpO+N0kO4/nHKCBeFEMm04iEIPolIfWXCzpA==}
-    deprecated: Module turned out to be not as useful as might have been expected
-
   sonner@1.7.1:
     resolution: {integrity: sha512-b6LHBfH32SoVasRFECrdY8p8s7hXPDn3OHUFbZZbiB1ctLS9Gdh6rpX2dVrpQA0kiL5jcRzDDldwwLkSKk3+QQ==}
     peerDependencies:
@@ -1832,44 +1825,44 @@ packages:
     engines: {node: '>= 14.6'}
     hasBin: true
 
-  zod@4.0.2:
-    resolution: {integrity: sha512-X2niJNY54MGam4L6Kj0AxeedeDIi/E5QFW0On2faSX5J4/pfLk1tW+cRMIMoojnCavn/u5W/kX17e1CSGnKMxA==}
+  zod@4.1.12:
+    resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
 
 snapshots:
 
-  '@ai-sdk/gateway@2.0.14(zod@4.0.2)':
+  '@ai-sdk/gateway@2.0.14(zod@4.1.12)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.17(zod@4.0.2)
+      '@ai-sdk/provider-utils': 3.0.17(zod@4.1.12)
       '@vercel/oidc': 3.0.5
-      zod: 4.0.2
+      zod: 4.1.12
 
-  '@ai-sdk/openai@2.0.71(zod@4.0.2)':
+  '@ai-sdk/openai@2.0.71(zod@4.1.12)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.17(zod@4.0.2)
-      zod: 4.0.2
+      '@ai-sdk/provider-utils': 3.0.17(zod@4.1.12)
+      zod: 4.1.12
 
-  '@ai-sdk/provider-utils@3.0.17(zod@4.0.2)':
+  '@ai-sdk/provider-utils@3.0.17(zod@4.1.12)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
       '@standard-schema/spec': 1.0.0
       eventsource-parser: 3.0.6
-      zod: 4.0.2
+      zod: 4.1.12
 
   '@ai-sdk/provider@2.0.0':
     dependencies:
       json-schema: 0.4.0
 
-  '@ai-sdk/react@2.0.100(react@19.0.0)(zod@4.0.2)':
+  '@ai-sdk/react@2.0.100(react@19.0.0)(zod@4.1.12)':
     dependencies:
-      '@ai-sdk/provider-utils': 3.0.17(zod@4.0.2)
-      ai: 5.0.100(zod@4.0.2)
+      '@ai-sdk/provider-utils': 3.0.17(zod@4.1.12)
+      ai: 5.0.100(zod@4.1.12)
       react: 19.0.0
       swr: 2.3.6(react@19.0.0)
       throttleit: 2.1.0
     optionalDependencies:
-      zod: 4.0.2
+      zod: 4.1.12
 
   '@alloc/quick-lru@5.2.0': {}
 
@@ -2759,13 +2752,13 @@ snapshots:
 
   '@vercel/oidc@3.0.5': {}
 
-  ai@5.0.100(zod@4.0.2):
+  ai@5.0.100(zod@4.1.12):
     dependencies:
-      '@ai-sdk/gateway': 2.0.14(zod@4.0.2)
+      '@ai-sdk/gateway': 2.0.14(zod@4.1.12)
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.17(zod@4.0.2)
+      '@ai-sdk/provider-utils': 3.0.17(zod@4.1.12)
       '@opentelemetry/api': 1.9.0
-      zod: 4.0.2
+      zod: 4.1.12
 
   any-promise@1.3.0: {}
 
@@ -3260,8 +3253,6 @@ snapshots:
 
   server-only@0.0.1: {}
 
-  some-module@0.0.3: {}
-
   sonner@1.7.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       react: 19.0.0
@@ -3415,4 +3406,4 @@ snapshots:
 
   yaml@2.8.1: {}
 
-  zod@4.0.2: {}
+  zod@4.1.12: {}

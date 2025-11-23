@@ -1,5 +1,3 @@
-import { streamText } from "ai"
-
 export const runtime = "edge"
 
 const systemPrompt = `You are an AI assistant for Impax Cort3x, an AI-powered innovation development platform that combines human expertise with AI tools to transform research into deployed initiatives.
@@ -46,15 +44,101 @@ Answer questions about:
 Be helpful, professional, and enthusiastic. Provide specific details when asked. If you don't know something, be honest and suggest contacting the team directly.`
 
 export async function POST(req: Request) {
-  const { messages } = await req.json()
+  try {
+    const { messages } = await req.json()
 
-  const result = streamText({
-    model: "openai/gpt-4o-mini",
-    system: systemPrompt,
-    messages,
-    temperature: 0.7,
-    maxTokens: 500,
-  })
+    const apiKey = process.env.OPENAI_API_KEY
+    if (!apiKey) {
+      return new Response(JSON.stringify({ error: "OpenAI API key not configured" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      })
+    }
 
-  return result.toUIMessageStreamResponse()
+    // Call OpenAI API directly
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [{ role: "system", content: systemPrompt }, ...messages],
+        temperature: 0.7,
+        max_tokens: 500,
+        stream: true,
+      }),
+    })
+
+    if (!response.ok) {
+      const error = await response.text()
+      return new Response(JSON.stringify({ error: `OpenAI API error: ${error}` }), {
+        status: response.status,
+        headers: { "Content-Type": "application/json" },
+      })
+    }
+
+    // Stream the response back to the client
+    const encoder = new TextEncoder()
+    const decoder = new TextDecoder()
+
+    const stream = new ReadableStream({
+      async start(controller) {
+        const reader = response.body?.getReader()
+        if (!reader) {
+          controller.close()
+          return
+        }
+
+        try {
+          while (true) {
+            const { done, value } = await reader.read()
+            if (done) break
+
+            const chunk = decoder.decode(value, { stream: true })
+            const lines = chunk.split("\n").filter((line) => line.trim() !== "")
+
+            for (const line of lines) {
+              if (line.startsWith("data: ")) {
+                const data = line.slice(6)
+                if (data === "[DONE]") {
+                  controller.close()
+                  return
+                }
+
+                try {
+                  const parsed = JSON.parse(data)
+                  const content = parsed.choices[0]?.delta?.content
+                  if (content) {
+                    controller.enqueue(encoder.encode(content))
+                  }
+                } catch (e) {
+                  // Skip invalid JSON
+                }
+              }
+            }
+          }
+        } catch (error) {
+          controller.error(error)
+        } finally {
+          reader.releaseLock()
+          controller.close()
+        }
+      },
+    })
+
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-cache",
+        Connection: "keep-alive",
+      },
+    })
+  } catch (error) {
+    return new Response(JSON.stringify({ error: "Failed to process chat request" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    })
+  }
 }
