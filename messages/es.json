@@ -1,0 +1,159 @@
+{
+  "header": {
+    "title": "Impax Cort3x",
+    "subtitle": "Plataforma de Innovación",
+    "admin": "Admin",
+    "getStarted": "Comenzar"
+  },
+  "hero": {
+    "badge": "Investigación IA + Coaching Experto",
+    "title": "Insights Impulsados por IA. Desafíos Guiados por Expertos.",
+    "description": "Nuestra plataforma combina investigación profunda de IA con coaching experto que desafía tu pensamiento. Obtén meses de inteligencia de mercado en semanas, luego trabaja con coaches que te impulsan a construir algo verdaderamente impactante.",
+    "seePlatform": "Ver la Plataforma",
+    "talkToCoach": "Hablar con un Coach",
+    "features": {
+      "research": {
+        "title": "Investigación Profunda con IA",
+        "description": "Obtén inteligencia de mercado integral, análisis de tendencias y mapeo de oportunidades que tomaría meses compilar manualmente"
+      },
+      "coaching": {
+        "title": "Coaching Experto",
+        "description": "Trabaja con coaches que desafían tus suposiciones y te guían a través de un proceso de innovación estructurado"
+      },
+      "execution": {
+        "title": "Ejecución Guiada",
+        "description": "Navega la entrada compleja al mercado con orientación experta en estrategia, cumplimiento y asociaciones locales"
+      }
+    }
+  },
+  "location": {
+    "badge": "Inteligencia de Mercado Estratégica",
+    "title": "Insights Profundos en 3 Mercados Estratégicos",
+    "description": "Nuestra plataforma de IA ofrece investigación de mercado integral para Chile, EE.UU. e Indonesia. Combinado con coaches expertos locales, obtienes tanto la inteligencia como la orientación para navegar cada mercado exitosamente.",
+    "features": {
+      "research": {
+        "title": "Investigación de Mercado Integral",
+        "description": "Análisis impulsado por IA de paisajes regulatorios, oportunidades de mercado, dinámicas competitivas y matices culturales para cada región"
+      },
+      "coaches": {
+        "title": "Coaches Expertos Locales",
+        "description": "Trabaja con coaches que entienden la cultura empresarial local, requisitos regulatorios y redes de asociación en cada mercado"
+      },
+      "mapping": {
+        "title": "Mapeo de Oportunidades Estratégicas",
+        "description": "Identifica incentivos, subvenciones, asociaciones y estrategias de entrada al mercado adaptadas a tus objetivos de innovación"
+      }
+    }
+  },
+  "solution": {
+    "title": "Tu Acelerador de Innovación:",
+    "subtitle": "Investigación IA + Coaching Experto = Innovación Más Rápida e Inteligente",
+    "cycleAlt": "Diagrama del Ciclo de Innovación",
+    "phases": {
+      "strategy": {
+        "title": "Estrategia",
+        "description": "La detección de tendencias impulsada por IA y la inteligencia de mercado visualizan oportunidades. Los coaches desafían tus suposiciones y refinan tu dirección estratégica."
+      },
+      "ideation": {
+        "title": "Ideación",
+        "description": "La IA genera y evalúa ideas basadas en datos de mercado. Los coaches expertos guían la priorización y te impulsan a pensar más grande y audaz."
+      },
+      "execution": {
+        "title": "Ejecución",
+        "description": "Despliega iniciativas con orientación experta en cumplimiento, asociaciones y entrada al mercado. Rastrea el progreso con insights impulsados por IA y apoyo de coaching."
+      }
+    }
+  },
+  "focus": {
+    "title": "¿Cuál es tu enfoque de innovación?",
+    "description": "Selecciona áreas para ver cómo nuestra investigación de IA y coaching experto pueden acelerar tu viaje de innovación",
+    "areas": {
+      "trends": "Tendencias y Tecnología",
+      "startups": "Startups",
+      "consumer": "Insights del Consumidor",
+      "opportunities": "Oportunidades y Riesgos",
+      "ideas": "Ideas",
+      "rdPipeline": "Pipeline de I+D",
+      "openInnovation": "Innovación Abierta",
+      "portfolio": "Portafolio de Innovación",
+      "roadmaps": "Hojas de Ruta"
+    }
+  },
+  "initiatives": {
+    "badge": "Portafolio Estratégico",
+    "title": "Éxito de Innovación Comprobado",
+    "description": "Iniciativas reales desplegadas en impacto ambiental, innovación cultural y crecimiento personal",
+    "viewProject": "Ver Proyecto",
+    "status": "Estado",
+    "progress": "Progreso",
+    "budget": "Presupuesto",
+    "noInitiatives": "Aún no hay iniciativas disponibles. ¡Vuelve pronto!",
+    "categories": {
+      "environmental": "Ambiental",
+      "cultural": "Cultural",
+      "personalGrowth": "Crecimiento Personal"
+    }
+  },
+  "partners": {
+    "badge": "Socios de Confianza",
+    "title": "Trabajando con Líderes de la Industria",
+    "description": "Colaborando con organizaciones líderes para impulsar la innovación"
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "description": "Todo lo que necesitas saber sobre Impax Cort3x",
+    "questions": {
+      "whatIs": {
+        "question": "¿Qué es Impax Cort3x?",
+        "answer": "Impax Cort3x es un súper acelerador que combina investigación impulsada por IA con coaching experto. Entregamos inteligencia de mercado profunda que tomaría meses compilar, luego te emparejamos con coaches que desafían tu pensamiento y te guían a través de un proceso de innovación estructurado. Es investigación que se encuentra con mentoría para una innovación más rápida e inteligente."
+      },
+      "howAI": {
+        "question": "¿Cómo funciona la investigación de IA?",
+        "answer": "Nuestra plataforma de IA analiza tendencias de mercado, paisajes regulatorios, dinámicas competitivas y espacios de oportunidad en Chile, EE.UU. e Indonesia. Entrega informes de investigación integrales, visualizaciones de tendencias y recomendaciones estratégicas que normalmente requerirían meses de investigación manual. Esto te da una ventaja masiva para entender tu mercado."
+      },
+      "challenging": {
+        "question": "¿Qué hace que el coaching sea \"desafiante\"?",
+        "answer": "Nuestros coaches no solo validan tus ideas, las desafían. Te impulsan a pensar más grande, probar tus suposiciones y considerar ángulos que podrías haber perdido. El proceso es estructurado y guiado, pero está diseñado para ser intelectualmente riguroso. Creemos que las mejores innovaciones provienen de ser desafiado, no mimado."
+      },
+      "whySuper": {
+        "question": "¿Por qué es un \"súper acelerador\"?",
+        "answer": "Aceleramos la innovación a través de mejores insights y orientación experta, no automatización. La investigación de IA entrega meses de inteligencia de mercado en semanas. El coaching experto proporciona orientación estructurada a través de decisiones complejas. Juntos, te ayudan a moverte del concepto al lanzamiento al mercado más rápido e inteligente que los enfoques tradicionales."
+      },
+      "moreQuestions": {
+        "question": "¿Puedo hacer más preguntas?",
+        "answer": "Haz clic en el botón de chat en la esquina inferior derecha para hablar con nuestro asistente de IA. Pregunta cualquier cosa sobre nuestras capacidades de investigación, metodología de coaching o cómo podemos acelerar tu viaje de innovación."
+      }
+    }
+  },
+  "cta": {
+    "title": "¿Listo para Acelerar con IA + Coaching Experto?",
+    "description": "Obtén insights profundos de mercado y orientación experta que desafía tu pensamiento y acelera tu camino al mercado.",
+    "explorePlatform": "Explorar la Plataforma",
+    "talkToCoach": "Hablar con un Coach",
+    "getStarted": "Comenzar",
+    "imageAlt": "Bombilla de Innovación IA"
+  },
+  "footer": {
+    "brand": "Impax Cort3x",
+    "tagline": "Plataforma de desarrollo de innovación impulsada por IA transformando investigación en realidad.",
+    "platform": {
+      "title": "Plataforma",
+      "features": "Características",
+      "pricing": "Precios",
+      "caseStudies": "Casos de Estudio"
+    },
+    "company": {
+      "title": "Empresa",
+      "about": "Acerca de",
+      "careers": "Carreras",
+      "contact": "Contacto"
+    },
+    "resources": {
+      "title": "Recursos",
+      "documentation": "Documentación",
+      "blog": "Blog",
+      "support": "Soporte"
+    },
+    "copyright": "© 2025 Impax Cort3x. Todos los derechos reservados. | Transformando Investigación en Iniciativas Desplegadas"
+  }
+}

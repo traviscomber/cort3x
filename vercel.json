@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/update-documents",
+      "schedule": "0 0 * * 5"
+    },
+    {
+      "path": "/api/cron/intelligent-update",
+      "schedule": "0 2 * * 5"
+    }
+  ]
+}

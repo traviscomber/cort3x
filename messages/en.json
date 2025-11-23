@@ -1,0 +1,159 @@
+{
+  "header": {
+    "title": "Impax Cort3x",
+    "subtitle": "Innovation Platform",
+    "admin": "Admin",
+    "getStarted": "Get Started"
+  },
+  "hero": {
+    "badge": "AI Research + Expert Coaching",
+    "title": "AI-Powered Insights. Expert-Guided Challenges.",
+    "description": "Our platform combines deep AI research with expert coaching that challenges your thinking. Get months of market intelligence in weeks, then work with coaches who push you to build something truly impactful.",
+    "seePlatform": "See the Platform",
+    "talkToCoach": "Talk to a Coach",
+    "features": {
+      "research": {
+        "title": "Deep AI Research",
+        "description": "Get comprehensive market intelligence, trend analysis, and opportunity mapping that would take months to compile manually"
+      },
+      "coaching": {
+        "title": "Expert Coaching",
+        "description": "Work with coaches who challenge your assumptions and guide you through a structured innovation process"
+      },
+      "execution": {
+        "title": "Guided Execution",
+        "description": "Navigate complex market entry with expert guidance on strategy, compliance, and local partnerships"
+      }
+    }
+  },
+  "location": {
+    "badge": "Strategic Market Intelligence",
+    "title": "Deep Insights Across 3 Strategic Markets",
+    "description": "Our AI platform delivers comprehensive market research for Chile, USA, and Indonesia. Combined with local expert coaches, you get both the intelligence and guidance to navigate each market successfully.",
+    "features": {
+      "research": {
+        "title": "Comprehensive Market Research",
+        "description": "AI-powered analysis of regulatory landscapes, market opportunities, competitive dynamics, and cultural nuances for each region"
+      },
+      "coaches": {
+        "title": "Local Expert Coaches",
+        "description": "Work with coaches who understand local business culture, regulatory requirements, and partnership networks in each market"
+      },
+      "mapping": {
+        "title": "Strategic Opportunity Mapping",
+        "description": "Identify incentives, grants, partnerships, and market entry strategies tailored to your innovation goals"
+      }
+    }
+  },
+  "solution": {
+    "title": "Your Innovation Accelerator:",
+    "subtitle": "AI Research + Expert Coaching = Faster, Smarter Innovation",
+    "cycleAlt": "Innovation Cycle Diagram",
+    "phases": {
+      "strategy": {
+        "title": "Strategy",
+        "description": "AI-powered trend detection and market intelligence visualize opportunities. Coaches challenge your assumptions and refine your strategic direction."
+      },
+      "ideation": {
+        "title": "Ideation",
+        "description": "AI generates and evaluates ideas based on market data. Expert coaches guide prioritization and push you to think bigger and bolder."
+      },
+      "execution": {
+        "title": "Execution",
+        "description": "Deploy initiatives with expert guidance on compliance, partnerships, and market entry. Track progress with AI-powered insights and coaching support."
+      }
+    }
+  },
+  "focus": {
+    "title": "Where's your innovation focus?",
+    "description": "Select areas to see how our AI research and expert coaching can accelerate your innovation journey",
+    "areas": {
+      "trends": "Trends & Tech",
+      "startups": "Startups",
+      "consumer": "Consumer Insights",
+      "opportunities": "Opportunities & Risks",
+      "ideas": "Ideas",
+      "rdPipeline": "R&D Pipeline",
+      "openInnovation": "Open Innovation",
+      "portfolio": "Innovation Portfolio",
+      "roadmaps": "Roadmaps"
+    }
+  },
+  "initiatives": {
+    "badge": "Strategic Portfolio",
+    "title": "Proven Innovation Success",
+    "description": "Real initiatives deployed across environmental impact, cultural innovation, and personal growth",
+    "viewProject": "View Project",
+    "status": "Status",
+    "progress": "Progress",
+    "budget": "Budget",
+    "noInitiatives": "No initiatives available yet. Check back soon!",
+    "categories": {
+      "environmental": "Environmental",
+      "cultural": "Cultural",
+      "personalGrowth": "Personal Growth"
+    }
+  },
+  "partners": {
+    "badge": "Trusted Partners",
+    "title": "Working with Industry Leaders",
+    "description": "Collaborating with leading organizations to drive innovation forward"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "description": "Everything you need to know about Impax Cort3x",
+    "questions": {
+      "whatIs": {
+        "question": "What is Impax Cort3x?",
+        "answer": "Impax Cort3x is a super accelerator that combines AI-powered research with expert coaching. We deliver deep market intelligence that would take months to compile, then pair you with coaches who challenge your thinking and guide you through a structured innovation process. It's research meets mentorship for faster, smarter innovation."
+      },
+      "howAI": {
+        "question": "How does the AI research work?",
+        "answer": "Our AI platform analyzes market trends, regulatory landscapes, competitive dynamics, and opportunity spaces across Chile, USA, and Indonesia. It delivers comprehensive research reports, trend visualizations, and strategic recommendations that would normally require months of manual research. This gives you a massive head start on understanding your market."
+      },
+      "challenging": {
+        "question": "What makes the coaching \"challenging\"?",
+        "answer": "Our coaches don't just validate your ideas—they challenge them. They push you to think bigger, test your assumptions, and consider angles you might have missed. The process is structured and guided, but it's designed to be intellectually rigorous. We believe the best innovations come from being challenged, not coddled."
+      },
+      "whySuper": {
+        "question": "Why is this a \"super accelerator\"?",
+        "answer": "We accelerate innovation through better insights and expert guidance, not automation. The AI research delivers months of market intelligence in weeks. The expert coaching provides structured guidance through complex decisions. Together, they help you move from concept to market launch faster and smarter than traditional approaches."
+      },
+      "moreQuestions": {
+        "question": "Can I ask more questions?",
+        "answer": "Click the chat button in the bottom-right corner to talk with our AI assistant. Ask anything about our research capabilities, coaching methodology, or how we can accelerate your innovation journey."
+      }
+    }
+  },
+  "cta": {
+    "title": "Ready to Accelerate with AI + Expert Coaching?",
+    "description": "Get deep market insights and expert guidance that challenges your thinking and accelerates your path to market.",
+    "explorePlatform": "Explore the Platform",
+    "talkToCoach": "Talk to a Coach",
+    "getStarted": "Get Started",
+    "imageAlt": "AI Innovation Lightbulb"
+  },
+  "footer": {
+    "brand": "Impax Cort3x",
+    "tagline": "AI-powered innovation development platform transforming research into reality.",
+    "platform": {
+      "title": "Platform",
+      "features": "Features",
+      "pricing": "Pricing",
+      "caseStudies": "Case Studies"
+    },
+    "company": {
+      "title": "Company",
+      "about": "About",
+      "careers": "Careers",
+      "contact": "Contact"
+    },
+    "resources": {
+      "title": "Resources",
+      "documentation": "Documentation",
+      "blog": "Blog",
+      "support": "Support"
+    },
+    "copyright": "© 2025 Impax Cort3x. All rights reserved. | Transforming Research into Deployed Initiatives"
+  }
+}

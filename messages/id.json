@@ -1,0 +1,159 @@
+{
+  "header": {
+    "title": "Impax Cort3x",
+    "subtitle": "Platform Inovasi",
+    "admin": "Admin",
+    "getStarted": "Mulai"
+  },
+  "hero": {
+    "badge": "Riset AI + Pelatihan Ahli",
+    "title": "Wawasan Bertenaga AI. Tantangan Dipandu Ahli.",
+    "description": "Platform kami menggabungkan riset AI mendalam dengan pelatihan ahli yang menantang pemikiran Anda. Dapatkan intelijen pasar berbulan-bulan dalam hitungan minggu, lalu bekerja dengan pelatih yang mendorong Anda membangun sesuatu yang benar-benar berdampak.",
+    "seePlatform": "Lihat Platform",
+    "talkToCoach": "Bicara dengan Pelatih",
+    "features": {
+      "research": {
+        "title": "Riset AI Mendalam",
+        "description": "Dapatkan intelijen pasar komprehensif, analisis tren, dan pemetaan peluang yang akan memakan waktu berbulan-bulan untuk dikompilasi secara manual"
+      },
+      "coaching": {
+        "title": "Pelatihan Ahli",
+        "description": "Bekerja dengan pelatih yang menantang asumsi Anda dan membimbing Anda melalui proses inovasi terstruktur"
+      },
+      "execution": {
+        "title": "Eksekusi Terpandu",
+        "description": "Navigasi masuk pasar yang kompleks dengan panduan ahli tentang strategi, kepatuhan, dan kemitraan lokal"
+      }
+    }
+  },
+  "location": {
+    "badge": "Intelijen Pasar Strategis",
+    "title": "Wawasan Mendalam di 3 Pasar Strategis",
+    "description": "Platform AI kami memberikan riset pasar komprehensif untuk Chile, AS, dan Indonesia. Dikombinasikan dengan pelatih ahli lokal, Anda mendapatkan intelijen dan panduan untuk menavigasi setiap pasar dengan sukses.",
+    "features": {
+      "research": {
+        "title": "Riset Pasar Komprehensif",
+        "description": "Analisis bertenaga AI tentang lanskap regulasi, peluang pasar, dinamika kompetitif, dan nuansa budaya untuk setiap wilayah"
+      },
+      "coaches": {
+        "title": "Pelatih Ahli Lokal",
+        "description": "Bekerja dengan pelatih yang memahami budaya bisnis lokal, persyaratan regulasi, dan jaringan kemitraan di setiap pasar"
+      },
+      "mapping": {
+        "title": "Pemetaan Peluang Strategis",
+        "description": "Identifikasi insentif, hibah, kemitraan, dan strategi masuk pasar yang disesuaikan dengan tujuan inovasi Anda"
+      }
+    }
+  },
+  "solution": {
+    "title": "Akselerator Inovasi Anda:",
+    "subtitle": "Riset AI + Pelatihan Ahli = Inovasi Lebih Cepat dan Cerdas",
+    "cycleAlt": "Diagram Siklus Inovasi",
+    "phases": {
+      "strategy": {
+        "title": "Strategi",
+        "description": "Deteksi tren bertenaga AI dan intelijen pasar memvisualisasikan peluang. Pelatih menantang asumsi Anda dan menyempurnakan arah strategis Anda."
+      },
+      "ideation": {
+        "title": "Ideasi",
+        "description": "AI menghasilkan dan mengevaluasi ide berdasarkan data pasar. Pelatih ahli membimbing prioritas dan mendorong Anda berpikir lebih besar dan lebih berani."
+      },
+      "execution": {
+        "title": "Eksekusi",
+        "description": "Terapkan inisiatif dengan panduan ahli tentang kepatuhan, kemitraan, dan masuk pasar. Lacak kemajuan dengan wawasan bertenaga AI dan dukungan pelatihan."
+      }
+    }
+  },
+  "focus": {
+    "title": "Di mana fokus inovasi Anda?",
+    "description": "Pilih area untuk melihat bagaimana riset AI dan pelatihan ahli kami dapat mempercepat perjalanan inovasi Anda",
+    "areas": {
+      "trends": "Tren & Teknologi",
+      "startups": "Startup",
+      "consumer": "Wawasan Konsumen",
+      "opportunities": "Peluang & Risiko",
+      "ideas": "Ide",
+      "rdPipeline": "Pipeline R&D",
+      "openInnovation": "Inovasi Terbuka",
+      "portfolio": "Portofolio Inovasi",
+      "roadmaps": "Peta Jalan"
+    }
+  },
+  "initiatives": {
+    "badge": "Portofolio Strategis",
+    "title": "Kesuksesan Inovasi Terbukti",
+    "description": "Inisiatif nyata yang diterapkan di seluruh dampak lingkungan, inovasi budaya, dan pertumbuhan pribadi",
+    "viewProject": "Lihat Proyek",
+    "status": "Status",
+    "progress": "Kemajuan",
+    "budget": "Anggaran",
+    "noInitiatives": "Belum ada inisiatif yang tersedia. Periksa kembali segera!",
+    "categories": {
+      "environmental": "Lingkungan",
+      "cultural": "Budaya",
+      "personalGrowth": "Pertumbuhan Pribadi"
+    }
+  },
+  "partners": {
+    "badge": "Mitra Terpercaya",
+    "title": "Bekerja dengan Pemimpin Industri",
+    "description": "Berkolaborasi dengan organisasi terkemuka untuk mendorong inovasi ke depan"
+  },
+  "faq": {
+    "title": "Pertanyaan yang Sering Diajukan",
+    "description": "Semua yang perlu Anda ketahui tentang Impax Cort3x",
+    "questions": {
+      "whatIs": {
+        "question": "Apa itu Impax Cort3x?",
+        "answer": "Impax Cort3x adalah akselerator super yang menggabungkan riset bertenaga AI dengan pelatihan ahli. Kami memberikan intelijen pasar mendalam yang akan memakan waktu berbulan-bulan untuk dikompilasi, lalu memasangkan Anda dengan pelatih yang menantang pemikiran Anda dan membimbing Anda melalui proses inovasi terstruktur. Ini adalah riset bertemu mentoring untuk inovasi yang lebih cepat dan cerdas."
+      },
+      "howAI": {
+        "question": "Bagaimana cara kerja riset AI?",
+        "answer": "Platform AI kami menganalisis tren pasar, lanskap regulasi, dinamika kompetitif, dan ruang peluang di Chile, AS, dan Indonesia. Ini memberikan laporan riset komprehensif, visualisasi tren, dan rekomendasi strategis yang biasanya memerlukan berbulan-bulan riset manual. Ini memberi Anda keunggulan besar dalam memahami pasar Anda."
+      },
+      "challenging": {
+        "question": "Apa yang membuat pelatihan \"menantang\"?",
+        "answer": "Pelatih kami tidak hanya memvalidasi ide Anda—mereka menantangnya. Mereka mendorong Anda untuk berpikir lebih besar, menguji asumsi Anda, dan mempertimbangkan sudut yang mungkin Anda lewatkan. Prosesnya terstruktur dan terpandu, tetapi dirancang untuk ketat secara intelektual. Kami percaya inovasi terbaik datang dari ditantang, bukan dimanjakan."
+      },
+      "whySuper": {
+        "question": "Mengapa ini \"akselerator super\"?",
+        "answer": "Kami mempercepat inovasi melalui wawasan yang lebih baik dan panduan ahli, bukan otomatisasi. Riset AI memberikan intelijen pasar berbulan-bulan dalam hitungan minggu. Pelatihan ahli memberikan panduan terstruktur melalui keputusan kompleks. Bersama-sama, mereka membantu Anda bergerak dari konsep ke peluncuran pasar lebih cepat dan lebih cerdas daripada pendekatan tradisional."
+      },
+      "moreQuestions": {
+        "question": "Bisakah saya mengajukan lebih banyak pertanyaan?",
+        "answer": "Klik tombol obrolan di sudut kanan bawah untuk berbicara dengan asisten AI kami. Tanyakan apa saja tentang kemampuan riset kami, metodologi pelatihan, atau bagaimana kami dapat mempercepat perjalanan inovasi Anda."
+      }
+    }
+  },
+  "cta": {
+    "title": "Siap Mempercepat dengan AI + Pelatihan Ahli?",
+    "description": "Dapatkan wawasan pasar mendalam dan panduan ahli yang menantang pemikiran Anda dan mempercepat jalur Anda ke pasar.",
+    "explorePlatform": "Jelajahi Platform",
+    "talkToCoach": "Bicara dengan Pelatih",
+    "getStarted": "Mulai",
+    "imageAlt": "Bola Lampu Inovasi AI"
+  },
+  "footer": {
+    "brand": "Impax Cort3x",
+    "tagline": "Platform pengembangan inovasi bertenaga AI yang mengubah riset menjadi kenyataan.",
+    "platform": {
+      "title": "Platform",
+      "features": "Fitur",
+      "pricing": "Harga",
+      "caseStudies": "Studi Kasus"
+    },
+    "company": {
+      "title": "Perusahaan",
+      "about": "Tentang",
+      "careers": "Karir",
+      "contact": "Kontak"
+    },
+    "resources": {
+      "title": "Sumber Daya",
+      "documentation": "Dokumentasi",
+      "blog": "Blog",
+      "support": "Dukungan"
+    },
+    "copyright": "© 2025 Impax Cort3x. Hak cipta dilindungi. | Mengubah Riset menjadi Inisiatif yang Diterapkan"
+  }
+}

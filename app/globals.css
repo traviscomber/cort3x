@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Added utility class to hide scrollbars */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+}
+
+@layer base {
+  :root {
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
+
+    /* Updated to POSCA khaki green (#65793C) - sophisticated, earthy olive-green */
+    --background: 0 0% 100%;
+    --foreground: 75 25% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 75 25% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 75 25% 15%;
+    --primary: 75 25% 35%; /* POSCA khaki green #65793C - sophisticated, earthy */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 32 95% 44%; /* Gold/amber #D97706 - premium quality, success */
+    --secondary-foreground: 75 25% 15%;
+    --muted: 75 15% 96%;
+    --muted-foreground: 75 15% 45%;
+    --accent: 17 88% 48%; /* Warm terracotta/orange #EA580C - energy, action */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 75 15% 90%;
+    --input: 75 15% 90%;
+    --ring: 75 25% 35%;
+    --chart-1: 75 25% 35%;
+    --chart-2: 32 95% 44%;
+    --chart-3: 17 88% 48%;
+    --chart-4: 43 74% 49%;
+    --chart-5: 142 76% 36%;
+    --radius: 0.75rem;
+    --sidebar-background: 75 25% 98%;
+    --sidebar-foreground: 75 25% 15%;
+    --sidebar-primary: 75 25% 35%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 75 15% 95%;
+    --sidebar-accent-foreground: 75 25% 15%;
+    --sidebar-border: 75 15% 90%;
+    --sidebar-ring: 75 25% 35%;
+  }
+  .dark {
+    --background: 75 25% 8%;
+    --foreground: 0 0% 98%;
+    --card: 75 20% 12%;
+    --card-foreground: 0 0% 98%;
+    --popover: 75 20% 12%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 75 25% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 32 95% 44%;
+    --secondary-foreground: 75 25% 15%;
+    --muted: 75 15% 20%;
+    --muted-foreground: 75 15% 65%;
+    --accent: 17 88% 48%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 75 15% 20%;
+    --input: 75 15% 20%;
+    --ring: 75 25% 45%;
+    --chart-1: 75 25% 45%;
+    --chart-2: 32 95% 44%;
+    --chart-3: 17 88% 48%;
+    --chart-4: 43 74% 49%;
+    --chart-5: 142 76% 36%;
+    --sidebar-background: 75 25% 10%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 75 25% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 75 15% 15%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 75 15% 20%;
+    --sidebar-ring: 75 25% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
