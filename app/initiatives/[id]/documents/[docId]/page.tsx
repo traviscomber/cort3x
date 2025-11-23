@@ -246,7 +246,7 @@ export default async function DocumentPage({
                       <div className="text-sm text-orange-800 mt-2">
                         <p className="font-medium mb-1">Recent changes:</p>
                         <ul className="list-disc list-inside space-y-1">
-                          {document.metadata.change_log[0].changes.map((change, idx) => (
+                          {document.metadata.change_log[0].changes.map((change: string, idx) => (
                             <li key={idx}>{change}</li>
                           ))}
                         </ul>
