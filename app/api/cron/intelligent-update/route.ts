@@ -1,36 +1,78 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
 import { researchTopic, generateDocumentUpdate, analyzeInitiativeProgress } from "@/lib/document-intelligence"
+import { rateLimit, RATE_LIMITS } from "@/lib/rate-limit"
+import { logger } from "@/lib/logger"
 
 export const maxDuration = 300 // 5 minutes for AI processing
 
 export async function GET(request: Request) {
   try {
+    const rateLimitResult = await rateLimit("cron:intelligent-update", RATE_LIMITS.CRON)
+
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        {
+          error: "Rate limit exceeded",
+          retryAfter: rateLimitResult.reset,
+        },
+        {
+          status: 429,
+          headers: {
+            "X-RateLimit-Limit": rateLimitResult.limit.toString(),
+            "X-RateLimit-Remaining": rateLimitResult.remaining.toString(),
+            "X-RateLimit-Reset": rateLimitResult.reset.toString(),
+          },
+        },
+      )
+    }
+
     // Verify cron secret
     const authHeader = request.headers.get("authorization")
     if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+      logger.warn("Unauthorized cron job attempt")
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
     return await performIntelligentUpdate()
   } catch (error) {
-    console.error("[v0] Intelligent update error:", error)
+    logger.error("Intelligent update failed", error)
     return NextResponse.json({ error: "Failed to perform intelligent updates" }, { status: 500 })
   }
 }
 
 export async function POST(request: Request) {
   try {
-    // Allow manual trigger from admin panel
+    const rateLimitResult = await rateLimit("cron:intelligent-update:manual", RATE_LIMITS.CRON)
+
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        {
+          error: "Rate limit exceeded",
+          retryAfter: rateLimitResult.reset,
+        },
+        {
+          status: 429,
+          headers: {
+            "X-RateLimit-Limit": rateLimitResult.limit.toString(),
+            "X-RateLimit-Remaining": rateLimitResult.remaining.toString(),
+            "X-RateLimit-Reset": rateLimitResult.reset.toString(),
+          },
+        },
+      )
+    }
+
     return await performIntelligentUpdate()
   } catch (error) {
-    console.error("[v0] Intelligent update error:", error)
+    logger.error("Manual intelligent update failed", error)
     return NextResponse.json({ error: "Failed to perform intelligent updates" }, { status: 500 })
   }
 }
 
 async function performIntelligentUpdate() {
   const supabase = await createClient()
+
+  logger.info("Starting intelligent update cycle")
 
   // Get all initiatives with their documents
   const { data: initiatives, error: initiativesError } = await supabase
@@ -44,7 +86,7 @@ async function performIntelligentUpdate() {
 
   // Process each initiative
   for (const initiative of initiatives || []) {
-    console.log(`[v0] Processing initiative: ${initiative.title}`)
+    logger.info("Processing initiative", { initiativeId: initiative.id, title: initiative.title })
 
     // Research latest developments
     const findings = await researchTopic(initiative.title, initiative.tags || [])
@@ -58,7 +100,7 @@ async function performIntelligentUpdate() {
 
     // Update each document with new findings
     for (const doc of initiative.documents || []) {
-      console.log(`[v0] Updating document: ${doc.title}`)
+      logger.info("Updating document", { docId: doc.id, title: doc.title })
 
       const update = await generateDocumentUpdate(doc.title, doc.content || "", findings)
 
@@ -89,7 +131,7 @@ async function performIntelligentUpdate() {
         .eq("id", doc.id)
 
       if (updateError) {
-        console.error("[v0] Error updating document:", updateError)
+        logger.error("Failed to update document", updateError, { docId: doc.id })
       } else {
         updateResults.push({
           document: doc.title,
@@ -109,9 +151,14 @@ async function performIntelligentUpdate() {
       .eq("id", initiative.id)
 
     if (initiativeUpdateError) {
-      console.error("[v0] Error updating initiative:", initiativeUpdateError)
+      logger.error("Failed to update initiative", initiativeUpdateError, { initiativeId: initiative.id })
     }
   }
+
+  logger.info("Intelligent update cycle completed", {
+    totalUpdates: updateResults.length,
+    totalInitiatives: initiatives?.length,
+  })
 
   return NextResponse.json({
     success: true,

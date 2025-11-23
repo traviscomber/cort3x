@@ -8,15 +8,12 @@ import { cookies } from "next/headers"
 export async function createClient() {
   const cookieStore = await cookies()
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY
 
   if (!supabaseUrl || !supabaseKey) {
-    console.error("[v0] Missing Supabase environment variables:", {
-      hasUrl: !!supabaseUrl,
-      hasKey: !!supabaseKey,
-    })
-    throw new Error("Supabase environment variables are not configured")
+    console.warn("[v0] Supabase environment variables not configured. Using mock client.")
+    return createMockClient()
   }
 
   return createSupabaseServerClient(supabaseUrl, supabaseKey, {
@@ -35,6 +32,37 @@ export async function createClient() {
       },
     },
   })
+}
+
+function createMockClient() {
+  return {
+    from: () => ({
+      select: () => ({ data: null, error: new Error("Supabase not configured") }),
+      insert: () => ({ data: null, error: new Error("Supabase not configured") }),
+      update: () => ({ data: null, error: new Error("Supabase not configured") }),
+      delete: () => ({ data: null, error: new Error("Supabase not configured") }),
+      eq: function () {
+        return this
+      },
+      order: function () {
+        return this
+      },
+      limit: function () {
+        return this
+      },
+      in: function () {
+        return this
+      },
+      single: () => ({ data: null, error: new Error("Supabase not configured") }),
+    }),
+    auth: {
+      getUser: async () => ({ data: { user: null }, error: new Error("Supabase not configured") }),
+      signInWithPassword: async () => ({ data: null, error: new Error("Supabase not configured") }),
+      signUp: async () => ({ data: null, error: new Error("Supabase not configured") }),
+      signOut: async () => ({ error: new Error("Supabase not configured") }),
+    },
+    rpc: () => ({ data: null, error: new Error("Supabase not configured") }),
+  } as any
 }
 
 export { createClient as createServerClient }

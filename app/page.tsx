@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server"
 import { HomePageClient } from "@/components/home-page-client"
 import { StructuredData } from "@/components/structured-data"
 import type { Metadata } from "next"
+import { logger } from "@/lib/logger"
 
 export const metadata: Metadata = {
   title: "Impax Cort3x | AI-Powered Innovation Accelerator with Expert Coaching",
@@ -50,7 +51,7 @@ export default async function HomePage() {
       .order("name")
     countries = countriesData || []
   } catch (error) {
-    console.error("[v0] Failed to fetch data from Supabase:", error)
+    logger.error("Failed to fetch homepage data", error)
     // Continue with empty arrays - the homepage will still render
   }
 

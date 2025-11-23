@@ -41,6 +41,8 @@ export function HomePageClient({ initiatives, partners, countries }: HomePageCli
   const [selectedFocus, setSelectedFocus] = useState<string | null>(null)
   const [selectedCountry, setSelectedCountry] = useState<string>("indonesia")
   const [filteredInitiatives, setFilteredInitiatives] = useState(initiatives)
+  const [isAtStart, setIsAtStart] = useState(true)
+  const [isAtEnd, setIsAtEnd] = useState(false)
 
   const handleSeePlatform = () => {
     scrollToSection("projects")
@@ -52,51 +54,33 @@ export function HomePageClient({ initiatives, partners, countries }: HomePageCli
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
-      console.log("[v0] Scrolling left")
-      scrollContainerRef.current.scrollBy({ left: -400, behavior: "smooth" })
+      scrollContainerRef.current.scrollBy({ left: -300, behavior: "smooth" })
     }
   }
 
   const scrollRight = () => {
     if (scrollContainerRef.current) {
-      console.log("[v0] Scrolling right")
-      scrollContainerRef.current.scrollBy({ left: 400, behavior: "smooth" })
+      scrollContainerRef.current.scrollBy({ left: 300, behavior: "smooth" })
     }
   }
 
-  const handleScrollUpdate = () => {
+  const updateScrollButtons = () => {
     if (scrollContainerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current
-      const atStart = scrollLeft <= 10
-      const atEnd = scrollLeft >= scrollWidth - clientWidth - 10
-
-      console.log("[v0] Scroll position:", { scrollLeft, scrollWidth, clientWidth, atStart, atEnd })
-
-      setShowLeftArrow(!atStart)
-      setShowRightArrow(!atEnd)
+      setIsAtStart(scrollLeft === 0)
+      setIsAtEnd(scrollLeft + clientWidth >= scrollWidth - 1)
     }
   }
 
   useEffect(() => {
     const container = scrollContainerRef.current
     if (!container) {
-      console.log("[v0] No scroll container found")
       return
     }
 
-    console.log("[v0] Attaching scroll listener, initiatives:", initiatives?.length)
-
-    // Add scroll event listener
-    container.addEventListener("scroll", handleScrollUpdate)
-
-    // Initial check after a small delay to ensure DOM is ready
-    setTimeout(() => {
-      handleScrollUpdate()
-    }, 100)
-
-    return () => {
-      container.removeEventListener("scroll", handleScrollUpdate)
-    }
+    updateScrollButtons()
+    container.addEventListener("scroll", updateScrollButtons)
+    return () => container.removeEventListener("scroll", updateScrollButtons)
   }, [initiatives])
 
   const scrollToSection = (sectionId: string) => {
@@ -132,6 +116,12 @@ export function HomePageClient({ initiatives, partners, countries }: HomePageCli
       setFilteredInitiatives(initiatives)
     }
   }, [selectedCountry, initiatives])
+
+  const handleContinue = () => {
+    if (selectedCountry) {
+      window.location.href = `/onboarding/journey?country=${selectedCountry}`
+    }
+  }
 
   const handleContinueWithCountry = () => {
     console.log("[v0] Continuing with country:", selectedCountry)

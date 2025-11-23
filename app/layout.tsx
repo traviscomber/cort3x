@@ -5,6 +5,8 @@ import "./globals.css"
 import { TranslationsProvider } from "@/lib/i18n/translations-provider"
 import { SiteNav } from "@/components/site-nav"
 import { FunnelPromoBanner } from "@/components/funnel-promo-banner"
+import { logger } from "@/lib/logger"
+import { ErrorBoundary } from "@/components/error-boundary"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -40,7 +42,7 @@ const getMetadataBase = () => {
   try {
     return new URL(getSiteUrl())
   } catch (error) {
-    console.error("[v0] Failed to create metadataBase URL:", error)
+    logger.error("Failed to create metadataBase URL", error)
     return undefined
   }
 }
@@ -191,11 +193,13 @@ export default function RootLayout({
         <meta name="revisit-after" content="7 days" />
       </head>
       <body className="font-sans">
-        <TranslationsProvider>
-          <SiteNav />
-          {children}
-          <FunnelPromoBanner />
-        </TranslationsProvider>
+        <ErrorBoundary>
+          <TranslationsProvider>
+            <SiteNav />
+            {children}
+            <FunnelPromoBanner />
+          </TranslationsProvider>
+        </ErrorBoundary>
       </body>
     </html>
   )

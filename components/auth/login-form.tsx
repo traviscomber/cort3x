@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { createClient } from "@/lib/supabase/client"
 import { Loader2, Mail, Lock } from "lucide-react"
+import { logger } from "@/lib/logger"
 
 export function LoginForm() {
   const [email, setEmail] = useState("")
@@ -22,34 +23,33 @@ export function LoginForm() {
     setLoading(true)
     setError(null)
 
-    console.log("[v0] Login attempt for:", email)
+    logger.debug("Login attempt", { email })
 
     try {
       const supabase = createClient()
 
-      console.log("[v0] Calling signInWithPassword...")
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
 
       if (error) {
-        console.log("[v0] Login error:", error.message)
+        logger.warn("Login failed", { error: error.message, email })
         setError(error.message)
         setLoading(false)
         return
       }
 
       if (data.user) {
-        console.log("[v0] Login successful, user:", data.user.email)
+        logger.info("Login successful", { userId: data.user.id })
         window.location.href = "/dashboard"
       } else {
-        console.log("[v0] No user returned from login")
+        logger.error("No user returned from login")
         setError("Login failed. Please try again.")
         setLoading(false)
       }
     } catch (err) {
-      console.log("[v0] Unexpected error:", err)
+      logger.error("Unexpected login error", err)
       setError("An unexpected error occurred")
       setLoading(false)
     }

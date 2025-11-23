@@ -8,6 +8,7 @@ import { useTranslations } from "@/lib/i18n/translations-provider"
 import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import { createBrowserClient } from "@/lib/supabase/client"
+import { logger } from "@/lib/logger"
 
 export function SiteNav() {
   const { t } = useTranslations()
@@ -32,7 +33,7 @@ export function SiteNav() {
 
         return () => subscription.unsubscribe()
       } catch (error) {
-        console.log("[v0] Supabase client not available, skipping auth check")
+        logger.debug("Supabase client not available, skipping auth check")
         return
       }
     }
