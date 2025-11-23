@@ -1,26 +1,96 @@
 "use client"
 
-import { useState } from "react"
+import { useState, type FormEvent, type ChangeEvent } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { MessageCircle, Send, X, Loader2 } from "lucide-react"
-import { useChat } from "@ai-sdk/react"
+
+interface Message {
+  id: string
+  role: "user" | "assistant"
+  content: string
+}
 
 export function FAQChat() {
   const [isOpen, setIsOpen] = useState(false)
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: "welcome",
+      role: "assistant",
+      content:
+        "Hello! I'm your AI assistant for Cort3x powered by n3uralia. Ask me anything about our innovation development services, The Nusantara Code, Royal Pop Indonesia, QUESTLOG, or how we can help transform your research into deployed initiatives.",
+    },
+  ])
+  const [input, setInput] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-    api: "/api/chat",
-    initialMessages: [
-      {
-        id: "welcome",
-        role: "assistant",
-        content:
-          "Hello! I'm your AI assistant for Impax Cort3x. Ask me anything about our innovation development services, The Nusantara Code, Royal Pop Indonesia, QUESTLOG, or how we can help transform your research into deployed initiatives.",
-      },
-    ],
-  })
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (!input.trim() || isLoading) return
+
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      role: "user",
+      content: input,
+    }
+
+    setMessages((prev) => [...prev, userMessage])
+    setInput("")
+    setIsLoading(true)
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [...messages, userMessage].map((m) => ({
+            role: m.role,
+            content: m.content,
+          })),
+        }),
+      })
+
+      if (!response.ok) throw new Error("Failed to get response")
+
+      const reader = response.body?.getReader()
+      const decoder = new TextDecoder()
+      let assistantMessage = ""
+
+      const assistantMessageId = (Date.now() + 1).toString()
+      setMessages((prev) => [...prev, { id: assistantMessageId, role: "assistant", content: "" }])
+
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read()
+          if (done) break
+
+          const chunk = decoder.decode(value)
+          assistantMessage += chunk
+
+          setMessages((prev) =>
+            prev.map((m) => (m.id === assistantMessageId ? { ...m, content: assistantMessage } : m)),
+          )
+        }
+      }
+    } catch (error) {
+      console.error("Chat error:", error)
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now().toString(),
+          role: "assistant",
+          content: "Sorry, I encountered an error. Please try again.",
+        },
+      ])
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value)
+  }
 
   return (
     <>
