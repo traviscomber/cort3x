@@ -324,7 +324,7 @@ export default async function DocumentPage({
                   View Version History ({document.metadata.change_log.length} updates)
                 </summary>
                 <div className="mt-4 space-y-4">
-                  {document.metadata.change_log.map((log, idx) => (
+                  {document.metadata.change_log.map((log: { date: string; changes: string[] }, idx: number) => (
                     <div key={idx} className="border-l-2 border-gray-300 pl-4">
                       <p className="text-sm font-medium text-gray-900 mb-1">{formatDate(log.date)}</p>
                       <ul className="text-sm text-gray-600 space-y-1">
