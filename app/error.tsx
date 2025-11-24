@@ -1,15 +1,15 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { AlertCircle } from "lucide-react"
 import { monitoring } from "@/lib/monitoring"
 
-const isDevelopment = process.env.NODE_ENV === "development"
+const Error = ({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) => {
+  const [isDevelopment, setIsDevelopment] = useState(false)
 
-export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
-    // Track error in monitoring system
+    setIsDevelopment(process.env.NODE_ENV === "development")
     monitoring.trackError(error, {
       digest: error.digest,
       page: "global",
@@ -51,3 +51,5 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
     </div>
   )
 }
+
+export default Error

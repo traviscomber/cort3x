@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+// Slider component for progress adjustment (0-100%)
 import { Slider } from "@/components/ui/slider"
 import { createClient } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"

@@ -181,11 +181,11 @@ export default function RootLayout({
   return (
     <html className={`${inter.variable} ${jetbrainsMono.variable}`} lang="en" suppressHydrationWarning>
       <head>
-        <link rel="canonical" href="https://green-industrial-innovation.vercel.app" />
-        <link rel="alternate" hrefLang="en" href="https://green-industrial-innovation.vercel.app/en" />
-        <link rel="alternate" hrefLang="es" href="https://green-industrial-innovation.vercel.app/es" />
-        <link rel="alternate" hrefLang="id" href="https://green-industrial-innovation.vercel.app/id" />
-        <link rel="alternate" hrefLang="x-default" href="https://green-industrial-innovation.vercel.app" />
+        <link rel="canonical" href={getSiteUrl()} />
+        <link rel="alternate" hrefLang="en" href={`${getSiteUrl()}/en`} />
+        <link rel="alternate" hrefLang="es" href={`${getSiteUrl()}/es`} />
+        <link rel="alternate" hrefLang="id" href={`${getSiteUrl()}/id`} />
+        <link rel="alternate" hrefLang="x-default" href={getSiteUrl()} />
         <meta name="language" content="English, Spanish, Indonesian" />
         <meta name="coverage" content="Worldwide" />
         <meta name="distribution" content="Global" />

@@ -194,13 +194,7 @@ export default async function DocumentPage({
     .eq("initiative_id", params.id)
     .single()
 
-  console.log("[v0] Document ID:", params.docId)
-  console.log("[v0] Document found:", !!document)
-  console.log("[v0] Document has content:", !!document?.content)
-  console.log("[v0] Content length:", document?.content?.length || 0)
-
   if (error || !document) {
-    console.log("[v0] Document not found or error:", error)
     notFound()
   }
 
