@@ -216,8 +216,8 @@ export class SemanticMemory {
 
     if (!data || data.length === 0) return 0
 
-    const totalSuccess = data.reduce((sum: number, p) => sum + p.success_count, 0)
-    const totalAttempts = data.reduce((sum: number, p) => sum + p.total_count, 0)
+    const totalSuccess = data.reduce((sum: number, p: { success_count: number }) => sum + p.success_count, 0)
+    const totalAttempts = data.reduce((sum: number, p: { total_count: number }) => sum + p.total_count, 0)
 
     return totalAttempts > 0 ? totalSuccess / totalAttempts : 0
   }
@@ -237,8 +237,8 @@ export class SemanticMemory {
 
     if (!data || data.length === 0) return 0
 
-    const totalSuccess = data.reduce((sum: number, p) => sum + p.success_count, 0)
-    const totalAttempts = data.reduce((sum: number, p) => sum + p.total_count, 0)
+    const totalSuccess = data.reduce((sum: number, p: { success_count: number }) => sum + p.success_count, 0)
+    const totalAttempts = data.reduce((sum: number, p: { total_count: number }) => sum + p.total_count, 0)
 
     return totalAttempts > 0 ? totalSuccess / totalAttempts : 0
   }
