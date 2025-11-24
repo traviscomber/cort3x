@@ -110,16 +110,16 @@ export class EpisodicMemory {
 export class SemanticMemory {
   private userId: string
   private agentType: string
+  private supabase: any
 
   constructor(userId: string, agentType: string) {
     this.userId = userId
     this.agentType = agentType
+    this.supabase = createClient()
   }
 
   async updatePreference(key: string, value: number, weight = 1.0) {
-    const supabase = await createClient()
-
-    const { data: current } = await supabase
+    const { data: current } = await this.supabase
       .from("agent_semantic_memory")
       .select("value")
       .eq("user_id", this.userId)
@@ -130,7 +130,7 @@ export class SemanticMemory {
     const currentValue = current?.value || 0
     const newValue = 0.9 * currentValue + 0.1 * weight * value
 
-    await supabase.from("agent_semantic_memory").upsert({
+    await this.supabase.from("agent_semantic_memory").upsert({
       user_id: this.userId,
       agent_type: this.agentType,
       key,
@@ -140,10 +140,9 @@ export class SemanticMemory {
   }
 
   async recordPattern(context: string, action: string, success: boolean) {
-    const supabase = await createClient()
     const patternKey = `${context}_${action}`
 
-    const { data: current } = await supabase
+    const { data: current } = await this.supabase
       .from("agent_patterns")
       .select("*")
       .eq("user_id", this.userId)
@@ -154,7 +153,7 @@ export class SemanticMemory {
     const successCount = (current?.success_count || 0) + (success ? 1 : 0)
     const totalCount = (current?.total_count || 0) + 1
 
-    await supabase.from("agent_patterns").upsert({
+    await this.supabase.from("agent_patterns").upsert({
       user_id: this.userId,
       agent_type: this.agentType,
       pattern_key: patternKey,
@@ -168,9 +167,7 @@ export class SemanticMemory {
   }
 
   async getBestAction(context: string): Promise<string | null> {
-    const supabase = await createClient()
-
-    const { data } = await supabase
+    const { data } = await this.supabase
       .from("agent_patterns")
       .select("*")
       .eq("user_id", this.userId)
@@ -184,9 +181,7 @@ export class SemanticMemory {
   }
 
   async getPreference(key: string): Promise<number> {
-    const supabase = await createClient()
-
-    const { data } = await supabase
+    const { data } = await this.supabase
       .from("agent_semantic_memory")
       .select("value")
       .eq("user_id", this.userId)
@@ -198,9 +193,7 @@ export class SemanticMemory {
   }
 
   async getSuccessPatterns(context: string, limit = 5) {
-    const supabase = await createClient()
-
-    const { data } = await supabase
+    const { data } = await this.supabase
       .from("agent_patterns")
       .select("*")
       .eq("user_id", this.userId)
@@ -214,9 +207,7 @@ export class SemanticMemory {
   }
 
   async getSuccessRate(context: string): Promise<number> {
-    const supabase = await createClient()
-
-    const { data } = await supabase
+    const { data } = await this.supabase
       .from("agent_patterns")
       .select("success_count, total_count")
       .eq("user_id", this.userId)
@@ -225,9 +216,61 @@ export class SemanticMemory {
 
     if (!data || data.length === 0) return 0
 
-    const totalSuccess = data.reduce((sum, p) => sum + p.success_count, 0)
-    const totalAttempts = data.reduce((sum, p) => sum + p.total_count, 0)
+    const totalSuccess = data.reduce((sum: number, p) => sum + p.success_count, 0)
+    const totalAttempts = data.reduce((sum: number, p) => sum + p.total_count, 0)
 
     return totalAttempts > 0 ? totalSuccess / totalAttempts : 0
   }
+
+  /**
+   * Calculates pattern success rate for a given context
+   * @param context - The pattern context to evaluate
+   * @returns Success rate as a decimal between 0 and 1
+   */
+  async getPatternSuccessRate(context: string): Promise<number> {
+    const { data } = await this.supabase
+      .from("agent_patterns")
+      .select("success_count, total_count")
+      .eq("user_id", this.userId)
+      .eq("agent_type", this.agentType)
+      .eq("context", context)
+
+    if (!data || data.length === 0) return 0
+
+    const totalSuccess = data.reduce((sum: number, p) => sum + p.success_count, 0)
+    const totalAttempts = data.reduce((sum: number, p) => sum + p.total_count, 0)
+
+    return totalAttempts > 0 ? totalSuccess / totalAttempts : 0
+  }
+
+  /**
+   * Retrieves all patterns for performance analysis
+   * Returns aggregated data sorted by success rate
+   */
+  async getAllPatternStats(): Promise<PatternStats[]> {
+    const { data } = await this.supabase
+      .from("agent_patterns")
+      .select("*")
+      .eq("user_id", this.userId)
+      .eq("agent_type", this.agentType)
+      .order("success_count", { ascending: false })
+
+    if (!data || data.length === 0) return []
+
+    return data.map((pattern: any) => ({
+      context: pattern.context,
+      pattern: pattern.pattern,
+      successCount: pattern.success_count,
+      totalCount: pattern.total_count,
+      successRate: pattern.total_count > 0 ? pattern.success_count / pattern.total_count : 0,
+    }))
+  }
+}
+
+interface PatternStats {
+  context: string
+  pattern: string
+  successCount: number
+  totalCount: number
+  successRate: number
 }
