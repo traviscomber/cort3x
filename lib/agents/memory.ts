@@ -93,9 +93,17 @@ export class EpisodicMemory {
       .order("timestamp", { ascending: false })
 
     if (episodes && episodes.length > this.capacity) {
-      const idsToDelete = episodes.slice(this.capacity).map((e) => e.id)
+      const idsToDelete = episodes.slice(this.capacity).map((e: { id: string }) => e.id)
       await supabase.from("agent_episodic_memory").delete().in("id", idsToDelete)
     }
+  }
+
+  /**
+   * Prunes oldest episodes when capacity is exceeded
+   * Added type annotation to fix TypeScript build error
+   */
+  async prune(): Promise<void> {
+    await this.pruneOldEpisodes()
   }
 }
 
