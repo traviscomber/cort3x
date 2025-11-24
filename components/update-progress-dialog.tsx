@@ -14,8 +14,7 @@ import {
 } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-// Slider component for progress adjustment (0-100%)
-import { Slider } from "@/components/ui/slider"
+import { Input } from "@/components/ui/input"
 import { createClient } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
 import { Loader2 } from "lucide-react"
@@ -87,13 +86,14 @@ export function UpdateProgressDialog({ initiative, open, onOpenChange }: UpdateP
                 <Label htmlFor="progress">Progress</Label>
                 <span className="text-2xl font-bold text-primary">{progress}%</span>
               </div>
-              <Slider
+              <Input
                 id="progress"
+                type="number"
                 min={0}
                 max={100}
                 step={5}
-                value={[progress]}
-                onValueChange={(value) => setProgress(value[0])}
+                value={progress}
+                onChange={(e) => setProgress(Math.min(100, Math.max(0, Number.parseInt(e.target.value) || 0)))}
                 className="w-full"
               />
               <div className="flex justify-between text-xs text-muted-foreground">
