@@ -104,16 +104,24 @@ export function HomePageClient({ initiatives, partners, countries }: HomePageCli
     if (selectedCountry) {
       // Filter initiatives based on selected country
       const filtered = initiatives.filter((initiative: any) => {
-        // You can adjust this logic based on how country is stored in your initiatives
+        // Hide "The Nusantara Code" from the list
+        if (initiative.title === "The Nusantara Code" || initiative.id === "the-nusantara-code") {
+          return false
+        }
+
+        // Filter by country
         return (
           initiative.country?.toLowerCase() === selectedCountry.toLowerCase() ||
           initiative.location?.toLowerCase().includes(selectedCountry.toLowerCase()) ||
           !initiative.country
-        ) // Show initiatives without country assigned
+        )
       })
       setFilteredInitiatives(filtered)
     } else {
-      setFilteredInitiatives(initiatives)
+      const filtered = initiatives.filter((initiative: any) => {
+        return initiative.title !== "The Nusantara Code" && initiative.id !== "the-nusantara-code"
+      })
+      setFilteredInitiatives(filtered)
     }
   }, [selectedCountry, initiatives])
 

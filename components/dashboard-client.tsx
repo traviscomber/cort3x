@@ -89,8 +89,12 @@ export function DashboardClient({
     setIsProgressDialogOpen(true)
   }
 
+  const visibleInitiatives = initiatives.filter(
+    (i) => i.title !== "The Nusantara Code" && i.id !== "the-nusantara-code",
+  )
+
   const filteredInitiatives =
-    filterStatus === "all" ? initiatives : initiatives.filter((i) => i.status === filterStatus)
+    filterStatus === "all" ? visibleInitiatives : visibleInitiatives.filter((i) => i.status === filterStatus)
 
   const getStatusColor = (status: string) => {
     switch (status) {
