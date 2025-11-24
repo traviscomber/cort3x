@@ -143,13 +143,13 @@ const formatDocumentContent = (content: string) => {
                           })}
                         </div>
                       )}
-                      <div className="prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: subContent }} />
+                      <article className="prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: subContent }} />
                     </div>
                   )
                 })}
               </div>
             ) : (
-              <div
+              <article
                 className="prose prose-sm max-w-none"
                 dangerouslySetInnerHTML={{ __html: section.replace(/^##\s+.+$/m, "").trim() }}
               />
@@ -159,7 +159,9 @@ const formatDocumentContent = (content: string) => {
       )
     }
 
-    return <div key={index} className="prose prose-lg max-w-none mb-6" dangerouslySetInnerHTML={{ __html: section }} />
+    return (
+      <article key={index} className="prose prose-lg max-w-none mb-6" dangerouslySetInnerHTML={{ __html: section }} />
+    )
   })
 }
 

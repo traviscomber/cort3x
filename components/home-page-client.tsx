@@ -624,7 +624,8 @@ export function HomePageClient({ initiatives, partners, countries }: HomePageCli
               <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance text-gray-900">
                 {t("initiatives.title")}
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto text-pretty leading-relaxed">
+              {/* Fixed hydration error: replaced <p> with <div> to allow block-level children */}
+              <div className="text-xl text-gray-600 max-w-3xl mx-auto text-pretty leading-relaxed">
                 Explore real-world projects across environmental impact, cultural innovation, and personal growth
                 {selectedCountry && (
                   <span className="block mt-2">
@@ -634,7 +635,7 @@ export function HomePageClient({ initiatives, partners, countries }: HomePageCli
                     </Badge>
                   </span>
                 )}
-              </p>
+              </div>
             </header>
 
             {filteredInitiatives && filteredInitiatives.length > 0 ? (
@@ -1113,7 +1114,8 @@ export function HomePageClient({ initiatives, partners, countries }: HomePageCli
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <h3 className="text-4xl md:text-5xl font-bold mb-6 text-balance text-gray-900">{t("cta.title")}</h3>
-                <p className="text-xl mb-8 text-gray-700 text-pretty">{t("cta.description")}</p>
+                {/* Fixed hydration error: replaced <p> with <div> for consistency */}
+                <div className="text-xl mb-8 text-gray-700 text-pretty">{t("cta.description")}</div>
                 <div className="flex flex-wrap items-center gap-4">
                   <Button
                     size="lg"
