@@ -18,7 +18,7 @@ INSERT INTO initiatives (
 ) VALUES (
   'doublec-education',
   'DoubleC.Education',
-  'The first AI-powered educational platform for trading, leveraging advanced Machine Learning algorithms to provide personalized learning experiences, real-time market analysis, and intelligent trading strategies for students and professionals.',
+  'The first AI-powered educational platform for trading, leveraging advanced Machine Learning algorithms to provide personalized learning experiences, real-time market analysis, and intelligent trading strategies for students and professionals worldwide.',
   'education',
   'active',
   75,
@@ -125,17 +125,22 @@ SET partners = '[
   {
     "name": "Leading Trading Institutions",
     "type": "Educational Partner",
-    "contribution": "Curriculum development and market expertise"
+    "contribution": "Curriculum development, regulatory compliance, and market expertise"
   },
   {
     "name": "AI Research Labs",
     "type": "Technology Partner",
-    "contribution": "Machine learning model development and optimization"
+    "contribution": "Advanced machine learning model development, neural network optimization, and research collaboration"
   },
   {
     "name": "Financial Data Providers",
     "type": "Data Partner",
-    "contribution": "Real-time market data and historical analytics"
+    "contribution": "Real-time market data feeds, historical analytics, and alternative data sources"
+  },
+  {
+    "name": "Cloud Infrastructure Partners",
+    "type": "Infrastructure Partner",
+    "contribution": "Scalable computing resources, GPU acceleration for ML models, and global CDN distribution"
   }
 ]'::jsonb
 WHERE id = 'doublec-education';
