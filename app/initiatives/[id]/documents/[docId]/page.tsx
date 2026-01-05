@@ -183,10 +183,14 @@ const getRelativeTime = (dateString: string) => {
 
 export default async function DocumentPage({
   params,
+  searchParams,
 }: {
   params: { id: string; docId: string }
+  searchParams?: { lang?: string }
 }) {
   const supabase = await createClient()
+
+  const lang = searchParams?.lang || "en"
 
   // Fetch document
   const { data: document, error } = await supabase

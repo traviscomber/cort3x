@@ -29,28 +29,77 @@ export default async function HomePage() {
   let initiatives = []
   let partners = []
   let countries = []
+  let dataFetchError: string | null = null
 
   try {
+    console.log("[v0] HomePage: Starting data fetch")
     const supabase = await createClient()
+    console.log("[v0] HomePage: Supabase client created")
 
-    // Fetch real initiatives from database
-    const { data: initiativesData } = await supabase
-      .from("initiatives")
-      .select("*")
-      .order("created_at", { ascending: false })
-    initiatives = initiativesData || []
+    try {
+      console.log("[v0] HomePage: Fetching initiatives...")
+      const { data: initiativesData, error: initError } = await supabase
+        .from("initiatives")
+        .select("*")
+        .order("created_at", { ascending: false })
 
-    // Fetch real partners from database for trust indicators
-    const { data: partnersData } = await supabase.from("partners").select("name, logo").eq("status", "active").limit(5)
-    partners = partnersData || []
+      if (initError) {
+        console.error("[v0] HomePage: Initiatives fetch error:", initError)
+      } else {
+        console.log("[v0] HomePage: Initiatives fetched successfully:", initiativesData?.length || 0)
+        initiatives = initiativesData || []
+      }
+    } catch (e) {
+      console.error("[v0] HomePage: Initiatives query exception:", e)
+    }
 
-    const { data: countriesData } = await supabase
-      .from("countries")
-      .select("*")
-      .in("code", ["CL", "US", "ID"])
-      .order("name")
-    countries = countriesData || []
+    try {
+      console.log("[v0] HomePage: Fetching partners...")
+      const { data: partnersData, error: partnerError } = await supabase
+        .from("partners")
+        .select("name, logo")
+        .eq("status", "active")
+        .limit(5)
+
+      if (partnerError) {
+        console.error("[v0] HomePage: Partners fetch error:", partnerError)
+      } else {
+        console.log("[v0] HomePage: Partners fetched successfully:", partnersData?.length || 0)
+        partners = partnersData || []
+      }
+    } catch (e) {
+      console.error("[v0] HomePage: Partners query exception:", e)
+    }
+
+    try {
+      console.log("[v0] HomePage: Fetching countries...")
+      const { data: countriesData, error: countryError } = await supabase
+        .from("countries")
+        .select("*")
+        .in("code", ["CL", "US", "ID"])
+        .order("name")
+
+      if (countryError) {
+        console.error("[v0] HomePage: Countries fetch error:", countryError)
+      } else {
+        console.log("[v0] HomePage: Countries fetched successfully:", countriesData?.length || 0)
+        countries = countriesData || []
+      }
+    } catch (e) {
+      console.error("[v0] HomePage: Countries query exception:", e)
+    }
+
+    console.log(
+      "[v0] HomePage: Data fetch complete - initiatives:",
+      initiatives.length,
+      "partners:",
+      partners.length,
+      "countries:",
+      countries.length,
+    )
   } catch (error) {
+    console.error("[v0] HomePage: Fatal error during data fetch:", error)
+    dataFetchError = error instanceof Error ? error.message : "Unknown error occurred"
     logger.error("Failed to fetch homepage data", error)
     // Continue with empty arrays - the homepage will still render
   }
@@ -59,6 +108,12 @@ export default async function HomePage() {
     <>
       <StructuredData locale="en" />
       <HomePageClient initiatives={initiatives} partners={partners} countries={countries} />
+      {dataFetchError && (
+        <div className="fixed bottom-4 right-4 p-4 bg-red-100 border border-red-400 rounded text-red-700 text-sm max-w-sm">
+          <p className="font-semibold">Data fetch error (dev only):</p>
+          <p className="text-xs">{dataFetchError}</p>
+        </div>
+      )}
     </>
   )
 }

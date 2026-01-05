@@ -115,7 +115,7 @@ export function SiteNav() {
           {/* Right Actions */}
           <div className="flex items-center gap-3">
             <LanguageSwitcher />
-            {/* {!user ? (
+            {!user ? (
               <Link href="/auth/login" className="hidden sm:block">
                 <Button variant="ghost" size="sm">
                   Login
@@ -123,7 +123,7 @@ export function SiteNav() {
               </Link>
             ) : (
               <span className="hidden sm:block text-sm text-gray-600">{user.email}</span>
-            )} */}
+            )}
             <Link href="/admin/populate-content" className="hidden sm:block">
               <Button variant="ghost" size="sm">
                 {t("header.admin")}
