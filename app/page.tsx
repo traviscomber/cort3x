@@ -32,12 +32,9 @@ export default async function HomePage() {
   let dataFetchError: string | null = null
 
   try {
-    console.log("[v0] HomePage: Starting data fetch")
     const supabase = await createClient()
-    console.log("[v0] HomePage: Supabase client created")
 
     try {
-      console.log("[v0] HomePage: Fetching initiatives...")
       const { data: initiativesData, error: initError } = await supabase
         .from("initiatives")
         .select("*")
@@ -46,7 +43,6 @@ export default async function HomePage() {
       if (initError) {
         console.error("[v0] HomePage: Initiatives fetch error:", initError)
       } else {
-        console.log("[v0] HomePage: Initiatives fetched successfully:", initiativesData?.length || 0)
         initiatives = initiativesData || []
       }
     } catch (e) {
@@ -54,7 +50,6 @@ export default async function HomePage() {
     }
 
     try {
-      console.log("[v0] HomePage: Fetching partners...")
       const { data: partnersData, error: partnerError } = await supabase
         .from("partners")
         .select("name, logo")
@@ -64,7 +59,6 @@ export default async function HomePage() {
       if (partnerError) {
         console.error("[v0] HomePage: Partners fetch error:", partnerError)
       } else {
-        console.log("[v0] HomePage: Partners fetched successfully:", partnersData?.length || 0)
         partners = partnersData || []
       }
     } catch (e) {
@@ -72,7 +66,6 @@ export default async function HomePage() {
     }
 
     try {
-      console.log("[v0] HomePage: Fetching countries...")
       const { data: countriesData, error: countryError } = await supabase
         .from("countries")
         .select("*")
@@ -82,26 +75,15 @@ export default async function HomePage() {
       if (countryError) {
         console.error("[v0] HomePage: Countries fetch error:", countryError)
       } else {
-        console.log("[v0] HomePage: Countries fetched successfully:", countriesData?.length || 0)
         countries = countriesData || []
       }
     } catch (e) {
       console.error("[v0] HomePage: Countries query exception:", e)
     }
-
-    console.log(
-      "[v0] HomePage: Data fetch complete - initiatives:",
-      initiatives.length,
-      "partners:",
-      partners.length,
-      "countries:",
-      countries.length,
-    )
   } catch (error) {
     console.error("[v0] HomePage: Fatal error during data fetch:", error)
     dataFetchError = error instanceof Error ? error.message : "Unknown error occurred"
     logger.error("Failed to fetch homepage data", error)
-    // Continue with empty arrays - the homepage will still render
   }
 
   return (

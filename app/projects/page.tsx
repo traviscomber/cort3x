@@ -24,25 +24,50 @@ export default async function ProjectsPage() {
     redirect("/auth/login")
   }
 
-  const { data: userData } = await supabase
-    .from("users")
-    .select("subscription_tier, monthly_audits_used, monthly_audits_limit")
-    .eq("id", user.id)
-    .single()
+  try {
+    const { data: userData, error: userError } = await supabase
+      .from("users")
+      .select("subscription_tier, monthly_audits_used, monthly_audits_limit")
+      .eq("id", user.id)
+      .single()
 
-  const { data: projects } = await supabase
-    .from("feasibility_audits")
-    .select("*")
-    .eq("user_id", user.id)
-    .order("created_at", { ascending: false })
+    if (userError) {
+      console.log("[v0] User data error:", userError.message)
+    }
 
-  return (
-    <ProjectsPageClient
-      projects={projects || []}
-      user={user}
-      userTier={userData?.subscription_tier || "starter"}
-      monthlyAuditsUsed={userData?.monthly_audits_used || 0}
-      monthlyAuditsLimit={userData?.monthly_audits_limit || 3}
-    />
-  )
+    const { data: projects, error: projectsError } = await supabase
+      .from("feasibility_audits")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false })
+
+    if (projectsError) {
+      console.log("[v0] Projects error:", projectsError.message)
+    }
+
+    const validProjects = (projects || []).map((p) => ({
+      ...p,
+      project_name: p.project_name || "Untitled Project",
+      project_description: p.project_description || "No description",
+      category: p.category || "Other",
+      country: p.country || "Unknown",
+      status: p.status || "pending",
+      created_at: p.created_at || new Date().toISOString(),
+    }))
+
+    return (
+      <ProjectsPageClient
+        projects={validProjects}
+        user={user}
+        userTier={userData?.subscription_tier || "starter"}
+        monthlyAuditsUsed={userData?.monthly_audits_used || 0}
+        monthlyAuditsLimit={userData?.monthly_audits_limit || 3}
+      />
+    )
+  } catch (error) {
+    console.error("[v0] Projects page error:", error)
+    return (
+      <ProjectsPageClient projects={[]} user={user} userTier="starter" monthlyAuditsUsed={0} monthlyAuditsLimit={3} />
+    )
+  }
 }

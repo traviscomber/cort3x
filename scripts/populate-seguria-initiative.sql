@@ -18,7 +18,7 @@ INSERT INTO initiatives (
 ) VALUES (
   'seguria-security',
   'SegurIA',
-  'Advanced AI-powered security platform providing intelligent surveillance, real-time threat detection, access control, and predictive security analytics for industrial, agricultural, and logistics operations across Latin America. Leveraging computer vision, IoT sensors, and machine learning for comprehensive threat prevention.',
+  'SegurIA es la plataforma líder de seguridad inteligente basada en IA para Chile, proporcionando vigilancia avanzada, detección de amenazas en tiempo real, control de acceso y análisis predictivo de seguridad para operaciones industriales, agrícolas y de logística. Aprovechando visión por computadora, sensores IoT y aprendizaje automático para protección integral.',
   'security',
   'active',
   85,
@@ -115,17 +115,35 @@ SET location_data = '{
   "headquarters": {
     "city": "Santiago",
     "country": "Chile",
+    "address": "Región Metropolitana, Providencia",
     "coordinates": {
       "lat": -33.8688,
-      "lng": -51.6213
+      "lng": -71.6213
     }
   },
-  "regions": [
-    "Central Chile",
-    "Northern Mining Regions",
-    "Southern Agricultural Zones",
-    "Logistics Corridor (Santiago-Valparaíso)"
-  ]
+  "operational_regions": [
+    {
+      "name": "Zona Central",
+      "cities": ["Santiago", "Rancagua", "Talca"],
+      "focus": "Industrial/Manufactura, Logística"
+    },
+    {
+      "name": "Zona Norte",
+      "cities": ["Antofagasta", "Calama", "La Serena"],
+      "focus": "Minería, Transporte de carga"
+    },
+    {
+      "name": "Zona Sur",
+      "cities": ["Puerto Montt", "Punta Arenas", "Valdivia"],
+      "focus": "Agricultura, Ganadería, Acuicultura"
+    },
+    {
+      "name": "Corredor Logístico",
+      "cities": ["Valparaíso", "Viña del Mar", "Quillota"],
+      "focus": "Puertos, Centros de distribución"
+    }
+  ],
+  "market_coverage": "100% Chile continental y insular"
 }'::jsonb
 WHERE id = 'seguria-security';
 

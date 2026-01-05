@@ -59,30 +59,37 @@ export function ProjectsPageClient({
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([])
+  const [renderError, setRenderError] = useState<string | null>(null)
 
   const tierFeatures = getTierFeatures(userTier)
   const auditsRemaining = monthlyAuditsLimit - monthlyAuditsUsed
   const usagePercentage = (monthlyAuditsUsed / monthlyAuditsLimit) * 100
 
   const filteredProjects = useMemo(() => {
-    let filtered = projects
+    try {
+      let filtered = projects
 
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase()
-      filtered = filtered.filter(
-        (project) =>
-          project.project_name?.toLowerCase().includes(query) ||
-          project.project_description?.toLowerCase().includes(query) ||
-          project.category?.toLowerCase().includes(query) ||
-          project.country?.toLowerCase().includes(query),
-      )
+      if (searchQuery.trim()) {
+        const query = searchQuery.toLowerCase()
+        filtered = filtered.filter(
+          (project) =>
+            project.project_name?.toLowerCase().includes(query) ||
+            project.project_description?.toLowerCase().includes(query) ||
+            project.category?.toLowerCase().includes(query) ||
+            project.country?.toLowerCase().includes(query),
+        )
+      }
+
+      if (selectedStatuses.length > 0) {
+        filtered = filtered.filter((project) => selectedStatuses.includes(project.status))
+      }
+
+      return filtered
+    } catch (err) {
+      console.error("[v0] Filter error:", err)
+      setRenderError("Error filtering projects")
+      return projects
     }
-
-    if (selectedStatuses.length > 0) {
-      filtered = filtered.filter((project) => selectedStatuses.includes(project.status))
-    }
-
-    return filtered
   }, [projects, searchQuery, selectedStatuses])
 
   const toggleStatus = (status: string) => {
@@ -115,6 +122,19 @@ export function ProjectsPageClient({
 
   const currentTierConfig = tierConfig[userTier] || tierConfig.free
   const TierIcon = currentTierConfig.icon
+
+  if (renderError) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 flex items-center justify-center">
+        <div className="text-center">
+          <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+          <h2 className="text-xl font-bold text-gray-900 mb-2">Unable to load projects</h2>
+          <p className="text-gray-600 mb-6">{renderError}</p>
+          <Button onClick={() => window.location.reload()}>Reload Page</Button>
+        </div>
+      </div>
+    )
+  }
 
   if (projects.length === 0) {
     return (
@@ -433,46 +453,63 @@ export function ProjectsPageClient({
           {filteredProjects.length > 0 ? (
             <div className="grid md:grid-cols-2 gap-6">
               {filteredProjects.map((project) => {
-                const config = statusConfig[project.status]
-                const StatusIcon = config.icon
+                try {
+                  const config = statusConfig[project.status] || statusConfig.pending
+                  const StatusIcon = config.icon
 
-                return (
-                  <Card
-                    key={project.id}
-                    className="border-2 border-gray-200 bg-white hover:border-primary hover:shadow-xl transition-all duration-300"
-                  >
-                    <CardHeader>
-                      <div className="flex items-start justify-between gap-3 mb-3">
-                        <Badge className={`${config.color} text-white border-0`}>
-                          <StatusIcon className="h-3 w-3 mr-1" />
-                          {config.label}
-                        </Badge>
-                        {project.total_score && (
-                          <Badge variant="outline" className="font-bold text-lg">
-                            {project.total_score}/100
+                  return (
+                    <Card
+                      key={project.id}
+                      className="border-2 border-gray-200 bg-white hover:border-primary hover:shadow-xl transition-all duration-300"
+                    >
+                      <CardHeader>
+                        <div className="flex items-start justify-between gap-3 mb-3">
+                          <Badge className={`${config.color} text-white border-0`}>
+                            <StatusIcon className="h-3 w-3 mr-1" />
+                            {config.label}
                           </Badge>
-                        )}
-                      </div>
-                      <CardTitle className="text-xl text-gray-900">{project.project_name}</CardTitle>
-                      <CardDescription className="text-sm line-clamp-2">{project.project_description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex flex-wrap gap-2 text-xs text-gray-600">
-                        <Badge variant="secondary">{project.category}</Badge>
-                        <Badge variant="secondary">{project.country}</Badge>
-                        <Badge variant="secondary">Created {new Date(project.created_at).toLocaleDateString()}</Badge>
-                      </div>
-                    </CardContent>
-                    <CardFooter>
-                      <Link href={`/projects/${project.id}`} className="w-full">
-                        <Button variant="outline" className="w-full group bg-transparent">
-                          View Details
-                          <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                        </Button>
-                      </Link>
-                    </CardFooter>
-                  </Card>
-                )
+                          {project.total_score && (
+                            <Badge variant="outline" className="font-bold text-lg">
+                              {project.total_score}/100
+                            </Badge>
+                          )}
+                        </div>
+                        <CardTitle className="text-xl text-gray-900">{project.project_name || "Untitled"}</CardTitle>
+                        <CardDescription className="text-sm line-clamp-2">
+                          {project.project_description || "No description"}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex flex-wrap gap-2 text-xs text-gray-600">
+                          <Badge variant="secondary">{project.category || "Other"}</Badge>
+                          <Badge variant="secondary">{project.country || "Unknown"}</Badge>
+                          <Badge variant="secondary">Created {new Date(project.created_at).toLocaleDateString()}</Badge>
+                        </div>
+                      </CardContent>
+                      <CardFooter>
+                        <Link href={`/projects/${project.id}`} className="w-full">
+                          <Button variant="outline" className="w-full group bg-transparent">
+                            View Details
+                            <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                          </Button>
+                        </Link>
+                      </CardFooter>
+                    </Card>
+                  )
+                } catch (err) {
+                  console.error("[v0] Error rendering project card:", project.id, err)
+                  return (
+                    <Card key={project.id} className="border-2 border-red-200 bg-red-50">
+                      <CardHeader>
+                        <CardTitle className="text-red-900">Error Loading Project</CardTitle>
+                        <CardDescription className="text-red-800">Project ID: {project.id}</CardDescription>
+                      </CardHeader>
+                      <CardFooter>
+                        <p className="text-xs text-red-700">Unable to display this project. Please contact support.</p>
+                      </CardFooter>
+                    </Card>
+                  )
+                }
               })}
             </div>
           ) : (
