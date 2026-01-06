@@ -1,14 +1,12 @@
-"use client"
-
-import { useEffect, useState } from "react"
+import { notFound } from "next/navigation"
 import Link from "next/link"
-import { createClient } from "@/lib/supabase/browser"
-import { useTranslations } from "@/lib/i18n/translations-provider"
+import { createClient } from "@/lib/supabase/server"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Calendar, FileText, Tag } from "lucide-react"
 import { DocumentCompletionBadge } from "@/components/document-completion-badge"
+
 import { UpdateIndicator } from "@/components/update-indicator"
 
 interface Document {
@@ -59,6 +57,7 @@ const isRecentlyUpdated = (createdAt: string, updatedAt: string) => {
   const updated = new Date(updatedAt)
   const daysSinceUpdate = (Date.now() - updated.getTime()) / (1000 * 60 * 60 * 24)
 
+  // Consider "recently updated" if updated within last 7 days AND updated after creation
   return daysSinceUpdate <= 7 && updated > created
 }
 
@@ -93,83 +92,34 @@ const getCategoryColor = (category: string) => {
   return colors[category] || "bg-gray-100 text-gray-800"
 }
 
-const getTranslatedDocument = (doc: Document, t: (key: string) => string): Document => {
-  if (doc.id === "seguria-market-analysis") {
-    return {
-      ...doc,
-      title: t("initiatives.seguriaMarketAnalysis.title") || doc.title,
-      description: t("initiatives.seguriaMarketAnalysis.description") || doc.description,
-    }
+export default async function InitiativePage({ params }: { params: { id: string } }) {
+  const supabase = await createClient()
+
+  // Fetch initiative
+  const { data: initiative, error: initError } = await supabase
+    .from("initiatives")
+    .select("*")
+    .eq("id", params.id)
+    .single()
+
+  if (initError || !initiative) {
+    console.log("[v0] Initiative not found:", params.id)
+    notFound()
   }
-  return doc
-}
 
-export default function InitiativePage({ params }: { params: { id: string } }) {
-  const { t } = useTranslations()
-  const [initiative, setInitiative] = useState<Initiative | null>(null)
-  const [documents, setDocuments] = useState<Document[]>([])
-  const [loading, setLoading] = useState(true)
+  // Fetch documents for this initiative
+  const { data: documents, error: docsError } = await supabase
+    .from("documents")
+    .select("*")
+    .eq("initiative_id", params.id)
+    .order("created_at", { ascending: true })
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true)
-      try {
-        const supabase = createClient()
-
-        const [initRes, docsRes] = await Promise.all([
-          supabase.from("initiatives").select("*").eq("id", params.id).single(),
-          supabase
-            .from("documents")
-            .select("*")
-            .eq("initiative_id", params.id)
-            .order("created_at", { ascending: true }),
-        ])
-
-        if (initRes.data) setInitiative(initRes.data as Initiative)
-        if (docsRes.data) setDocuments(docsRes.data as Document[])
-      } catch (error) {
-        console.error("Error fetching initiative data:", error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchData()
-  }, [params.id])
+  console.log("[v0] Found documents:", documents?.length || 0)
 
   const formatFileSize = (bytes: number) => {
     if (bytes < 1024) return `${bytes} B`
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
-  }
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-muted-foreground">Loading initiative...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (!initiative) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <FileText className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-          <h3 className="text-2xl font-semibold mb-2">Initiative not found</h3>
-          <p className="text-muted-foreground mb-6">The initiative you're looking for doesn't exist.</p>
-          <Link href="/">
-            <Button variant="outline">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Home
-            </Button>
-          </Link>
-        </div>
-      </div>
-    )
   }
 
   const theme = getInitiativeTheme(params.id)
@@ -202,7 +152,7 @@ export default function InitiativePage({ params }: { params: { id: string } }) {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-8">Documentation</h2>
 
-          {documents.length === 0 ? (
+          {!documents || documents.length === 0 ? (
             <Card className="p-12 text-center">
               <FileText className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
               <p className="text-lg text-muted-foreground mb-4">No documents available yet</p>
@@ -212,75 +162,71 @@ export default function InitiativePage({ params }: { params: { id: string } }) {
             </Card>
           ) : (
             <div className="space-y-6">
-              {documents.map((doc: Document) => {
-                const translatedDoc = getTranslatedDocument(doc, t)
+              {documents.map((doc: Document) => (
+                <Link key={doc.id} href={`/initiatives/${params.id}/documents/${doc.id}`}>
+                  <Card className="transition-all hover:shadow-lg hover:-translate-y-1 cursor-pointer relative">
+                    <div className="absolute -top-2 -right-2 z-10">
+                      <UpdateIndicator updatedAt={doc.updated_at} createdAt={doc.created_at} />
+                    </div>
 
-                return (
-                  <Link key={doc.id} href={`/initiatives/${params.id}/documents/${doc.id}`}>
-                    <Card className="transition-all hover:shadow-lg hover:-translate-y-1 cursor-pointer relative">
-                      <div className="absolute -top-2 -right-2 z-10">
-                        <UpdateIndicator updatedAt={doc.updated_at} createdAt={doc.created_at} />
+                    <CardHeader>
+                      <div className="flex items-start justify-between gap-4 mb-2">
+                        <FileText className={`h-6 w-6 ${theme.icon} flex-shrink-0 mt-1`} />
+                        <div className="flex-1 min-w-0">
+                          <CardTitle className="text-xl mb-2 text-balance">{doc.title}</CardTitle>
+                          <CardDescription className="text-pretty">{doc.description}</CardDescription>
+                        </div>
                       </div>
-
-                      <CardHeader>
-                        <div className="flex items-start justify-between gap-4 mb-2">
-                          <FileText className={`h-6 w-6 ${theme.icon} flex-shrink-0 mt-1`} />
-                          <div className="flex-1 min-w-0">
-                            <CardTitle className="text-xl mb-2 text-balance">{translatedDoc.title}</CardTitle>
-                            <CardDescription className="text-pretty">{translatedDoc.description}</CardDescription>
-                          </div>
+                      {doc.completion_percentage !== undefined && (
+                        <div className="mt-3">
+                          <DocumentCompletionBadge
+                            percentage={doc.completion_percentage}
+                            standard={doc.documentation_standard}
+                          />
                         </div>
-                        {doc.completion_percentage !== undefined && (
-                          <div className="mt-3">
-                            <DocumentCompletionBadge
-                              percentage={doc.completion_percentage}
-                              standard={doc.documentation_standard}
-                            />
-                          </div>
-                        )}
-                      </CardHeader>
-                      <CardContent>
-                        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+                      )}
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                          <Calendar className="h-4 w-4" />
+                          <span>
+                            {doc.updated_at && new Date(doc.updated_at) > new Date(doc.created_at)
+                              ? getDaysSinceUpdate(doc.updated_at)
+                              : formatDate(doc.created_at)}
+                          </span>
+                        </div>
+                        {doc.file_size && (
                           <div className="flex items-center gap-1">
-                            <Calendar className="h-4 w-4" />
-                            <span>
-                              {doc.updated_at && new Date(doc.updated_at) > new Date(doc.created_at)
-                                ? getDaysSinceUpdate(doc.updated_at)
-                                : formatDate(doc.created_at)}
-                            </span>
-                          </div>
-                          {doc.file_size && (
-                            <div className="flex items-center gap-1">
-                              <FileText className="h-4 w-4" />
-                              <span>{formatFileSize(doc.file_size)}</span>
-                            </div>
-                          )}
-                          {doc.category && (
-                            <Badge variant="secondary" className={getCategoryColor(doc.category)}>
-                              {doc.category}
-                            </Badge>
-                          )}
-                          {doc.status && doc.status !== "published" && (
-                            <Badge variant="outline" className="border-yellow-500 text-yellow-700">
-                              {doc.status}
-                            </Badge>
-                          )}
-                        </div>
-                        {doc.tags && doc.tags.length > 0 && (
-                          <div className="flex flex-wrap items-center gap-2 mt-3">
-                            <Tag className="h-3 w-3 text-muted-foreground" />
-                            {doc.tags.map((tag) => (
-                              <Badge key={tag} variant="outline" className="text-xs">
-                                {tag}
-                              </Badge>
-                            ))}
+                            <FileText className="h-4 w-4" />
+                            <span>{formatFileSize(doc.file_size)}</span>
                           </div>
                         )}
-                      </CardContent>
-                    </Card>
-                  </Link>
-                )
-              })}
+                        {doc.category && (
+                          <Badge variant="secondary" className={getCategoryColor(doc.category)}>
+                            {doc.category}
+                          </Badge>
+                        )}
+                        {doc.status && doc.status !== "published" && (
+                          <Badge variant="outline" className="border-yellow-500 text-yellow-700">
+                            {doc.status}
+                          </Badge>
+                        )}
+                      </div>
+                      {doc.tags && doc.tags.length > 0 && (
+                        <div className="flex flex-wrap items-center gap-2 mt-3">
+                          <Tag className="h-3 w-3 text-muted-foreground" />
+                          {doc.tags.map((tag) => (
+                            <Badge key={tag} variant="outline" className="text-xs">
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
             </div>
           )}
         </div>

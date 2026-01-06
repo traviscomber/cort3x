@@ -1,12 +1,11 @@
-"use client"
+import { notFound } from "next/navigation"
 import Link from "next/link"
-import { useEffect, useState } from "react"
-import { createClient } from "@/lib/supabase/browser"
-import { useTranslations } from "@/lib/i18n/translations-provider"
+import { createClient } from "@/lib/supabase/server"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowLeft, Calendar, FileText, Tag, Download, TrendingUp, Users, DollarSign, Target, Leaf } from "lucide-react"
+import { DocumentUpdateHistory } from "@/components/document-update-history"
 import { DocumentCompletionProgress } from "@/components/document-completion-progress"
 
 interface Document {
@@ -182,65 +181,27 @@ const getRelativeTime = (dateString: string) => {
   return `${Math.floor(diffInDays / 30)} months ago`
 }
 
-export default function DocumentPage({
+export default async function DocumentPage({
   params,
+  searchParams,
 }: {
   params: { id: string; docId: string }
+  searchParams?: { lang?: string }
 }) {
-  const { locale, t } = useTranslations()
-  const [document, setDocument] = useState<Document | null>(null)
-  const [loading, setLoading] = useState(true)
+  const supabase = await createClient()
 
-  useEffect(() => {
-    const fetchDocument = async () => {
-      setLoading(true)
-      const supabase = createClient()
+  const lang = searchParams?.lang || "en"
 
-      const { data, error } = await supabase
-        .from("documents")
-        .select("*")
-        .eq("id", params.docId)
-        .eq("initiative_id", params.id)
-        .single()
+  // Fetch document
+  const { data: document, error } = await supabase
+    .from("documents")
+    .select("*")
+    .eq("id", params.docId)
+    .eq("initiative_id", params.id)
+    .single()
 
-      if (error || !data) {
-        setDocument(null)
-      } else {
-        setDocument(data)
-      }
-      setLoading(false)
-    }
-
-    fetchDocument()
-  }, [params.docId, params.id, locale])
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-muted-foreground">Loading document...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (!document) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <FileText className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-          <h3 className="text-2xl font-semibold mb-2">Document not found</h3>
-          <p className="text-muted-foreground mb-6">The document you're looking for doesn't exist.</p>
-          <Link href={`/initiatives/${params.id}`}>
-            <Button variant="outline">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Initiative
-            </Button>
-          </Link>
-        </div>
-      </div>
-    )
+  if (error || !document) {
+    notFound()
   }
 
   return (
@@ -296,16 +257,8 @@ export default function DocumentPage({
               </div>
             )}
 
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-balance">
-              {params.docId === "seguria-market-analysis"
-                ? t("initiatives.seguriaMarketAnalysis.title")
-                : document.title}
-            </h1>
-            <p className="text-xl text-muted-foreground mb-6 text-pretty">
-              {params.docId === "seguria-market-analysis"
-                ? t("initiatives.seguriaMarketAnalysis.description")
-                : document.description}
-            </p>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-balance">{document.title}</h1>
+            <p className="text-xl text-muted-foreground mb-6 text-pretty">{document.description}</p>
 
             <div className="flex flex-wrap items-center gap-4 text-sm">
               <div className="flex items-center gap-2 text-muted-foreground">
@@ -391,12 +344,14 @@ export default function DocumentPage({
       {/* Document Content */}
       <section className="container mx-auto px-4 py-12">
         <div className="max-w-5xl mx-auto">
-          {document.content ? (
-            <div className="space-y-6">
-              {params.docId === "seguria-market-analysis" && locale === "en"
-                ? formatDocumentContent(t("initiatives.seguriaMarketAnalysis.content"))
-                : formatDocumentContent(document.content)}
+          {document.update_history && document.update_history.length > 0 && (
+            <div className="mb-8">
+              <DocumentUpdateHistory updateHistory={document.update_history} />
             </div>
+          )}
+
+          {document.content ? (
+            <div className="space-y-6">{formatDocumentContent(document.content)}</div>
           ) : (
             <div className="text-center py-16">
               <FileText className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />

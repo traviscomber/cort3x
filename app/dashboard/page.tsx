@@ -2,26 +2,9 @@ import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 import type { Metadata } from "next"
 import { DashboardClient } from "@/components/dashboard-client"
+import type { Database } from "@/lib/database.types"
 
-type Initiative = {
-  id: string
-  title: string
-  description: string
-  category: string
-  status: string
-  progress: number
-  project_code: string
-  milestones: any[]
-  objectives: any[]
-  risks: any[]
-  budget: number
-  start_date: string
-  end_date: string
-  lead: string
-  created_at: string
-  updated_at: string
-  [key: string]: unknown
-}
+type Initiative = Database["public"]["Tables"]["initiatives"]["Row"]
 
 export const metadata: Metadata = {
   title: "Dashboard | Impax Cort3x",
@@ -57,9 +40,7 @@ export default async function DashboardPage() {
     activeProjects: activeCount,
     completedProjects: completedCount,
     avgProgress:
-      initiatives.length > 0
-        ? initiatives.reduce((sum, i: Initiative) => sum + (i.progress || 0), 0) / initiatives.length
-        : 0,
+      initiatives.length > 0 ? initiatives.reduce((sum, i) => sum + (i.progress || 0), 0) / initiatives.length : 0,
     totalLeads: recentLeads.length,
     totalPartnershipSubmissions: 0,
   }
