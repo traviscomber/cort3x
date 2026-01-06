@@ -1,6 +1,8 @@
-import { notFound } from "next/navigation"
+"use client"
 import Link from "next/link"
-import { createClient } from "@/lib/supabase/server"
+import { useEffect, useState } from "react"
+import { createClient } from "@/lib/supabase/browser"
+import { useTranslations } from "@/lib/i18n/translations-provider"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -181,27 +183,65 @@ const getRelativeTime = (dateString: string) => {
   return `${Math.floor(diffInDays / 30)} months ago`
 }
 
-export default async function DocumentPage({
+export default function DocumentPage({
   params,
-  searchParams,
 }: {
   params: { id: string; docId: string }
-  searchParams?: { lang?: string }
 }) {
-  const supabase = await createClient()
+  const { locale, t } = useTranslations()
+  const [document, setDocument] = useState<Document | null>(null)
+  const [loading, setLoading] = useState(true)
 
-  const lang = searchParams?.lang || "en"
+  useEffect(() => {
+    const fetchDocument = async () => {
+      setLoading(true)
+      const supabase = createClient()
 
-  // Fetch document
-  const { data: document, error } = await supabase
-    .from("documents")
-    .select("*")
-    .eq("id", params.docId)
-    .eq("initiative_id", params.id)
-    .single()
+      const { data, error } = await supabase
+        .from("documents")
+        .select("*")
+        .eq("id", params.docId)
+        .eq("initiative_id", params.id)
+        .single()
 
-  if (error || !document) {
-    notFound()
+      if (error || !data) {
+        setDocument(null)
+      } else {
+        setDocument(data)
+      }
+      setLoading(false)
+    }
+
+    fetchDocument()
+  }, [params.docId, params.id, locale])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-muted-foreground">Loading document...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!document) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <FileText className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
+          <h3 className="text-2xl font-semibold mb-2">Document not found</h3>
+          <p className="text-muted-foreground mb-6">The document you're looking for doesn't exist.</p>
+          <Link href={`/initiatives/${params.id}`}>
+            <Button variant="outline">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Initiative
+            </Button>
+          </Link>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -257,8 +297,16 @@ export default async function DocumentPage({
               </div>
             )}
 
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-balance">{document.title}</h1>
-            <p className="text-xl text-muted-foreground mb-6 text-pretty">{document.description}</p>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-balance">
+              {params.docId === "seguria-market-analysis"
+                ? t("initiatives.seguriaMarketAnalysis.title")
+                : document.title}
+            </h1>
+            <p className="text-xl text-muted-foreground mb-6 text-pretty">
+              {params.docId === "seguria-market-analysis"
+                ? t("initiatives.seguriaMarketAnalysis.description")
+                : document.description}
+            </p>
 
             <div className="flex flex-wrap items-center gap-4 text-sm">
               <div className="flex items-center gap-2 text-muted-foreground">
@@ -351,7 +399,11 @@ export default async function DocumentPage({
           )}
 
           {document.content ? (
-            <div className="space-y-6">{formatDocumentContent(document.content)}</div>
+            <div className="space-y-6">
+              {params.docId === "seguria-market-analysis" && locale === "en"
+                ? formatDocumentContent(t("initiatives.seguriaMarketAnalysis.content"))
+                : formatDocumentContent(document.content)}
+            </div>
           ) : (
             <div className="text-center py-16">
               <FileText className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
