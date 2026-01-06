@@ -25,6 +25,7 @@ export default async function ProjectsPage() {
     country: string | null
     status: string | null
     created_at: string | null
+    payment_status: "pending" | "paid" | "refunded"
     [key: string]: unknown
   }
 
@@ -57,15 +58,20 @@ export default async function ProjectsPage() {
       console.log("[v0] Projects error:", projectsError.message)
     }
 
-    const validProjects = ((projects || []) as Project[]).map((p: Project) => ({
-      ...p,
-      project_name: p.project_name || "Untitled Project",
-      project_description: p.project_description || "No description",
-      category: p.category || "Other",
-      country: p.country || "Unknown",
-      status: p.status || "pending",
-      created_at: p.created_at || new Date().toISOString(),
-    }))
+    const validProjects = (projects || []).map(
+      (p) =>
+        ({
+          id: p.id || "",
+          user_id: p.user_id || "",
+          project_name: p.project_name || "Untitled Project",
+          project_description: p.project_description || "No description",
+          category: p.category || "Other",
+          country: p.country || "Unknown",
+          status: p.status || "pending",
+          created_at: p.created_at || new Date().toISOString(),
+          payment_status: (p.payment_status as "pending" | "paid" | "refunded") || "pending",
+        }) satisfies Project,
+    )
 
     return (
       <ProjectsPageClient
