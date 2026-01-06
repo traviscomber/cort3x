@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowLeft, Calendar, FileText, Tag, Download, TrendingUp, Users, DollarSign, Target, Leaf } from "lucide-react"
-import { DocumentUpdateHistory } from "@/components/document-update-history"
 import { DocumentCompletionProgress } from "@/components/document-completion-progress"
 
 interface Document {
@@ -392,12 +391,6 @@ export default function DocumentPage({
       {/* Document Content */}
       <section className="container mx-auto px-4 py-12">
         <div className="max-w-5xl mx-auto">
-          {document.update_history && document.update_history.length > 0 && (
-            <div className="mb-8">
-              <DocumentUpdateHistory updateHistory={document.update_history} />
-            </div>
-          )}
-
           {document.content ? (
             <div className="space-y-6">
               {params.docId === "seguria-market-analysis" && locale === "en"
