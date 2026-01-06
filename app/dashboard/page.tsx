@@ -2,9 +2,31 @@ import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 import type { Metadata } from "next"
 import { DashboardClient } from "@/components/dashboard-client"
-import type { Database } from "@/lib/database.types"
 
-type Initiative = Database["public"]["Tables"]["initiatives"]["Row"]
+type Initiative = {
+  id: string
+  title: string
+  description: string | null
+  category: string | null
+  status: string
+  created_by: string | null
+  country: string | null
+  project_code: string | null
+  progress: number | null
+  location_data: unknown
+  created_at: string
+  updated_at: string
+  risks: unknown
+  milestones: unknown
+  objectives: unknown
+  documents: unknown
+  partners: unknown
+  budget: unknown
+  lead: unknown
+  start_date: string | null
+  end_date: string | null
+  [key: string]: unknown
+}
 
 export const metadata: Metadata = {
   title: "Dashboard | Impax Cort3x",
