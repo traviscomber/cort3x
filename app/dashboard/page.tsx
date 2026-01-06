@@ -2,9 +2,16 @@ import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 import type { Metadata } from "next"
 import { DashboardClient } from "@/components/dashboard-client"
-import type { Database } from "@/lib/database.types"
 
-type Initiative = Database["public"]["Tables"]["initiatives"]["Row"]
+// Define Initiative type inline instead
+type Initiative = {
+  id: string
+  title: string
+  status: string
+  progress: number
+  created_at: string
+  [key: string]: unknown
+}
 
 export const metadata: Metadata = {
   title: "Dashboard | Impax Cort3x",
