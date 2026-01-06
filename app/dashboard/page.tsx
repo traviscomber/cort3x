@@ -3,13 +3,23 @@ import { redirect } from "next/navigation"
 import type { Metadata } from "next"
 import { DashboardClient } from "@/components/dashboard-client"
 
-// Define Initiative type inline instead
 type Initiative = {
   id: string
   title: string
+  description: string
+  category: string
   status: string
   progress: number
+  project_code: string
+  milestones: any[]
+  objectives: any[]
+  risks: any[]
+  budget: number
+  start_date: string
+  end_date: string
+  lead: string
   created_at: string
+  updated_at: string
   [key: string]: unknown
 }
 
