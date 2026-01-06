@@ -16,6 +16,18 @@ export const metadata: Metadata = {
 export default async function ProjectsPage() {
   const supabase = await createClient()
 
+  type Project = {
+    id: string
+    user_id: string
+    project_name: string | null
+    project_description: string | null
+    category: string | null
+    country: string | null
+    status: string | null
+    created_at: string | null
+    [key: string]: unknown
+  }
+
   const {
     data: { user },
   } = await supabase.auth.getUser()
@@ -45,7 +57,7 @@ export default async function ProjectsPage() {
       console.log("[v0] Projects error:", projectsError.message)
     }
 
-    const validProjects = (projects || []).map((p) => ({
+    const validProjects = ((projects || []) as Project[]).map((p: Project) => ({
       ...p,
       project_name: p.project_name || "Untitled Project",
       project_description: p.project_description || "No description",
