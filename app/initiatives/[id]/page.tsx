@@ -93,6 +93,17 @@ const getCategoryColor = (category: string) => {
   return colors[category] || "bg-gray-100 text-gray-800"
 }
 
+const getTranslatedDocument = (doc: Document, t: (key: string) => string): Document => {
+  if (doc.id === "seguria-market-analysis") {
+    return {
+      ...doc,
+      title: t("initiatives.seguriaMarketAnalysis.title") || doc.title,
+      description: t("initiatives.seguriaMarketAnalysis.description") || doc.description,
+    }
+  }
+  return doc
+}
+
 export default function InitiativePage({ params }: { params: { id: string } }) {
   const { t } = useTranslations()
   const [initiative, setInitiative] = useState<Initiative | null>(null)
@@ -102,16 +113,25 @@ export default function InitiativePage({ params }: { params: { id: string } }) {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
-      const supabase = createClient()
+      try {
+        const supabase = createClient()
 
-      const [initRes, docsRes] = await Promise.all([
-        supabase.from("initiatives").select("*").eq("id", params.id).single(),
-        supabase.from("documents").select("*").eq("initiative_id", params.id).order("created_at", { ascending: true }),
-      ])
+        const [initRes, docsRes] = await Promise.all([
+          supabase.from("initiatives").select("*").eq("id", params.id).single(),
+          supabase
+            .from("documents")
+            .select("*")
+            .eq("initiative_id", params.id)
+            .order("created_at", { ascending: true }),
+        ])
 
-      if (initRes.data) setInitiative(initRes.data)
-      if (docsRes.data) setDocuments(docsRes.data)
-      setLoading(false)
+        if (initRes.data) setInitiative(initRes.data as Initiative)
+        if (docsRes.data) setDocuments(docsRes.data as Document[])
+      } catch (error) {
+        console.error("Error fetching initiative data:", error)
+      } finally {
+        setLoading(false)
+      }
     }
 
     fetchData()
@@ -121,17 +141,6 @@ export default function InitiativePage({ params }: { params: { id: string } }) {
     if (bytes < 1024) return `${bytes} B`
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
-  }
-
-  const getTranslatedDocument = (doc: Document) => {
-    if (doc.id === "seguria-market-analysis") {
-      return {
-        ...doc,
-        title: t("initiatives.seguriaMarketAnalysis.title"),
-        description: t("initiatives.seguriaMarketAnalysis.description"),
-      }
-    }
-    return doc
   }
 
   if (loading) {
@@ -204,7 +213,7 @@ export default function InitiativePage({ params }: { params: { id: string } }) {
           ) : (
             <div className="space-y-6">
               {documents.map((doc: Document) => {
-                const translatedDoc = getTranslatedDocument(doc)
+                const translatedDoc = getTranslatedDocument(doc, t)
 
                 return (
                   <Link key={doc.id} href={`/initiatives/${params.id}/documents/${doc.id}`}>
