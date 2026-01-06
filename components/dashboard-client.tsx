@@ -29,20 +29,26 @@ import { UpdateProgressDialog } from "@/components/update-progress-dialog"
 interface Initiative {
   id: string
   title: string
-  description: string
-  category: string
+  description: string | null
+  category: string | null
   status: string
-  progress: number
-  project_code: string
-  milestones: any[]
-  objectives: any[]
-  risks: any[]
-  budget: number
-  start_date: string
-  end_date: string
-  lead: string
+  created_by: string | null
+  country: string | null
+  project_code: string | null
+  progress: number | null
+  location_data: unknown
   created_at: string
   updated_at: string
+  risks: unknown
+  milestones: unknown
+  objectives: unknown
+  documents: unknown
+  partners: unknown
+  budget: unknown
+  lead: unknown
+  start_date: string | null
+  end_date: string | null
+  [key: string]: unknown
 }
 
 interface DashboardStats {
@@ -111,7 +117,7 @@ export function DashboardClient({
     }
   }
 
-  const getCategoryColor = (category: string) => {
+  const getCategoryColor = (category: string | null) => {
     switch (category) {
       case "environmental":
         return "bg-primary/10 text-primary border-primary/20"
@@ -124,10 +130,10 @@ export function DashboardClient({
     }
   }
 
-  const getProgressColor = (progress: number) => {
-    if (progress >= 75) return "bg-green-500"
-    if (progress >= 50) return "bg-blue-500"
-    if (progress >= 25) return "bg-amber-500"
+  const getProgressColor = (progress: number | null) => {
+    if (progress !== null && progress >= 75) return "bg-green-500"
+    if (progress !== null && progress >= 50) return "bg-blue-500"
+    if (progress !== null && progress >= 25) return "bg-amber-500"
     return "bg-gray-400"
   }
 
@@ -369,11 +375,15 @@ export function DashboardClient({
                               {initiative.project_code}
                             </Badge>
                           )}
-                          <Badge className={getCategoryColor(initiative.category)}>{initiative.category}</Badge>
+                          {initiative.category && (
+                            <Badge className={getCategoryColor(initiative.category)}>{initiative.category}</Badge>
+                          )}
                           <Badge className={getStatusColor(initiative.status)}>{initiative.status}</Badge>
                         </div>
                         <CardTitle className="text-xl">{initiative.title}</CardTitle>
-                        <CardDescription className="line-clamp-2">{initiative.description}</CardDescription>
+                        <CardDescription className="line-clamp-2">
+                          {initiative.description !== null ? initiative.description : "No description"}
+                        </CardDescription>
                       </div>
                     </div>
                   </CardHeader>
@@ -382,9 +392,11 @@ export function DashboardClient({
                     <div className="space-y-2">
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Progress</span>
-                        <span className="font-semibold">{initiative.progress || 0}%</span>
+                        <span className="font-semibold">
+                          {initiative.progress !== null ? `${initiative.progress}%` : "N/A"}
+                        </span>
                       </div>
-                      <Progress value={initiative.progress || 0} className="h-2" />
+                      {initiative.progress !== null && <Progress value={initiative.progress} className="h-2" />}
                     </div>
 
                     {/* Key Metrics */}
@@ -394,7 +406,9 @@ export function DashboardClient({
                           <Target className="h-4 w-4 text-primary" />
                           <div>
                             <div className="text-xs text-muted-foreground">Milestones</div>
-                            <div className="font-semibold">{initiative.milestones.length || 0}</div>
+                            <div className="font-semibold">
+                              {Array.isArray(initiative.milestones) ? initiative.milestones.length : 0}
+                            </div>
                           </div>
                         </div>
                       )}
@@ -403,7 +417,9 @@ export function DashboardClient({
                           <CheckCircle2 className="h-4 w-4 text-green-600" />
                           <div>
                             <div className="text-xs text-muted-foreground">Objectives</div>
-                            <div className="font-semibold">{initiative.objectives.length || 0}</div>
+                            <div className="font-semibold">
+                              {Array.isArray(initiative.objectives) ? initiative.objectives.length : 0}
+                            </div>
                           </div>
                         </div>
                       )}
@@ -412,7 +428,9 @@ export function DashboardClient({
                           <AlertCircle className="h-4 w-4 text-amber-600" />
                           <div>
                             <div className="text-xs text-muted-foreground">Risks</div>
-                            <div className="font-semibold">{initiative.risks.length || 0}</div>
+                            <div className="font-semibold">
+                              {Array.isArray(initiative.risks) ? initiative.risks.length : 0}
+                            </div>
                           </div>
                         </div>
                       )}
@@ -421,7 +439,9 @@ export function DashboardClient({
                           <DollarSign className="h-4 w-4 text-blue-600" />
                           <div>
                             <div className="text-xs text-muted-foreground">Budget</div>
-                            <div className="font-semibold">${(initiative.budget / 1000).toFixed(0)}K</div>
+                            <div className="font-semibold">
+                              ${initiative.budget !== null ? (initiative.budget / 1000).toFixed(0) : "N/A"}K
+                            </div>
                           </div>
                         </div>
                       )}
