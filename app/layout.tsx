@@ -2,11 +2,11 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter, JetBrains_Mono } from "next/font/google"
 import "./globals.css"
-import { TranslationsProvider } from "@/lib/i18n/translations-provider"
 import { SiteNav } from "@/components/site-nav"
 import { FunnelPromoBanner } from "@/components/funnel-promo-banner"
 import { logger } from "@/lib/logger"
 import { ErrorBoundary } from "@/components/error-boundary"
+import { TranslationsProvider } from "@/lib/i18n/translations-provider"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -179,7 +179,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html className={`${inter.variable} ${jetbrainsMono.variable}`} lang="en" suppressHydrationWarning>
+    <html className={`${inter.variable} ${jetbrainsMono.variable}`} lang="es" suppressHydrationWarning>
       <head>
         <link rel="canonical" href={getSiteUrl()} />
         <link rel="alternate" hrefLang="en" href={`${getSiteUrl()}/en`} />
@@ -193,13 +193,13 @@ export default function RootLayout({
         <meta name="revisit-after" content="7 days" />
       </head>
       <body className="font-sans">
-        <ErrorBoundary>
-          <TranslationsProvider>
+        <TranslationsProvider>
+          <ErrorBoundary>
             <SiteNav />
             {children}
             <FunnelPromoBanner />
-          </TranslationsProvider>
-        </ErrorBoundary>
+          </ErrorBoundary>
+        </TranslationsProvider>
       </body>
     </html>
   )

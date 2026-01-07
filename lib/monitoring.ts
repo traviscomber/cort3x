@@ -15,7 +15,53 @@ class MonitoringService {
   private events: MonitoringEvent[] = []
   private readonly MAX_EVENTS = 1000
 
+  private sanitizeMetadata(metadata: Record<string, unknown>, depth = 0): Record<string, unknown> {
+    if (depth > 5) return {} // Prevent infinite recursion
+
+    const sanitized: Record<string, unknown> = {}
+
+    for (const [key, value] of Object.entries(metadata)) {
+      if (value === null || value === undefined) {
+        sanitized[key] = value
+      } else if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+        sanitized[key] = value
+      } else if (value instanceof Error) {
+        sanitized[key] = {
+          message: value.message,
+          stack: value.stack,
+          name: value.name,
+        }
+      } else if (typeof value === "object" && !Array.isArray(value)) {
+        try {
+          sanitized[key] = this.sanitizeMetadata(value as Record<string, unknown>, depth + 1)
+        } catch {
+          sanitized[key] = String(value)
+        }
+      } else if (Array.isArray(value)) {
+        sanitized[key] = value.map((item) => {
+          if (item instanceof Error) {
+            return {
+              message: item.message,
+              stack: item.stack,
+              name: item.name,
+            }
+          }
+          return typeof item === "object" && item !== null
+            ? this.sanitizeMetadata(item as Record<string, unknown>, depth + 1)
+            : item
+        })
+      } else {
+        // For functions, symbols, etc., convert to string representation
+        sanitized[key] = String(value)
+      }
+    }
+
+    return sanitized
+  }
+
   async trackError(error: Error, context?: Record<string, unknown>, userId?: string) {
+    const sanitizedContext = context ? this.sanitizeMetadata(context) : undefined
+
     const event: MonitoringEvent = {
       type: "error",
       severity: this.getErrorSeverity(error),
@@ -23,14 +69,14 @@ class MonitoringService {
       metadata: {
         stack: error.stack,
         name: error.name,
-        ...context,
+        ...sanitizedContext,
       },
       userId,
       timestamp: new Date().toISOString(),
     }
 
     this.addEvent(event)
-    logger.error("Error tracked", { error, context, userId })
+    logger.error("Error tracked", error, { context: sanitizedContext, userId })
 
     // Send to external monitoring (Sentry, LogRocket, etc.)
     if (this.shouldAlert(event)) {
@@ -135,11 +181,15 @@ class MonitoringService {
 
   private async sendAlert(event: MonitoringEvent) {
     try {
-      // Send to your alerting system (Slack, PagerDuty, email, etc.)
+      const safeEvent = {
+        ...event,
+        metadata: event.metadata ? this.sanitizeMetadata(event.metadata) : undefined,
+      }
+
       await fetch("/api/alerts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(event),
+        body: JSON.stringify(safeEvent),
       })
     } catch (error) {
       logger.error("Failed to send alert", error)

@@ -67,7 +67,7 @@ const formatDocumentContent = (content: string) => {
   const isHTML = content.trim().startsWith("<") || /<[^>]+>/.test(content)
 
   if (isHTML) {
-    return <article className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: content }} />
+    return <article className="prose prose-lg max-w-none space-y-6" dangerouslySetInnerHTML={{ __html: content }} />
   }
 
   // Split content into sections
@@ -196,7 +196,7 @@ export default async function DocumentPage({
 }) {
   const supabase = await createClient()
 
-  const lang = searchParams?.lang || "en"
+  // const lang = searchParams?.lang || "en"
 
   // Fetch document
   const { data: document, error } = await supabase
