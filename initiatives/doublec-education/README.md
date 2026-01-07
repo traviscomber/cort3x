@@ -1,129 +1,207 @@
-# DoubleC.Education - AI Trading Education Platform
+# DoubleC.Education - AI Trading Education Platform for Chile
 
 ## Overview
 
-DoubleC.Education is the world's first AI-powered educational platform designed specifically for trading education. By leveraging advanced Machine Learning algorithms, we provide personalized learning experiences that adapt to each student's learning style, pace, and market conditions.
+DoubleC.Education es la primera plataforma de educación en trading potenciada por IA diseñada específicamente para el mercado chileno. Combinamos machine learning avanzado con experiencia práctica real usando datos de la SVS/IPSA para proporcionar experiencias de aprendizaje personalizadas que se adaptan al estilo de aprendizaje, ritmo y condiciones de mercado de cada estudiante.
 
-## Vision
+## Visión
 
-To democratize trading education through intelligent technology, making professional-grade trading knowledge accessible to everyone globally, regardless of their background or experience level.
+Democratizar la educación en trading a través de tecnología inteligente, haciendo conocimiento profesional de trading accesible a todos en Chile, independientemente de su experiencia previa.
 
-## Key Features
+## Características Clave
 
-### 1. AI-Powered Personalization
-- Adaptive learning paths based on individual progress and performance
-- Real-time adjustment of difficulty and content based on comprehension
-- Personalized study schedules optimized for retention
+### 1. Personalización Potenciada por IA
+- Rutas de aprendizaje adaptativas basadas en progreso y performance individual
+- Ajuste en tiempo real de dificultad y contenido según comprensión
+- Horarios de estudio personalizados optimizados para retención
 
-### 2. Machine Learning Market Analysis
-- Live market data integration with ML-powered pattern recognition
-- Predictive analytics for market trends and opportunities
-- Automated signal detection and trading opportunity identification
+### 2. Análisis de Mercado con Machine Learning
+- Integración de datos de mercado en vivo con reconocimiento de patrones basado en ML
+- Análisis predictivo para tendencias de mercado e identificación de oportunidades
+- Detección automatizada de señales y oportunidades de trading
 
-### 3. Intelligent Trading Strategies
-- AI-generated strategy recommendations based on risk profile
-- Backtesting capabilities with historical data
-- Portfolio optimization using ML algorithms
+### 3. Estrategias de Trading Inteligentes
+- Recomendaciones de estrategia generadas por IA basadas en perfil de riesgo
+- Capacidades de backtesting con datos históricos chilenos
+- Optimización de portfolio usando algoritmos de ML
 
-### 4. Interactive Learning Environment
-- Gamified learning experiences with achievement tracking
-- Virtual trading simulator with real market conditions
-- Peer learning and community features
+### 4. Ambiente de Aprendizaje Interactivo
+- Experiencias de aprendizaje gamificadas con seguimiento de logros
+- Simulador de trading virtual con datos reales del mercado chileno
+- Características de aprendizaje comunitario y peer learning
 
-## Technology Stack
+## Stack Tecnológico
 
-- **Machine Learning**: TensorFlow, PyTorch for predictive models
-- **Data Processing**: Real-time streaming analytics
-- **Frontend**: Next.js, React for responsive web application
-- **Backend**: Node.js, Python for ML model serving
-- **Database**: PostgreSQL, Redis for caching
+- **Machine Learning**: TensorFlow, PyTorch para modelos predictivos
+- **Procesamiento de Datos**: Real-time streaming analytics de BVS
+- **Frontend**: Next.js 14, React Server Components
+- **Backend**: Node.js + Python para servicio de modelos ML
+- **Bases de Datos**: PostgreSQL, TimescaleDB, Redis para caching
+- **Infraestructura**: Kubernetes, Vercel Edge Network
+- **Seguridad**: TLS 1.3, AES-256, Cloudflare WAF
 
-## Target Audience
+## Público Objetivo
 
-- Beginner traders seeking structured education
-- Intermediate traders looking to improve strategies
-- Professional traders wanting AI-powered insights
-- Financial institutions training their staff
+- Traders novatos buscando educación estructurada
+- Traders intermedios queriendo mejorar estrategias
+- Traders profesionales buscando insights potenciados por IA
+- Instituciones financieras entrenando su personal
+- Universidades y CFT para programas académicos
 
-## Market Opportunity
+## Oportunidad de Mercado
 
-The global online trading education market is projected to reach $10+ billion by 2028, with increasing demand for personalized, technology-driven learning solutions.
+### Mercado Global
+- Mercado global de educación online en trading: $10B+ proyectado para 2028
 
-## Strategic Partnerships
+### Mercado Chile (Específico)
+- **Tamaño Mercado EdTech Chile**: $285M (2024) → $580M (2028) a 19.3% CAGR
+- **Usuarios de Trading Retail**: 185,000 activos, crecimiento 35% YoY
+- **Educación Financiera Online**: $42M segmento, crecimiento 28% YoY
+- **Gap de Mercado**: 82% traders sin educación localizada, 76% quiere contenido Chile específico
 
-### Educational Institutions
-Partnerships with leading trading schools and financial institutions for curriculum validation and accreditation.
+## Modelo Curricular
 
-### Technology Partners
-Collaborations with AI research labs for cutting-edge ML model development and continuous innovation.
+### Nivel 1: Fundamentos (4-5 semanas)
+- Conceptos base de mercados financieros
+- Análisis fundamental vs técnico
+- Gestión de riesgo y psicología del trading
+- Introducción a simulador con $10K capital virtual
 
-## Financial Projections (Conservative)
+### Nivel 2: Estrategias Intermedias (6-7 semanas)
+- Análisis técnico avanzado
+- Estrategias de price action
+- Gestión de posiciones y sizing
+- Trading en SVS/IPSA con datos reales
+- $50K capital virtual, datos real-time
 
-### Year 1 (Launch)
-- **Users**: 6,150 paid subscribers
-- **Revenue**: $4.2M ARR
-- **Operating Costs**: $3.1M (platform + team of 15)
-- **Net Margin**: -22% (growth investment phase)
+### Nivel 3: Trading Avanzado (8-9 semanas)
+- Trading de volatilidad extrema
+- Estrategias multi-timeframe
+- Análisis de flujo de dinero
+- Trading de noticias y eventos CMF
+- Mentoría personalizada de traders expertos
+- Acceso a comunidad elite
 
-### Year 2 (Growth)
-- **Users**: 18,500 paid subscribers
-- **Revenue**: $13.8M ARR
-- **Operating Costs**: $9.2M (team expansion to 42)
-- **Net Margin**: 20% EBITDA positive
+## Certificaciones
 
-### Year 3-5 (Scale)
-- **Year 3**: 52,000 users, $42M ARR, 32% EBITDA
-- **Year 4**: 124,000 users, $108M ARR, 37% EBITDA  
-- **Year 5**: 265,000 users, $245M ARR, 39% EBITDA
+- **Básica**: Certificado DoubleC Trader Principiante (NIVEL 1)
+- **Intermedia**: Certificado Trading Profesional (NIVEL 2)
+- **Avanzada**: Certificado CMF-compatible (NIVEL 2+3 track especial)
 
-### Exit Potential
-Based on EdTech/SaaS comparables (3-8x revenue multiples):
-- Conservative: $800M valuation at Year 4
-- Moderate: $2.4B valuation at Year 5
-- Optimistic: $6B+ if achieving Duolingo-like market dominance
+## Modelos de Ingresos
 
-## Competitive Advantages
+### B2C - Tiers de Suscripción
+- **Gratuito**: NIVEL 1 + primeros 2 módulos NIVEL 2 ($10K capital, data 24h delay)
+- **Premium ($150/año)**: Acceso NIVEL 1-3, $50K capital, datos real-time IPSA, mentor IA 24/7
+- **Premium+ ($500/año)**: TODO Premium + 4 sesiones mensuales mentoría humana, reportes personalizados, acceso comunidad elite
 
-1. **First-mover advantage** in AI-powered adaptive trading education
-2. **Proprietary ML models** trained on 25+ years of market data
-3. **Real-time personalization** powered by neural networks
-4. **Integrated backtesting** and risk analytics tools
-5. **Lower price point** ($99-$299/mo vs $3K-$8K traditional programs)
+### B2B2C - Universidades & Instituciones
+- **Small** ($8K/año): 100-300 estudiantes, 1 mentor, dashboard básico
+- **Medium** ($15K/año): 300-800 estudiantes, 3 mentors, analytics avanzados
+- **Large** ($25K/año): 800+ estudiantes, mentors custom, API access, white-label
+
+## Proyecciones Financieras
+
+### Año 1 (2025)
+- **Usuarios Pagos**: 8,750 (35% conversión)
+- **ARR**: $1.87M (70% B2C, 30% B2B)
+- **Break-even**: Mes 18
+
+### Año 2 (2026)
+- **Usuarios Registrados**: 75,000
+- **Usuarios Pagos**: 35,000
+- **ARR**: $7.4M
+- **EBITDA**: 15% positivo
+
+### Año 3 (2027)
+- **Usuarios Registrados**: 180,000
+- **Usuarios Pagos**: 85,000
+- **ARR**: $18.5M
+- **EBITDA**: 35%+
+
+### Potencial de Exit
+Basado en comparables EdTech/SaaS (3-8x revenue multiples):
+- Conservador: $800M valuación en Año 4
+- Moderado: $2.4B valuación en Año 5
+- Optimista: $6B+ si se logra dominio de mercado estilo Duolingo
+
+## Ventajas Competitivas
+
+1. **Localización 100% Chile**: Contenido, datos, regulaciones CMF, empresas chilenas
+2. **IA Personalizada**: Rutas dinámicas adaptadas a ritmo y estilo individual
+3. **Experiencia Práctica Real**: 150+ horas simulación con datos SVS/IPSA históricos
+4. **Mentoría de Expertos**: Acceso a traders profesionales chilenos, no internacional
+5. **Precio Accesible**: $150-500/año vs $3K-8K programas tradicionales
+
+## Cumplimiento Regulatorio
+
+- **Clasificación CMF**: Proveedor educativo (NO requiere licencia CMF)
+- **Compliance**: Cumplimiento total CMF Resolution 206/2022
+- **Seguridad**: Encriptación TLS 1.3 + AES-256, cumplimiento GDPR-equivalent
+- **Datos**: Protección total de datos personales según Law 19628
+- **Certificación Opcional**: Pathway CMF-colaborativo para certificaciones reconocidas
+
+## Asociaciones Estratégicas
+
+### Instituciones Educativas
+- Piloto con 3-5 universidades Q1-Q2 2025
+- Expansión a 15-20 universidades Q3-Q4 2025
+- Objetivo 30-40 universidades (30% market penetration) 2026-2027
+- **ARR Potencial B2B**: $500K-$1.2M
+
+### Partners Tecnológicos
+- BVS (Bolsa de Valores) para datos reales de mercado
+- Brokers chilenos para integración simulador
+- Proveedores de ML para modelos predictivos
 
 ## Roadmap
 
-### Phase 1: Foundation (Completed)
-- Platform development and beta testing
-- ML model training and validation
-- Initial user acquisition (1,000+ users)
+### Fase 1: Validación Piloto (Q1-Q2 2025)
+- Lanzamiento beta plataforma core
+- Integración datos SVS/IPSA
+- Adquisición 1,000+ usuarios beta
+- Modelo Tier Premium validado
 
-### Phase 2: Growth (Current)
-- Trading simulator launch
-- Advanced analytics dashboard
-- Mobile app development
+### Fase 2: Expansión (Q3-Q4 2025)
+- Lanzamiento universidades (3-5 pilotos)
+- Mentoría IA 24/7 operacional
+- App móvil MVP
+- 25,000 usuarios registrados
 
-### Phase 3: Scale (Upcoming)
-- International expansion
-- Enterprise partnerships
-- Advanced AI features and automation
+### Fase 3: Escala (2026-2027)
+- 30-40 universidades en plataforma
+- Certificación CMF en progreso
+- Expansión Latam (Perú, Colombia, Argentina)
+- Especialidades avanzadas (Crypto, HFT, Fund Management)
 
-### Phase 4: Innovation (Future)
-- AI trading assistants
-- Institutional grade tools
-- Blockchain integration for certification
+### Fase 4: Innovación (2027+)
+- Asistentes de trading potenciados por IA
+- Herramientas de nivel institucional
+- Integración blockchain para certificaciones
+- Plataforma de marketplace de estrategias
 
-## Impact Metrics
+## Métricas de Impacto
 
-- **Students Educated**: Target 265,000+ by Year 5
-- **Success Rate**: 70%+ students achieving profitability in simulated trading within 90 days
-- **Platform Availability**: 99.9% uptime SLA
-- **User Satisfaction**: Maintain 4.7+ star rating
-- **Global Reach**: 25+ countries, 8+ languages
+- **Estudiantes Educados**: Objetivo 265,000+ hacia Year 5
+- **Tasa de Éxito**: 70%+ estudiantes alcanzando rentabilidad en simulación dentro 90 días
+- **Disponibilidad Plataforma**: 99.9% uptime SLA
+- **Satisfacción Usuario**: Mantener 4.7+ star rating
+- **Alcance Global**: 25+ países, 8+ idiomas (expansión post-2027)
 
-## Website
+## Documentación Completa
 
-[doublec.education](https://doublec.education)
+La documentación detallada está disponible en el sistema:
 
-## Contact
+1. **Curriculum Design** - 3 niveles completos con gamificación y AI
+2. **Mercado Chileno de Educación** - Análisis TAM, competencia, segmentos, proyecciones
+3. **Technical Architecture** - Stack técnico, AI/ML systems, data architecture, seguridad
+4. **University Partnership Program** - 3 modelos integración académica, precios, roadmap comercial
+5. **Regulatory Compliance & CMF Requirements** - Framework regulatorio, data protection, marketing compliance
 
-For partnerships, investments, or more information, please reach out through the platform.
+## Contact & Links
+
+- **Website**: [doublec.education](https://doublec.education)
+- **Market**: Chile (expansion Latam 2026+)
+- **Founders**: AI Trading Education Team
+
+Para partnerships, inversiones o más información, contactar a través de la plataforma.
