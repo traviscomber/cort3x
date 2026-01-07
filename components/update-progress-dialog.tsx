@@ -23,7 +23,7 @@ interface UpdateProgressDialogProps {
   initiative: {
     id: string
     title: string
-    progress: number
+    progress: number | null
   }
   open: boolean
   onOpenChange: (open: boolean) => void
