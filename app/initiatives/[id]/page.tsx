@@ -112,6 +112,7 @@ export default async function InitiativePage({ params }: { params: { id: string 
     .from("documents")
     .select("*")
     .eq("initiative_id", params.id)
+    .neq("status", "hidden")
     .order("created_at", { ascending: true })
 
   console.log("[v0] Found documents:", documents?.length || 0)
