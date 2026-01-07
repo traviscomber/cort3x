@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server"
-import { embed } from "ai"
+import { fetch } from "node-fetch"
 
 export class EpisodicMemory {
   private userId: string
@@ -14,10 +14,24 @@ export class EpisodicMemory {
   async store(state: string, action: string, outcome: string) {
     const supabase = await createClient()
 
-    const { embedding } = await embed({
-      model: "openai/text-embedding-3-small",
-      value: `${state} ${action} ${outcome}`,
+    const embeddingResponse = await fetch("https://api.openai.com/v1/embeddings", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "text-embedding-3-small",
+        input: `${state} ${action} ${outcome}`,
+      }),
     })
+
+    if (!embeddingResponse.ok) {
+      throw new Error(`OpenAI Embedding API error: ${embeddingResponse.statusText}`)
+    }
+
+    const embeddingData = (await embeddingResponse.json()) as { data: Array<{ embedding: number[] }> }
+    const embedding = embeddingData.data[0].embedding
 
     const episode = {
       user_id: this.userId,
@@ -41,10 +55,24 @@ export class EpisodicMemory {
   async retrieveSimilar(query: string, k = 3) {
     const supabase = await createClient()
 
-    const { embedding: queryEmbedding } = await embed({
-      model: "openai/text-embedding-3-small",
-      value: query,
+    const embeddingResponse = await fetch("https://api.openai.com/v1/embeddings", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "text-embedding-3-small",
+        input: query,
+      }),
     })
+
+    if (!embeddingResponse.ok) {
+      throw new Error(`OpenAI Embedding API error: ${embeddingResponse.statusText}`)
+    }
+
+    const embeddingData = (await embeddingResponse.json()) as { data: Array<{ embedding: number[] }> }
+    const queryEmbedding = embeddingData.data[0].embedding
 
     const { data, error } = await supabase.rpc("match_episodes", {
       query_embedding: queryEmbedding,

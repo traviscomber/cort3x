@@ -1,4 +1,3 @@
-import { generateText } from "ai"
 import { EpisodicMemory, SemanticMemory } from "./memory"
 import type { AgentState, AgentPlan, AgentResponse, Tool } from "./types"
 import { logger } from "@/lib/logger"
@@ -218,12 +217,28 @@ Provide a clear, user-friendly explanation.`
   }
 
   protected async callLLM(systemPrompt: string, userPrompt: string): Promise<string> {
-    const { text } = await generateText({
-      model: this.modelId,
-      system: systemPrompt,
-      prompt: userPrompt,
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "gpt-4o",
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: userPrompt },
+        ],
+        temperature: 0.7,
+        max_tokens: 2000,
+      }),
     })
 
-    return text
+    if (!response.ok) {
+      throw new Error(`OpenAI API error: ${response.statusText}`)
+    }
+
+    const data = (await response.json()) as { choices: Array<{ message: { content: string } }> }
+    return data.choices[0].message.content
   }
 }
