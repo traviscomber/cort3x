@@ -13,19 +13,18 @@ type Initiative = {
   country: string | null
   project_code: string | null
   progress: number | null
-  location_data: unknown
+  location_data: Record<string, unknown> | null // changed from 'unknown' to match DashboardClient interface
   created_at: string
   updated_at: string
-  risks: unknown
-  milestones: unknown
-  objectives: unknown
-  documents: unknown
-  partners: unknown
-  budget: unknown
-  lead: unknown
+  risks: unknown[] | null // changed from 'unknown' to 'unknown[] | null' for consistency
+  milestones: unknown[] | null // changed from 'unknown' to 'unknown[] | null' for consistency
+  objectives: unknown[] | null // changed from 'unknown' to 'unknown[] | null' for consistency
+  documents: unknown[] | null // changed from 'unknown' to 'unknown[] | null' for consistency
+  partners: unknown[] | null // changed from 'unknown' to 'unknown[] | null' for consistency
+  budget: number | null // changed from 'unknown' to 'number | null'
+  lead: string | null // changed from 'unknown' to 'string | null'
   start_date: string | null
   end_date: string | null
-  [key: string]: unknown
 }
 
 export const metadata: Metadata = {
