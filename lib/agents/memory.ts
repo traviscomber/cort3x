@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server"
-import { fetch } from "node-fetch"
 
 export class EpisodicMemory {
   private userId: string
