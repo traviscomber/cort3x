@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server"
-import { openai } from "@ai-sdk/openai"
 import { embed } from "ai"
 
 export class EpisodicMemory {
@@ -16,7 +15,7 @@ export class EpisodicMemory {
     const supabase = await createClient()
 
     const { embedding } = await embed({
-      model: openai.embedding("text-embedding-3-small"),
+      model: "openai/text-embedding-3-small",
       value: `${state} ${action} ${outcome}`,
     })
 
@@ -43,7 +42,7 @@ export class EpisodicMemory {
     const supabase = await createClient()
 
     const { embedding: queryEmbedding } = await embed({
-      model: openai.embedding("text-embedding-3-small"),
+      model: "openai/text-embedding-3-small",
       value: query,
     })
 

@@ -1,5 +1,4 @@
 import { generateText } from "ai"
-import { openai } from "@ai-sdk/openai"
 import { EpisodicMemory, SemanticMemory } from "./memory"
 import type { AgentState, AgentPlan, AgentResponse, Tool } from "./types"
 import { logger } from "@/lib/logger"
@@ -9,7 +8,7 @@ export abstract class BaseAgent {
   protected semanticMemory: SemanticMemory
   protected userId: string
   protected agentType: string
-  protected model = openai("gpt-4o")
+  protected modelId = "openai/gpt-4o"
   protected tools: Map<string, Tool> = new Map()
   protected maxRetries = 3
   protected confidenceThreshold = 0.7
@@ -127,9 +126,9 @@ Return as a JSON array of strings.`
 
   protected async selectBestModel(complexity: "simple" | "medium" | "complex"): Promise<string> {
     const modelMap = {
-      simple: "gpt-4o-mini",
-      medium: "gpt-4o",
-      complex: "gpt-4-turbo",
+      simple: "openai/gpt-4o-mini",
+      medium: "openai/gpt-4o",
+      complex: "openai/gpt-4-turbo",
     }
 
     return modelMap[complexity]
@@ -220,7 +219,7 @@ Provide a clear, user-friendly explanation.`
 
   protected async callLLM(systemPrompt: string, userPrompt: string): Promise<string> {
     const { text } = await generateText({
-      model: this.model as any,
+      model: this.modelId,
       system: systemPrompt,
       prompt: userPrompt,
     })
