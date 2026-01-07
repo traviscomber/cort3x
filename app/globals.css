@@ -18,6 +18,142 @@
   }
 }
 
+@layer components {
+  /* Add HTML content styling for document rendering */
+  .prose {
+    @apply text-foreground;
+  }
+
+  .prose h1 {
+    @apply text-4xl font-bold mb-6 mt-0 text-foreground;
+  }
+
+  .prose h2 {
+    @apply text-2xl font-bold mt-8 mb-4 text-foreground;
+  }
+
+  .prose h3 {
+    @apply text-xl font-semibold mt-6 mb-3 text-foreground;
+  }
+
+  .prose h4 {
+    @apply text-lg font-semibold mt-4 mb-2 text-foreground;
+  }
+
+  .prose p {
+    @apply text-base leading-7 mb-4 text-foreground;
+  }
+
+  .prose ul {
+    @apply list-disc list-inside ml-6 mb-4 text-foreground;
+  }
+
+  .prose li {
+    @apply mb-2 text-foreground;
+  }
+
+  .prose ol {
+    @apply list-decimal list-inside ml-6 mb-4 text-foreground;
+  }
+
+  .prose strong {
+    @apply font-semibold text-foreground;
+  }
+
+  .prose em {
+    @apply italic text-foreground;
+  }
+
+  .prose table {
+    @apply w-full border-collapse mb-4;
+  }
+
+  .prose th {
+    @apply bg-muted p-3 text-left font-semibold text-foreground border;
+  }
+
+  .prose td {
+    @apply border p-3 text-foreground;
+  }
+
+  .prose tr {
+    @apply border-b;
+  }
+
+  .prose a {
+    @apply text-primary hover:underline;
+  }
+
+  .prose blockquote {
+    @apply border-l-4 border-primary pl-4 italic my-4 text-muted-foreground;
+  }
+
+  .prose code {
+    @apply bg-muted px-2 py-1 rounded text-sm font-mono text-foreground;
+  }
+
+  .prose pre {
+    @apply bg-muted p-4 rounded-lg overflow-x-auto mb-4;
+  }
+
+  .prose pre code {
+    @apply bg-transparent px-0 py-0;
+  }
+
+  .prose hr {
+    @apply border-t border-border my-8;
+  }
+
+  .prose img {
+    @apply max-w-full h-auto rounded-lg my-4;
+  }
+
+  .document-content {
+    @apply text-foreground;
+  }
+
+  .document-content > * {
+    @apply text-foreground;
+  }
+
+  .document-content h1,
+  .document-content h2,
+  .document-content h3,
+  .document-content h4,
+  .document-content h5,
+  .document-content h6 {
+    @apply text-foreground;
+  }
+
+  .document-content p,
+  .document-content li,
+  .document-content span,
+  .document-content div {
+    @apply text-foreground;
+  }
+
+  .document-content ul,
+  .document-content ol {
+    @apply ml-6 mb-4;
+  }
+
+  .document-content table {
+    @apply w-full border-collapse mb-4;
+  }
+
+  .document-content th {
+    @apply bg-muted p-3 text-left font-semibold border;
+  }
+
+  .document-content td {
+    @apply border p-3;
+  }
+
+  .lead {
+    @apply text-lg text-muted-foreground mb-4;
+  }
+}
+
 @layer base {
   :root {
     --font-sans: var(--font-geist-sans);
