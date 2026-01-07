@@ -1,4 +1,5 @@
 import { generateText } from "ai"
+import { openai } from "@ai-sdk/openai"
 
 export interface DocumentUpdate {
   documentId: string
@@ -36,7 +37,7 @@ export async function researchTopic(topic: string, keywords: string[]): Promise<
 
   // Use AI to search and analyze findings
   const { text } = await generateText({
-    model: "openai/gpt-4o",
+    model: openai("gpt-4o"),
     prompt: `You are a research analyst. Search for and analyze the latest news, reports, and developments about: ${topic}
     
 Keywords: ${keywords.join(", ")}
@@ -78,7 +79,7 @@ export async function generateDocumentUpdate(
   findings: ResearchFindings,
 ): Promise<DocumentUpdate> {
   const { text } = await generateText({
-    model: "openai/gpt-4o",
+    model: openai("gpt-4o"),
     prompt: `You are a strategic analyst updating documentation for: ${documentTitle}
 
 Current document content (first 2000 chars):
@@ -139,7 +140,7 @@ export async function analyzeInitiativeProgress(
   successMetrics: string[]
 }> {
   const { text } = await generateText({
-    model: "openai/gpt-4o",
+    model: openai("gpt-4o"),
     prompt: `You are a strategic advisor analyzing the initiative: ${initiativeName}
 
 Current progress: ${currentProgress}%
