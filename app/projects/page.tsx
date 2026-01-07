@@ -1,8 +1,8 @@
-import type { FeasibilityAudit } from "./types" // Assuming FeasibilityAudit is defined in a types file
+import type { FeasibilityAudit } from "./types"
 
-const projects = [] // Assuming projects is an array of FeasibilityAudit objects
+const projects: FeasibilityAudit[] = [] // Empty array of FeasibilityAudit objects
 
-const validProjects = (projects || ([] as FeasibilityAudit[])).map((p: FeasibilityAudit) => {
+const validProjects = (projects || []).map((p: FeasibilityAudit) => {
   // Process each project here
   return p
 })
@@ -10,13 +10,17 @@ const validProjects = (projects || ([] as FeasibilityAudit[])).map((p: Feasibili
 const ProjectsPage = () => {
   return (
     <div>
-      {validProjects.map((project, index) => (
-        <div key={index}>
-          {/* Render project details here */}
-          <h2>{project.name}</h2>
-          <p>{project.description}</p>
-        </div>
-      ))}
+      {validProjects.length > 0 ? (
+        validProjects.map((project, index) => (
+          <div key={index}>
+            {/* Render project details here */}
+            <h2>{project.project_name}</h2>
+            <p>{project.project_description}</p>
+          </div>
+        ))
+      ) : (
+        <p>No projects found</p>
+      )}
     </div>
   )
 }
