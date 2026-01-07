@@ -67,12 +67,7 @@ const formatDocumentContent = (content: string) => {
   const isHTML = content.trim().startsWith("<") || /<[^>]+>/.test(content)
 
   if (isHTML) {
-    return (
-      <article
-        className="prose prose-lg max-w-none prose-h1:text-4xl prose-h1:font-bold prose-h1:mb-6 prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-8 prose-h2:mb-4 prose-h3:text-xl prose-h3:font-semibold prose-h3:mt-6 prose-h3:mb-3 prose-p:text-base prose-p:leading-7 prose-p:mb-4 prose-ul:list-disc prose-ul:ml-6 prose-li:mb-2 prose-strong:font-semibold prose-table:w-full prose-table:border-collapse prose-th:bg-slate-100 prose-th:p-3 prose-th:text-left prose-th:font-semibold prose-td:border prose-td:p-3"
-        dangerouslySetInnerHTML={{ __html: content }}
-      />
-    )
+    return <article className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: content }} />
   }
 
   // Split content into sections

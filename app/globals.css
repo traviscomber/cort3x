@@ -19,95 +19,157 @@
 }
 
 @layer components {
-  /* Add HTML content styling for document rendering */
+  /* Comprehensive HTML content styling for document rendering in production */
   .prose {
     @apply text-foreground;
   }
 
+  /* Headings */
   .prose h1 {
-    @apply text-4xl font-bold mb-6 mt-0 text-foreground;
+    @apply text-4xl font-bold mb-6 mt-8 text-foreground;
+    line-height: 1.2;
   }
 
   .prose h2 {
-    @apply text-2xl font-bold mt-8 mb-4 text-foreground;
+    @apply text-3xl font-bold mb-4 mt-8 text-foreground;
+    line-height: 1.3;
   }
 
   .prose h3 {
-    @apply text-xl font-semibold mt-6 mb-3 text-foreground;
+    @apply text-2xl font-bold mb-4 mt-6 text-foreground;
+    line-height: 1.4;
   }
 
   .prose h4 {
-    @apply text-lg font-semibold mt-4 mb-2 text-foreground;
+    @apply text-xl font-semibold mb-3 mt-4 text-foreground;
   }
 
+  .prose h5 {
+    @apply text-lg font-semibold mb-2 mt-3 text-foreground;
+  }
+
+  .prose h6 {
+    @apply text-base font-semibold mb-2 mt-3 text-foreground;
+  }
+
+  /* Paragraphs */
   .prose p {
     @apply text-base leading-7 mb-4 text-foreground;
   }
 
-  .prose ul {
-    @apply list-disc list-inside ml-6 mb-4 text-foreground;
+  /* Lists */
+  .prose ul,
+  .prose ol {
+    @apply mb-4 text-foreground;
   }
 
-  .prose li {
-    @apply mb-2 text-foreground;
+  .prose ul {
+    @apply list-disc ml-6;
   }
 
   .prose ol {
-    @apply list-decimal list-inside ml-6 mb-4 text-foreground;
+    @apply list-decimal ml-6;
   }
 
-  .prose strong {
-    @apply font-semibold text-foreground;
+  .prose li {
+    @apply mb-2 ml-2 text-foreground;
   }
 
-  .prose em {
+  .prose li > p {
+    @apply mb-2;
+  }
+
+  /* Nested lists */
+  .prose ul ul,
+  .prose ol ol,
+  .prose ul ol,
+  .prose ol ul {
+    @apply mb-2 ml-4;
+  }
+
+  /* Text formatting */
+  .prose strong,
+  .prose b {
+    @apply font-bold text-foreground;
+  }
+
+  .prose em,
+  .prose i {
     @apply italic text-foreground;
   }
 
+  /* Links */
+  .prose a {
+    @apply text-primary underline hover:opacity-80 transition-opacity;
+  }
+
+  /* Tables */
   .prose table {
-    @apply w-full border-collapse mb-4;
+    @apply w-full border-collapse my-6 text-foreground;
+  }
+
+  .prose thead {
+    @apply bg-muted;
   }
 
   .prose th {
-    @apply bg-muted p-3 text-left font-semibold text-foreground border;
+    @apply px-4 py-3 text-left font-semibold text-foreground border border-border text-sm;
   }
 
   .prose td {
-    @apply border p-3 text-foreground;
+    @apply px-4 py-3 text-foreground border border-border text-sm;
   }
 
-  .prose tr {
-    @apply border-b;
+  .prose tbody tr {
+    @apply hover:bg-muted/50 transition-colors;
   }
 
-  .prose a {
-    @apply text-primary hover:underline;
+  .prose tbody tr:nth-child(odd) {
+    @apply bg-background;
   }
 
+  .prose tbody tr:nth-child(even) {
+    @apply bg-muted/30;
+  }
+
+  /* Blockquotes */
   .prose blockquote {
-    @apply border-l-4 border-primary pl-4 italic my-4 text-muted-foreground;
+    @apply border-l-4 border-primary pl-4 italic my-4 py-2 text-muted-foreground bg-muted/50 rounded-r;
   }
 
+  /* Code */
   .prose code {
     @apply bg-muted px-2 py-1 rounded text-sm font-mono text-foreground;
   }
 
   .prose pre {
-    @apply bg-muted p-4 rounded-lg overflow-x-auto mb-4;
+    @apply bg-muted p-4 rounded-lg overflow-x-auto mb-4 border border-border;
   }
 
   .prose pre code {
-    @apply bg-transparent px-0 py-0;
+    @apply bg-transparent px-0 py-0 text-foreground;
   }
 
+  /* Horizontal rules */
   .prose hr {
     @apply border-t border-border my-8;
   }
 
+  /* Images */
   .prose img {
-    @apply max-w-full h-auto rounded-lg my-4;
+    @apply max-w-full h-auto rounded-lg my-4 shadow-sm;
   }
 
+  /* General prose styling for max-width */
+  .prose-lg {
+    @apply text-lg;
+  }
+
+  .prose-sm {
+    @apply text-sm;
+  }
+
+  /* Document content wrapper */
   .document-content {
     @apply text-foreground;
   }
@@ -122,7 +184,19 @@
   .document-content h4,
   .document-content h5,
   .document-content h6 {
-    @apply text-foreground;
+    @apply text-foreground font-bold;
+  }
+
+  .document-content h1 {
+    @apply text-4xl mb-4 mt-6;
+  }
+
+  .document-content h2 {
+    @apply text-3xl mb-4 mt-6;
+  }
+
+  .document-content h3 {
+    @apply text-2xl mb-3 mt-4;
   }
 
   .document-content p,
@@ -137,6 +211,10 @@
     @apply ml-6 mb-4;
   }
 
+  .document-content li {
+    @apply mb-2;
+  }
+
   .document-content table {
     @apply w-full border-collapse mb-4;
   }
@@ -147,6 +225,14 @@
 
   .document-content td {
     @apply border p-3;
+  }
+
+  .document-content strong {
+    @apply font-bold;
+  }
+
+  .document-content em {
+    @apply italic;
   }
 
   .lead {
