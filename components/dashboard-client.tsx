@@ -36,19 +36,18 @@ interface Initiative {
   country: string | null
   project_code: string | null
   progress: number | null
-  location_data: unknown
+  location_data: Record<string, unknown> | null
   created_at: string
   updated_at: string
-  risks: unknown
-  milestones: unknown
-  objectives: unknown
-  documents: unknown
-  partners: unknown
-  budget: unknown
-  lead: unknown
+  risks: unknown[] | null
+  milestones: unknown[] | null
+  objectives: unknown[] | null
+  documents: unknown[] | null
+  partners: unknown[] | null
+  budget: number | null
+  lead: string | null
   start_date: string | null
   end_date: string | null
-  [key: string]: unknown
 }
 
 interface DashboardStats {
