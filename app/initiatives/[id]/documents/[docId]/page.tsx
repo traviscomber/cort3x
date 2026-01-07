@@ -140,7 +140,10 @@ const formatDocumentContent = (content: string) => {
   if (isHTML) {
     return (
       <article
-        className="prose prose-sm md:prose-base lg:prose-lg max-w-none space-y-6 prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-p:text-gray-700 prose-li:text-gray-700 prose-a:text-blue-600 hover:prose-a:text-blue-800"
+        className="prose prose-sm md:prose-base max-w-none"
+        style={{
+          color: "rgb(55, 65, 81)",
+        }}
         dangerouslySetInnerHTML={{ __html: content }}
       />
     )
