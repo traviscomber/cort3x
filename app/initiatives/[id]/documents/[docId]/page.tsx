@@ -63,11 +63,87 @@ const getCategoryColor = (category: string) => {
   return colors[category] || "bg-gray-100 text-gray-800"
 }
 
+const getAccentColorStyles = (accentColor: string) => {
+  const colorMap: Record<
+    string,
+    {
+      borderColor: string
+      backgroundColor: string
+      textColor: string
+      subBorderColor: string
+      metricBgColor: string
+      metricTextColor: string
+      headerBgColor: string
+    }
+  > = {
+    blue: {
+      borderColor: "rgb(59 130 246)", // blue-500
+      backgroundColor: "rgb(240 249 255)", // blue-50
+      textColor: "rgb(37 99 235)", // blue-600
+      subBorderColor: "rgb(219 234 254)", // blue-200
+      metricBgColor: "rgb(219 234 254)", // blue-100
+      metricTextColor: "rgb(37 99 235)", // blue-700
+      headerBgColor: "rgb(240 249 255)", // blue-50
+    },
+    purple: {
+      borderColor: "rgb(168 85 247)", // purple-500
+      backgroundColor: "rgb(250 245 255)", // purple-50
+      textColor: "rgb(147 51 234)", // purple-600
+      subBorderColor: "rgb(233 213 255)", // purple-200
+      metricBgColor: "rgb(233 213 255)", // purple-100
+      metricTextColor: "rgb(126 34 206)", // purple-700
+      headerBgColor: "rgb(250 245 255)", // purple-50
+    },
+    green: {
+      borderColor: "rgb(34 197 94)", // green-500
+      backgroundColor: "rgb(240 253 250)", // green-50
+      textColor: "rgb(22 163 74)", // green-600
+      subBorderColor: "rgb(220 252 231)", // green-200
+      metricBgColor: "rgb(220 252 231)", // green-100
+      metricTextColor: "rgb(21 128 61)", // green-700
+      headerBgColor: "rgb(240 253 250)", // green-50
+    },
+    orange: {
+      borderColor: "rgb(249 115 22)", // orange-500
+      backgroundColor: "rgb(255 247 237)", // orange-50
+      textColor: "rgb(234 88 12)", // orange-600
+      subBorderColor: "rgb(254 215 170)", // orange-200
+      metricBgColor: "rgb(254 215 170)", // orange-100
+      metricTextColor: "rgb(194 65 12)", // orange-700
+      headerBgColor: "rgb(255 247 237)", // orange-50
+    },
+    pink: {
+      borderColor: "rgb(236 72 153)", // pink-500
+      backgroundColor: "rgb(253 242 248)", // pink-50
+      textColor: "rgb(219 39 119)", // pink-600
+      subBorderColor: "rgb(252 231 243)", // pink-200
+      metricBgColor: "rgb(252 231 243)", // pink-100
+      metricTextColor: "rgb(190 24 93)", // pink-700
+      headerBgColor: "rgb(253 242 248)", // pink-50
+    },
+    emerald: {
+      borderColor: "rgb(5 150 105)", // emerald-500
+      backgroundColor: "rgb(240 253 250)", // emerald-50
+      textColor: "rgb(4 120 87)", // emerald-600
+      subBorderColor: "rgb(204 251 241)", // emerald-200
+      metricBgColor: "rgb(204 251 241)", // emerald-100
+      metricTextColor: "rgb(5 92 64)", // emerald-700
+      headerBgColor: "rgb(240 253 250)", // emerald-50
+    },
+  }
+  return colorMap[accentColor] || colorMap.emerald
+}
+
 const formatDocumentContent = (content: string) => {
   const isHTML = content.trim().startsWith("<") || /<[^>]+>/.test(content)
 
   if (isHTML) {
-    return <article className="prose prose-lg max-w-none space-y-6" dangerouslySetInnerHTML={{ __html: content }} />
+    return (
+      <article
+        className="prose prose-sm md:prose-base lg:prose-lg max-w-none space-y-6 prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-p:text-gray-700 prose-li:text-gray-700 prose-a:text-blue-600 hover:prose-a:text-blue-800"
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
+    )
   }
 
   // Split content into sections
@@ -112,14 +188,17 @@ const formatDocumentContent = (content: string) => {
         icon = <Target className="h-5 w-5" />
       }
 
+      const colorStyles = getAccentColorStyles(accentColor)
+
       return (
         <Card
           key={index}
-          className={`mb-8 border-l-4 border-l-${accentColor}-500 shadow-sm hover:shadow-md transition-shadow`}
+          className="mb-8 shadow-sm hover:shadow-md transition-shadow"
+          style={{ borderLeft: `4px solid ${colorStyles.borderColor}` }}
         >
-          <CardHeader className={`bg-${accentColor}-50/50`}>
+          <CardHeader style={{ backgroundColor: colorStyles.headerBgColor }}>
             <CardTitle className="flex items-center gap-3 text-2xl">
-              {icon && <span className={`text-${accentColor}-600`}>{icon}</span>}
+              {icon && <span style={{ color: colorStyles.textColor }}>{icon}</span>}
               {title}
             </CardTitle>
           </CardHeader>
@@ -135,28 +214,41 @@ const formatDocumentContent = (content: string) => {
                   const metrics = subContent.match(/\*\*(\d+[%$KM+]|\d+,\d+|\d+\.\d+[%$KM+]?)\*\*/g)
 
                   return (
-                    <div key={subIndex} className={`pl-4 border-l-2 border-${accentColor}-200`}>
+                    <div
+                      key={subIndex}
+                      className="pl-4"
+                      style={{ borderLeft: `2px solid ${colorStyles.subBorderColor}` }}
+                    >
                       {subTitle && <h4 className="text-lg font-semibold mb-3 text-gray-900">{subTitle}</h4>}
                       {metrics && metrics.length > 0 && (
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
                           {metrics.slice(0, 4).map((metric, mIndex) => {
                             const value = metric.replace(/\*\*/g, "")
                             return (
-                              <div key={mIndex} className={`bg-${accentColor}-100 rounded-lg p-3 text-center`}>
-                                <div className={`text-2xl font-bold text-${accentColor}-700`}>{value}</div>
+                              <div
+                                key={mIndex}
+                                className="rounded-lg p-3 text-center"
+                                style={{ backgroundColor: colorStyles.metricBgColor }}
+                              >
+                                <div className="text-2xl font-bold" style={{ color: colorStyles.metricTextColor }}>
+                                  {value}
+                                </div>
                               </div>
                             )
                           })}
                         </div>
                       )}
-                      <article className="prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: subContent }} />
+                      <article
+                        className="prose prose-sm max-w-none prose-headings:font-semibold prose-h3:text-base prose-h4:text-sm prose-p:text-gray-700 prose-li:text-gray-700"
+                        dangerouslySetInnerHTML={{ __html: subContent }}
+                      />
                     </div>
                   )
                 })}
               </div>
             ) : (
               <article
-                className="prose prose-sm max-w-none"
+                className="prose prose-sm max-w-none prose-headings:font-semibold prose-h2:text-xl prose-h3:text-base prose-p:text-gray-700 prose-li:text-gray-700"
                 dangerouslySetInnerHTML={{ __html: section.replace(/^##\s+.+$/m, "").trim() }}
               />
             )}
@@ -166,7 +258,11 @@ const formatDocumentContent = (content: string) => {
     }
 
     return (
-      <article key={index} className="prose prose-lg max-w-none mb-6" dangerouslySetInnerHTML={{ __html: section }} />
+      <article
+        key={index}
+        className="prose prose-sm md:prose-base lg:prose-lg max-w-none mb-6 prose-headings:font-bold prose-h2:text-2xl prose-h3:text-xl prose-p:text-gray-700 prose-li:text-gray-700"
+        dangerouslySetInnerHTML={{ __html: section }}
+      />
     )
   })
 }
