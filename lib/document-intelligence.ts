@@ -1,5 +1,6 @@
-import { generateText } from "ai"
-import { openai } from "@ai-sdk/openai"
+// This eliminates the v1/v2 type compatibility issue with generateText
+
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY
 
 export interface DocumentUpdate {
   documentId: string
@@ -30,15 +31,40 @@ export interface ResearchFindings {
 }
 
 /**
+ * Call OpenAI API directly for text generation
+ */
+async function callOpenAI(prompt: string, systemPrompt = "You are a helpful assistant."): Promise<string> {
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: "gpt-4o",
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: prompt },
+      ],
+      temperature: 0.7,
+      max_tokens: 2000,
+    }),
+  })
+
+  if (!response.ok) {
+    throw new Error(`OpenAI API error: ${response.statusText}`)
+  }
+
+  const data = (await response.json()) as { choices: Array<{ message: { content: string } }> }
+  return data.choices[0].message.content
+}
+
+/**
  * Research latest news and documents for a given topic
  */
 export async function researchTopic(topic: string, keywords: string[]): Promise<ResearchFindings> {
-  const searchQuery = `${topic} ${keywords.join(" ")} latest news updates 2025`
-
-  // Use AI to search and analyze findings
-  const { text } = await generateText({
-    model: openai("gpt-4o"),
-    prompt: `You are a research analyst. Search for and analyze the latest news, reports, and developments about: ${topic}
+  const text = await callOpenAI(
+    `You are a research analyst. Search for and analyze the latest news, reports, and developments about: ${topic}
     
 Keywords: ${keywords.join(", ")}
 
@@ -55,7 +81,8 @@ Format your response as JSON with this structure:
   "keyInsights": [""],
   "trends": [""]
 }`,
-  })
+    "You are a research analyst specializing in finding and analyzing recent developments.",
+  )
 
   try {
     return JSON.parse(text)
@@ -78,9 +105,8 @@ export async function generateDocumentUpdate(
   currentContent: string,
   findings: ResearchFindings,
 ): Promise<DocumentUpdate> {
-  const { text } = await generateText({
-    model: openai("gpt-4o"),
-    prompt: `You are a strategic analyst updating documentation for: ${documentTitle}
+  const text = await callOpenAI(
+    `You are a strategic analyst updating documentation for: ${documentTitle}
 
 Current document content (first 2000 chars):
 ${currentContent.substring(0, 2000)}
@@ -102,7 +128,8 @@ Format as JSON:
   "updateSummary": "",
   "sources": [""]
 }`,
-  })
+    "You are a strategic analyst specializing in document updates and strategic planning.",
+  )
 
   try {
     const update = JSON.parse(text)
@@ -139,9 +166,8 @@ export async function analyzeInitiativeProgress(
   opportunities: string[]
   successMetrics: string[]
 }> {
-  const { text } = await generateText({
-    model: openai("gpt-4o"),
-    prompt: `You are a strategic advisor analyzing the initiative: ${initiativeName}
+  const text = await callOpenAI(
+    `You are a strategic advisor analyzing the initiative: ${initiativeName}
 
 Current progress: ${currentProgress}%
 
@@ -163,7 +189,8 @@ Format as JSON:
   "opportunities": [""],
   "successMetrics": [""]
 }`,
-  })
+    "You are a strategic advisor specializing in initiative analysis and progress tracking.",
+  )
 
   try {
     return JSON.parse(text)
