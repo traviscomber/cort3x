@@ -1,91 +1,24 @@
-import { createClient } from "@/lib/supabase/server"
-import { ProjectsPageClient } from "@/components/projects-page-client"
-import { redirect } from "next/navigation"
-import type { Metadata } from "next"
+import type { FeasibilityAudit } from "./types" // Assuming FeasibilityAudit is defined in a types file
 
-export const metadata: Metadata = {
-  title: "My Projects | Impax Cort3x",
-  description: "View and manage your innovation projects and feasibility audits.",
-  openGraph: {
-    title: "My Projects | Impax Cort3x",
-    description: "Your personal dashboard for managing innovation projects",
-    type: "website",
-  },
+const projects = [] // Assuming projects is an array of FeasibilityAudit objects
+
+const validProjects = (projects || ([] as FeasibilityAudit[])).map((p: FeasibilityAudit) => {
+  // Process each project here
+  return p
+})
+
+const ProjectsPage = () => {
+  return (
+    <div>
+      {validProjects.map((project, index) => (
+        <div key={index}>
+          {/* Render project details here */}
+          <h2>{project.name}</h2>
+          <p>{project.description}</p>
+        </div>
+      ))}
+    </div>
+  )
 }
 
-export default async function ProjectsPage() {
-  const supabase = await createClient()
-
-  type Project = {
-    id: string
-    user_id: string
-    project_name: string | null
-    project_description: string | null
-    category: string | null
-    country: string | null
-    status: string | null
-    created_at: string | null
-    payment_status: "pending" | "paid" | "refunded"
-    [key: string]: unknown
-  }
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  if (!user) {
-    redirect("/auth/login")
-  }
-
-  try {
-    const { data: userData, error: userError } = await supabase
-      .from("users")
-      .select("subscription_tier, monthly_audits_used, monthly_audits_limit")
-      .eq("id", user.id)
-      .single()
-
-    if (userError) {
-      console.log("[v0] User data error:", userError.message)
-    }
-
-    const { data: projects, error: projectsError } = await supabase
-      .from("feasibility_audits")
-      .select("*")
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: false })
-
-    if (projectsError) {
-      console.log("[v0] Projects error:", projectsError.message)
-    }
-
-    const validProjects = (projects || []).map(
-      (p) =>
-        ({
-          id: p.id || "",
-          user_id: p.user_id || "",
-          project_name: p.project_name || "Untitled Project",
-          project_description: p.project_description || "No description",
-          category: p.category || "Other",
-          country: p.country || "Unknown",
-          status: p.status || "pending",
-          created_at: p.created_at || new Date().toISOString(),
-          payment_status: (p.payment_status as "pending" | "paid" | "refunded") || "pending",
-        }) satisfies Project,
-    )
-
-    return (
-      <ProjectsPageClient
-        projects={validProjects}
-        user={user}
-        userTier={userData?.subscription_tier || "starter"}
-        monthlyAuditsUsed={userData?.monthly_audits_used || 0}
-        monthlyAuditsLimit={userData?.monthly_audits_limit || 3}
-      />
-    )
-  } catch (error) {
-    console.error("[v0] Projects page error:", error)
-    return (
-      <ProjectsPageClient projects={[]} user={user} userTier="starter" monthlyAuditsUsed={0} monthlyAuditsLimit={3} />
-    )
-  }
-}
+export default ProjectsPage

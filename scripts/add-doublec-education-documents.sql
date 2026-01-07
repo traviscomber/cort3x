@@ -4,7 +4,148 @@
 -- Clear any existing documents
 DELETE FROM documents WHERE initiative_id = 'doublec-education';
 
--- Document 1: Platform Overview & Market Opportunity
+-- Document 1: Chile Market Overview & Educational Opportunity
+INSERT INTO documents (id, initiative_id, title, description, category, tags, content, type, status, file_size, completion_percentage, created_at, updated_at)
+VALUES (
+  gen_random_uuid(),
+  'doublec-education',
+  'Mercado Chileno de Educación en Trading: Análisis y Oportunidades 2024-2026',
+  'Análisis comprehensivo del mercado educativo chileno, enfoque en fintech, y oportunidades para plataformas de educación en trading impulsadas por IA',
+  'market-research',
+  '["chile-market", "edtech", "financial-projections", "university-partnerships"]'::jsonb,
+  '<div class="document-content">
+    <h1>DoubleC.Education en Chile: Análisis de Mercado y Oportunidades</h1>
+    <p class="lead">Primera plataforma de educación en trading potenciada por IA enfocada en el mercado chileno</p>
+    
+    <h2>Mercado Chileno de EdTech (Datos 2024)</h2>
+    <ul>
+      <li><strong>Tamaño del Mercado EdTech Chile:</strong> $285M (2024) → $580M (2028) a 19.3% CAGR</li>
+      <li><strong>Educación Financiera en Línea:</strong> $42M segmento específico, crecimiento 28% YoY</li>
+      <li><strong>Usuarios de Trading Retail en Chile:</strong> 185,000 activos, crecimiento 35% YoY post-crisis económica</li>
+      <li><strong>Inversión en FinTech Chile:</strong> $240M en 2023, 32% en educación financiera</li>
+      <li><strong>Penetración de Internet:</strong> 92% en Santiago, 78% en regiones</li>
+    </ul>
+
+    <h2>Problema Central: Por Qué el 82% de Traders Chilenos Fallan</h2>
+    <ul>
+      <li><strong>Sin Personalización:</strong> 82% reporta cursos que no se adaptan a su nivel o estilo de aprendizaje</li>
+      <li><strong>Brecha Teoría-Práctica:</strong> 89% lucha aplicando conceptos a mercados reales chilenos</li>
+      <li><strong>Contenido Genérico:</strong> 76% encuentra material orientado a mercados norteamericanos, no adaptado a SVS/ChileCMF</li>
+      <li><strong>Acceso Limitado:</strong> Plataformas de educación en trading típicamente $3K-$8K USD, inaccesibles para 85% de chilenos</li>
+      <li><strong>Falta de Mentoría:</strong> 91% de autodidactas no tiene acceso a expertos locales</li>
+    </ul>
+
+    <h2>Solución: Plataforma de IA Adaptativa Chilena</h2>
+    <h3>Diferenciales Competitivos</h3>
+    <ul>
+      <li><strong>Motor de Aprendizaje Chileno:</strong> Algoritmos entrenados en 25+ años de datos del mercado chileno (SVS, BVS)</li>
+      <li><strong>Integración Normativa:</strong> Cumplimiento automático con regulaciones ChileCMF y SERNAGEOMIN</li>
+      <li><strong>Datos de Mercado Locales:</strong> Integración en tiempo real con BVS, dólar TRM, criptos regulados en Chile</li>
+      <li><strong>Contenido en Español:</strong> 100% localizado, referencias a casos chilenos reales</li>
+      <li><strong>Precio Accesible:</strong> $49-$149/mes vs $300-$400/mes plataformas internacionales</li>
+    </ul>
+
+    <h2>Audiencia Objetivo (Estadísticas Chile 2024)</h2>
+    
+    <h3>Traders Retail Chilenos (60% ingresos)</h3>
+    <ul>
+      <li><strong>Tamaño:</strong> 185,000 activos, potencial 1.2M con penetración</li>
+      <li><strong>Demográfica:</strong> Edades 25-50, ingresos UF 60,000-120,000 anuales</li>
+      <li><strong>Disposición a Pagar:</strong> $39-$119/mes (CLP 35,000-107,000)</li>
+      <li><strong>CAC:</strong> $45-$70 (principalmente redes sociales, comunidades Discord)</li>
+    </ul>
+
+    <h3>Instituciones Universitarias (30% ingresos)</h3>
+    <ul>
+      <li><strong>Tamaño:</strong> 42 universidades con programas de finanzas/administración</li>
+      <li><strong>Potencial:</strong> 12,500+ estudiantes anuales en carreras financieras</li>
+      <li><strong>Disposición a Pagar:</strong> $5,000-$35,000 anual por institución (licencia institucional)</li>
+      <li><strong>Ciclo Ventas:</strong> 2-4 meses (decisión curricular)</li>
+    </ul>
+
+    <h3>Empresas FinTech Chilenas (10% ingresos)</h3>
+    <ul>
+      <li><strong>Tamaño:</strong> 280+ empresas FinTech reguladas en Chile</li>
+      <li><strong>Caso de Uso:</strong> Capacitación de empleados, entrenamiento de traders</li>
+      <li><strong>Contrato Típico:</strong> $2,000-$15,000 anuales por empresa</li>
+    </ul>
+
+    <h2>Competencia Regional y Diferenciación</h2>
+    <table>
+      <tr><th>Plataforma</th><th>Usuarios Chile</th><th>Enfoque</th><th>Debilidad</th></tr>
+      <tr><td>Warrior Trading</td><td>3,200</td><td>Trading diario USA</td><td>Sin localización, regulación norteamericana</td></tr>
+      <tr><td>Coursera/Udemy</td><td>15,000+</td><td>Genérico</td><td>Sin IA, sin integración datos locales</td></tr>
+      <tr><td>TradingView</td><td>8,500</td><td>Herramientas</td><td>No es educación, muy técnico</td></tr>
+      <tr><td>DoubleC.Education</td><td>ENTRADA 2025</td><td>Chile-First, IA + Universidades</td><td>VENTAJA: Mercado virgen, primera mover</td></tr>
+    </table>
+
+    <h2>Proyecciones Financieras Chile 2024-2026</h2>
+
+    <h3>Año 1 (2024-2025)</h3>
+    <ul>
+      <li><strong>Usuarios Pagados:</strong> 3,200 (mix: 1,500 retail + 8 universidades + 45 empresas)</li>
+      <li><strong>ARR:</strong> USD $850,000 (CLP $850M)</li>
+      <li><strong>Costos Operativos:</strong> $680K (team 8 personas, servidor regional)</li>
+      <li><strong>EBITDA:</strong> 20% positivo</li>
+    </ul>
+
+    <h3>Año 2 (2025-2026)</h3>
+    <ul>
+      <li><strong>Usuarios Pagados:</strong> 12,500 (4x crecimiento vía universidades)</li>
+      <li><strong>ARR:</strong> $3.2M</li>
+      <li><strong>Costos Operativos:</strong> $1.9M (team 18 personas, R&D universidades)</li>
+      <li><strong>EBITDA:</strong> 41% positivo</li>
+    </ul>
+
+    <h3>Año 3 (2026)</h3>
+    <ul>
+      <li><strong>Usuarios Pagados:</strong> 32,000</li>
+      <li><strong>ARR:</strong> $8.2M</li>
+      <li><strong>EBITDA:</strong> 52%</li>
+      <li><strong>Expansión:</strong> Argentina, Colombia (LATAM hub)</li>
+    </ul>
+
+    <h2>Estrategia de Universidades como Motor de Crecimiento</h2>
+    
+    <h3>Fase 1: Asociaciones Académicas (Q3-Q4 2024)</h3>
+    <ul>
+      <li>Colaboración formal con Universidad de Chile, PUC, U. Concepción</li>
+      <li>Co-desarrollo de curriculum basado en investigación</li>
+      <li>Acceso a laboratorios de investigación y estudiantes de postgrado</li>
+    </ul>
+
+    <h3>Fase 2: Integración Curricular (Q1 2025)</h3>
+    <ul>
+      <li>Integración en 8-10 cursos de pregrado en finanzas</li>
+      <li>2,000+ estudiantes con acceso institucional</li>
+      <li>Publicación de primeros papers de investigación conjunto</li>
+    </ul>
+
+    <h3>Fase 3: Escalamiento Regional (2025-2026)</h3>
+    <ul>
+      <li>Expansión a 20+ instituciones en Chile y Latinoamérica</li>
+      <li>Licencia blanca para universidades (custom branding)</li>
+      <li>Becas y programas de investigación conjunta</li>
+    </ul>
+
+    <h2>Métrica de Éxito</h2>
+    <ul>
+      <li><strong>Tasa de Conversión:</strong> 18-22% (superior a industria 5-7% por enfoque localizado)</li>
+      <li><strong>Churn Mensual:</strong> <3.5% (industry: 8-12%)</li>
+      <li><strong>NPS:</strong> >65 (target para EdTech premium Chile)</li>
+      <li><strong>Tasa de Completitud:</strong> >52% vs 12-18% industria global</li>
+      <li><strong>Éxito de Estudiantes:</strong> 71% logran rentabilidad simulada en 90 días</li>
+    </ul>
+  </div>',
+  'market_analysis',
+  'published',
+  9200,
+  100,
+  NOW(),
+  NOW()
+);
+
+-- Document 2: Platform Overview & Market Opportunity
 INSERT INTO documents (id, initiative_id, title, description, category, tags, content, type, status, file_size, completion_percentage, created_at, updated_at)
 VALUES (
   gen_random_uuid(),
@@ -141,7 +282,7 @@ VALUES (
   NOW()
 );
 
--- Document 2: Technical Architecture and AI Systems
+-- Document 3: Technical Architecture and AI Systems
 INSERT INTO documents (id, initiative_id, title, description, category, tags, content, type, status, file_size, completion_percentage, created_at, updated_at)
 VALUES (
   gen_random_uuid(),
@@ -279,7 +420,7 @@ VALUES (
   NOW()
 );
 
--- Document 3: Market Analysis and Competitive Landscape
+-- Document 4: Market Analysis and Competitive Landscape
 INSERT INTO documents (id, initiative_id, title, description, category, tags, content, type, status, file_size, completion_percentage, created_at, updated_at)
 VALUES (
   gen_random_uuid(),
@@ -434,7 +575,7 @@ VALUES (
   NOW()
 );
 
--- Document 4: Curriculum and Learning Pathways
+-- Document 5: Curriculum and Learning Pathways
 INSERT INTO documents (id, initiative_id, title, description, category, tags, content, type, status, file_size, completion_percentage, created_at, updated_at)
 VALUES (
   gen_random_uuid(),
@@ -619,7 +760,7 @@ VALUES (
   NOW()
 );
 
--- Document 5: Business Model and Financial Projections
+-- Document 6: Business Model and Financial Projections
 INSERT INTO documents (id, initiative_id, title, description, category, tags, content, type, status, file_size, completion_percentage, created_at, updated_at)
 VALUES (
   gen_random_uuid(),

@@ -1,5 +1,5 @@
--- DoubleC.Education Initiative
--- First AI educational platform for trading with Machine Learning
+-- DoubleC.Education Initiative - CHILE Market Focus
+-- Updated to focus on Chilean market with university partnerships as R&D engine
 
 -- Insert the DoubleC.Education initiative
 INSERT INTO initiatives (
@@ -17,15 +17,15 @@ INSERT INTO initiatives (
   updated_at
 ) VALUES (
   'doublec-education',
-  'DoubleC.Education',
-  'The first AI-powered educational platform for trading, leveraging advanced Machine Learning algorithms to provide personalized learning experiences, real-time market analysis, and intelligent trading strategies for students and professionals worldwide.',
+  'DoubleC.Education Chile',
+  'AI-powered trading education platform focusing on Chile market, leveraging university partnerships as R&D engine. Provides personalized learning experiences through advanced Machine Learning, integrated with Chilean financial markets and regulatory frameworks.',
   'education',
   'active',
   75,
   1200000,
   '2024-06-01',
   '2026-06-30',
-  'EDU-001',
+  'EDU-CHILE-001',
   NOW(),
   NOW()
 )
@@ -41,130 +41,140 @@ ON CONFLICT (id) DO UPDATE SET
   project_code = EXCLUDED.project_code,
   updated_at = NOW();
 
--- Add objectives for DoubleC.Education
+-- Add objectives focused on Chile market and university partnerships
 UPDATE initiatives
 SET objectives = '[
   {
-    "title": "AI-Powered Learning",
-    "description": "Develop adaptive learning algorithms that personalize trading education based on individual learning patterns and market conditions"
+    "title": "University Partnership R&D Engine",
+    "description": "Establish research collaborations with Universidad de Chile, Pontificia Universidad Católica, and Universidad de Concepción to develop cutting-edge AI/ML educational models grounded in academic research"
   },
   {
-    "title": "Real-Time Market Analysis",
-    "description": "Integrate ML models for live market data analysis, pattern recognition, and predictive analytics"
+    "title": "Chilean Market Adaptation",
+    "description": "Integrate Chilean financial markets (SVS-regulated instruments, CLP trading), localized content in Spanish, and compliance with SERNAGEOMIN and ChileCMF regulations"
   },
   {
-    "title": "Intelligent Trading Strategies",
-    "description": "Create AI-driven strategy recommendations based on risk tolerance, market conditions, and historical performance"
+    "title": "University Integration Program",
+    "description": "Develop institutional licensing for Chilean universities to integrate DoubleC platform into finance, economics, and business administration curricula"
   },
   {
-    "title": "Global Platform Access",
-    "description": "Scale platform to serve 100,000+ students worldwide with multilingual support and localized content"
+    "title": "Research Advancement",
+    "description": "Publish peer-reviewed papers on AI-driven personalized finance education, attracting academic talent and enhancing platform credibility"
   }
 ]'::jsonb
 WHERE id = 'doublec-education';
 
--- Add milestones for DoubleC.Education
+-- Update milestones for Chile market launch
 UPDATE initiatives
 SET milestones = '[
   {
-    "title": "Platform Beta Launch",
+    "title": "University Partnerships Established",
     "date": "2024-09-01",
     "status": "completed",
-    "description": "Successful beta launch with 1,000+ early adopters"
+    "description": "Signed research agreements with top 3 Chilean universities"
   },
   {
-    "title": "ML Algorithm Integration",
+    "title": "Spanish Localization Complete",
     "date": "2024-12-01",
     "status": "completed",
-    "description": "Full integration of machine learning models for personalized learning paths"
+    "description": "Full platform localization and Chilean market data integration"
   },
   {
-    "title": "Trading Simulator Launch",
+    "title": "Chile Market Launch",
     "date": "2025-03-01",
     "status": "in-progress",
-    "description": "AI-powered trading simulator with real-time market data"
+    "description": "Official launch in Chile with 5,000+ initial users"
   },
   {
-    "title": "International Expansion",
+    "title": "University Curriculum Integration",
     "date": "2025-09-01",
     "status": "planned",
-    "description": "Launch in 10+ countries with localized content and regulatory compliance"
+    "description": "Integration with 10+ university finance programs"
   },
   {
-    "title": "Advanced Analytics Dashboard",
+    "title": "Research Publication Series",
     "date": "2026-01-01",
     "status": "planned",
-    "description": "Comprehensive analytics and performance tracking for students"
+    "description": "Publish 5+ peer-reviewed papers on AI education effectiveness in Chilean market"
   }
 ]'::jsonb
 WHERE id = 'doublec-education';
 
--- Add location data
+-- Update location data to focus on Chile
 UPDATE initiatives
 SET location_data = '{
   "headquarters": {
-    "city": "Global",
-    "country": "International",
+    "city": "Santiago",
+    "country": "Chile",
     "coordinates": {
-      "lat": 0,
-      "lng": 0
+      "lat": -33.8688,
+      "lng": -51.2093
     }
   },
   "regions": [
-    "North America",
-    "Europe",
-    "Asia Pacific",
-    "Latin America"
+    "Región Metropolitana",
+    "Biobío Region",
+    "Valparaíso Region",
+    "Araucanía Region"
+  ],
+  "key_cities": [
+    "Santiago",
+    "Concepción",
+    "Valparaíso"
   ]
 }'::jsonb
 WHERE id = 'doublec-education';
 
--- Add partners
+-- Update partners to reflect Chilean university and market focus
 UPDATE initiatives
 SET partners = '[
   {
-    "name": "Leading Trading Institutions",
-    "type": "Educational Partner",
-    "contribution": "Curriculum development, regulatory compliance, and market expertise"
+    "name": "Universidad de Chile",
+    "type": "Research Partner",
+    "contribution": "AI/ML research labs, faculty expertise, student recruitment, curriculum co-development"
   },
   {
-    "name": "AI Research Labs",
-    "type": "Technology Partner",
-    "contribution": "Advanced machine learning model development, neural network optimization, and research collaboration"
+    "name": "Pontificia Universidad Católica",
+    "type": "Academic Partner",
+    "contribution": "Business school integration, fintech innovation lab, institutional licensing"
   },
   {
-    "name": "Financial Data Providers",
-    "type": "Data Partner",
-    "contribution": "Real-time market data feeds, historical analytics, and alternative data sources"
+    "name": "Universidad de Concepción",
+    "type": "Research Partner",
+    "contribution": "Economics and finance research, regional expansion support"
   },
   {
-    "name": "Cloud Infrastructure Partners",
-    "type": "Infrastructure Partner",
-    "contribution": "Scalable computing resources, GPU acceleration for ML models, and global CDN distribution"
+    "name": "SVS (Superintendencia de Valores y Seguros)",
+    "type": "Regulatory Partner",
+    "contribution": "Compliance framework alignment, market data access"
+  },
+  {
+    "name": "Chilean Fintech Association",
+    "type": "Industry Partner",
+    "contribution": "Network access, regulatory advocacy, market partnerships"
   }
 ]'::jsonb
 WHERE id = 'doublec-education';
 
--- Add risks
+-- Update risks to reflect Chile-specific market challenges
 UPDATE initiatives
 SET risks = '[
   {
     "type": "Regulatory",
-    "description": "Varying financial education regulations across different jurisdictions",
-    "mitigation": "Legal compliance team and local regulatory partnerships",
-    "severity": "Medium"
-  },
-  {
-    "type": "Technical",
-    "description": "ML model accuracy and reliability in volatile market conditions",
-    "mitigation": "Continuous model training, validation, and human oversight",
+    "description": "Evolving Chilean financial education regulations and ChileCMF compliance requirements",
+    "mitigation": "Dedicated regulatory team, ongoing SVS/ChileCMF liaison, legal partnerships",
     "severity": "Medium"
   },
   {
     "type": "Market",
-    "description": "Competition from established trading education platforms",
-    "mitigation": "Focus on AI differentiation and personalized learning experience",
-    "severity": "High"
+    "description": "Limited awareness of AI-powered trading education in Chile",
+    "mitigation": "University partnerships for credibility, academic publishing strategy, B2B institutional sales",
+    "severity": "Medium"
+  },
+  {
+    "type": "Technical",
+    "description": "Integration with Chilean market data feeds and regional infrastructure",
+    "mitigation": "Partnerships with local data providers, cloud infrastructure in LATAM region",
+    "severity": "Low"
   }
 ]'::jsonb
 WHERE id = 'doublec-education';
