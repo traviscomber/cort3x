@@ -9,7 +9,7 @@ export abstract class BaseAgent {
   protected semanticMemory: SemanticMemory
   protected userId: string
   protected agentType: string
-  protected model = openai("gpt-4-turbo")
+  protected model = openai("gpt-4o")
   protected tools: Map<string, Tool> = new Map()
   protected maxRetries = 3
   protected confidenceThreshold = 0.7
@@ -220,7 +220,7 @@ Provide a clear, user-friendly explanation.`
 
   protected async callLLM(systemPrompt: string, userPrompt: string): Promise<string> {
     const { text } = await generateText({
-      model: this.model,
+      model: this.model as any,
       system: systemPrompt,
       prompt: userPrompt,
     })
