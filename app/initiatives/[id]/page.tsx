@@ -4,7 +4,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowLeft, FileText } from "lucide-react"
+import { ArrowLeft, FileText, BarChart3 } from "lucide-react"
 import { DocumentCompletionBadge } from "@/components/document-completion-badge"
 
 interface Document {
@@ -63,6 +63,12 @@ export default async function InitiativePage({ params }: { params: { id: string 
             <Button variant="ghost" size="sm">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Initiatives
+            </Button>
+          </Link>
+          <Link href={`/dashboard/initiatives/${params.id}`}>
+            <Button variant="default" size="sm">
+              <BarChart3 className="mr-2 h-4 w-4" />
+              View Dashboard
             </Button>
           </Link>
         </div>

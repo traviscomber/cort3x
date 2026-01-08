@@ -25,6 +25,7 @@ import Link from "next/link"
 import { createClient } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
 import { UpdateProgressDialog } from "@/components/update-progress-dialog"
+import { DashboardChartsLink } from "@/components/dashboard-charts-link"
 
 interface Initiative {
   id: string
@@ -143,29 +144,19 @@ export function DashboardClient({
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-foreground">Project Dashboard</h1>
-              <p className="text-muted-foreground mt-1">Track your innovation projects in real-time</p>
+              <h1 className="text-3xl font-bold text-foreground">Dashboard de Iniciativas</h1>
+              <p className="text-muted-foreground mt-1">Gestiona y monitorea tus proyectos estratégicos</p>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="hidden sm:block text-right">
-                <p className="text-sm font-medium">{user.email}</p>
-                <p className="text-xs text-muted-foreground">Logged in</p>
-              </div>
-              <Link href="/initiatives/new">
-                <Button className="bg-primary hover:bg-primary/90">
-                  <TrendingUp className="mr-2 h-4 w-4" />
-                  New Project
+            <div className="flex items-center gap-3">
+              <Link href="/dashboard/analytics">
+                <Button className="gap-2" size="lg">
+                  <BarChart3 className="h-5 w-5" />
+                  Ver Análisis Completo
                 </Button>
               </Link>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleLogout}
-                disabled={isLoggingOut}
-                className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 bg-transparent"
-              >
+              <Button variant="outline" size="sm" onClick={handleLogout} disabled={isLoggingOut}>
                 <LogOut className="h-4 w-4 mr-2" />
-                {isLoggingOut ? "Logging out..." : "Logout"}
+                Salir
               </Button>
             </div>
           </div>
@@ -219,6 +210,9 @@ export function DashboardClient({
             </CardContent>
           </Card>
         </div>
+
+        {/* Analytics Dashboard Link Card */}
+        <DashboardChartsLink />
 
         {/* Quick Actions & Recent Activity sections */}
         <div className="grid gap-6 md:grid-cols-3">
@@ -475,19 +469,21 @@ export function DashboardClient({
                     )}
 
                     {/* Actions */}
-                    <div className="flex gap-2 pt-2">
-                      <Link href={`/initiatives/${initiative.id}`} className="flex-1">
-                        <Button variant="outline" className="w-full bg-transparent">
-                          View Details
-                        </Button>
-                      </Link>
+                    <div className="flex items-center gap-2 pt-2">
                       <Button
-                        variant="default"
-                        className="flex-1 bg-primary hover:bg-primary/90"
+                        variant="outline"
+                        size="sm"
                         onClick={() => handleUpdateProgress(initiative)}
+                        className="flex-1"
                       >
+                        <TrendingUp className="h-4 w-4 mr-1" />
                         Update Progress
                       </Button>
+                      <Link href={`/dashboard/initiatives/${initiative.id}`} className="flex-1">
+                        <Button variant="default" size="sm" className="w-full">
+                          View Dashboard
+                        </Button>
+                      </Link>
                     </div>
                   </CardContent>
                 </Card>
@@ -495,16 +491,20 @@ export function DashboardClient({
             )}
           </TabsContent>
         </Tabs>
-      </div>
 
-      {/* Progress Update Dialog */}
-      {selectedInitiative && (
-        <UpdateProgressDialog
-          initiative={selectedInitiative}
-          open={isProgressDialogOpen}
-          onOpenChange={setIsProgressDialogOpen}
-        />
-      )}
+        {/* Update Progress Dialog */}
+        {selectedInitiative && (
+          <UpdateProgressDialog
+            isOpen={isProgressDialogOpen}
+            onClose={() => setIsProgressDialogOpen(false)}
+            initiative={selectedInitiative}
+            onSuccess={() => {
+              setIsProgressDialogOpen(false)
+              router.refresh()
+            }}
+          />
+        )}
+      </div>
     </div>
   )
 }

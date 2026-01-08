@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 import type { Metadata } from "next"
 import { DashboardClient } from "@/components/dashboard-client"
+import { DashboardChartsContainer } from "@/components/dashboard-charts-container"
 
 type Initiative = {
   id: string
@@ -67,12 +68,22 @@ export default async function DashboardPage() {
   }
 
   return (
-    <DashboardClient
-      initiatives={initiatives}
-      stats={stats}
-      user={user}
-      recentLeads={recentLeads}
-      recentPartnershipSubmissions={[]}
-    />
+    <div className="space-y-8">
+      <DashboardClient
+        initiatives={initiatives}
+        stats={stats}
+        user={user}
+        recentLeads={recentLeads}
+        recentPartnershipSubmissions={[]}
+      />
+
+      <div className="mt-12 pt-8 border-t">
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-balance">Analytics & Visualizaciones</h2>
+          <p className="text-muted-foreground mt-2">Gráficos detallados de todas las iniciativas en tiempo real</p>
+        </div>
+        <DashboardChartsContainer />
+      </div>
+    </div>
   )
 }
