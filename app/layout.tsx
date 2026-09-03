@@ -3,7 +3,6 @@ import type { Metadata } from "next"
 import { Inter, JetBrains_Mono } from "next/font/google"
 import "./globals.css"
 import { SiteNav } from "@/components/site-nav"
-import { FunnelPromoBanner } from "@/components/funnel-promo-banner"
 import { logger } from "@/lib/logger"
 import { ErrorBoundary } from "@/components/error-boundary"
 import { TranslationsProvider } from "@/lib/i18n/translations-provider"
@@ -24,12 +23,10 @@ const getSiteUrl = () => {
   const envUrl = process.env.NEXT_PUBLIC_SITE_URL
   const fallbackUrl = "https://green-industrial-innovation.vercel.app"
 
-  // Return fallback if env var is not set or empty
   if (!envUrl || envUrl.trim() === "") {
     return fallbackUrl
   }
 
-  // Validate URL format
   try {
     new URL(envUrl)
     return envUrl
@@ -50,56 +47,30 @@ const getMetadataBase = () => {
 export const metadata: Metadata = {
   metadataBase: getMetadataBase(),
   title: {
-    default: "Cort3x powered by n3uralia | AI-Powered Innovation Accelerator with Expert Coaching",
-    template: "%s | Cort3x powered by n3uralia",
+    default: "Cort3x | Innovation Intelligence OS",
+    template: "%s | Cort3x",
   },
   description:
-    "Transform innovation with AI-powered research insights and expert coaching. Get comprehensive market intelligence in weeks, then work with coaches who challenge your thinking and guide you through structured innovation. Accelerate from concept to market launch.",
+    "Cort3x is an Innovation Intelligence OS that connects research, evidence, signals, opportunities, decisions and execution in one traceable workflow.",
   keywords: [
-    "AI innovation research",
-    "expert innovation coaching",
-    "market intelligence platform",
-    "AI-powered insights",
-    "guided innovation process",
-    "innovation accelerator",
-    "structured innovation methodology",
-    "research-driven innovation",
-    "expert mentorship",
-    "challenging innovation coaching",
-    "green innovation platform",
-    "market research AI",
-    "strategic innovation guidance",
-    "Indonesia carbon credits",
-    "kredit karbon Indonesia",
-    "heritage restoration Indonesia",
-    "restorasi warisan budaya",
-    "VM0047 methodology",
-    "Nusantara Code",
-    "Royal Pop Indonesia",
-    "green carbon Indonesia",
-    "karbon hijau Indonesia",
-    "UNESCO heritage Indonesia",
-    "warisan UNESCO Indonesia",
-    "Presidential Regulation 110/2025",
-    "Peraturan Presiden 110/2025",
-    "carbon economic value instruments",
-    "instrumen nilai ekonomi karbon",
-    "Indonesian cultural innovation",
-    "inovasi budaya Indonesia",
-    "sustainable development Indonesia",
-    "pembangunan berkelanjutan Indonesia",
-    "climate action Indonesia",
-    "aksi iklim Indonesia",
-    "AI market analysis",
-    "innovation coaching platform",
-    "Chile innovation",
-    "USA innovation accelerator",
-    "aceleradora de innovación Chile",
-    "akselerator inovasi Indonesia",
+    "innovation intelligence",
+    "innovation operating system",
+    "strategic research",
+    "evidence management",
+    "market intelligence",
+    "technology intelligence",
+    "opportunity mapping",
+    "strategic decision support",
+    "innovation portfolio",
+    "AI research",
+    "decision traceability",
+    "innovation execution",
+    "LATAM innovation",
+    "ASEAN innovation",
   ],
-  authors: [{ name: "Cort3x powered by n3uralia (www.n3uralia.com)" }],
-  creator: "Cort3x powered by n3uralia",
-  publisher: "Cort3x powered by n3uralia",
+  authors: [{ name: "Cort3x by n3uralia" }],
+  creator: "n3uralia",
+  publisher: "n3uralia",
   formatDetection: {
     email: false,
     address: false,
@@ -110,24 +81,24 @@ export const metadata: Metadata = {
     locale: "en_US",
     alternateLocale: ["es_CL", "id_ID"],
     url: "/",
-    siteName: "Cort3x powered by n3uralia | AI Research + Expert Coaching for Innovation",
-    title: "Cort3x powered by n3uralia | AI-Powered Research + Expert Coaching for Innovation",
+    siteName: "Cort3x | Innovation Intelligence OS",
+    title: "Cort3x | Innovation Intelligence OS",
     description:
-      "Accelerate innovation with AI-powered market intelligence and expert coaching that challenges your thinking. Get months of research in weeks, then work with coaches who guide you through structured, high-impact innovation.",
+      "Turn research into structured evidence, opportunities, decisions and execution with a persistent innovation intelligence workflow.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Cort3x powered by n3uralia | AI-Powered Innovation Accelerator with Expert Coaching",
+        alt: "Cort3x Innovation Intelligence OS",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Cort3x powered by n3uralia | AI Research + Expert Coaching for Innovation",
+    title: "Cort3x | Innovation Intelligence OS",
     description:
-      "Transform innovation with AI-powered market intelligence and expert coaching. Get comprehensive research in weeks, then work with coaches who challenge and guide you to market launch.",
+      "Connect research, evidence, opportunities, decisions and execution in one traceable innovation intelligence workflow.",
     images: ["/og-image.png"],
     creator: "@n3uralia",
   },
@@ -153,24 +124,20 @@ export const metadata: Metadata = {
   },
   verification: {
     google: "your-google-verification-code",
-    // Add other verification codes as needed
   },
   category: "technology",
-  classification: "Innovation Accelerator, AI Research, Business Coaching",
+  classification: "Innovation Intelligence Software",
   other: {
-    // Geographic targeting for all three locations
     "geo.region": "CL;US-CA;ID-JK",
     "geo.placename": "Santiago, Chile; San Francisco, USA; Jakarta, Indonesia",
     "geo.position": "-33.4489;-70.6693;37.7749;-122.4194;-6.2088;106.8456",
-    // LLMO optimization tags
-    "article:publisher": "Cort3x powered by n3uralia",
+    "article:publisher": "Cort3x by n3uralia",
     "article:author": "Cort3x Team at n3uralia",
-    // Additional semantic tags for LLMs
-    "application-name": "Cort3x powered by n3uralia",
+    "application-name": "Cort3x",
     "apple-mobile-web-app-title": "Cort3x",
     "theme-color": "#10b981",
   },
-    generator: 'v0.app'
+  generator: "v0.app",
 }
 
 export default function RootLayout({
@@ -179,7 +146,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html className={`${inter.variable} ${jetbrainsMono.variable}`} lang="es" suppressHydrationWarning>
+    <html className={`${inter.variable} ${jetbrainsMono.variable}`} lang="en" suppressHydrationWarning>
       <head>
         <link rel="canonical" href={getSiteUrl()} />
         <link rel="alternate" hrefLang="en" href={`${getSiteUrl()}/en`} />
@@ -197,7 +164,6 @@ export default function RootLayout({
           <ErrorBoundary>
             <SiteNav />
             {children}
-            <FunnelPromoBanner />
           </ErrorBoundary>
         </TranslationsProvider>
       </body>
