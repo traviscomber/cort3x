@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
+import { AuthorizationError, requireAdmin } from "@/lib/auth/admin"
 import { researchTopic, generateDocumentUpdate, analyzeInitiativeProgress } from "@/lib/document-intelligence"
 import { rateLimit, RATE_LIMITS } from "@/lib/rate-limit"
 import { logger } from "@/lib/logger"
@@ -27,7 +28,6 @@ export async function GET(request: Request) {
       )
     }
 
-    // Verify cron secret
     const authHeader = request.headers.get("authorization")
     if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
       logger.warn("Unauthorized cron job attempt")
@@ -41,7 +41,7 @@ export async function GET(request: Request) {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST() {
   try {
     const rateLimitResult = await rateLimit("cron:intelligent-update:manual", RATE_LIMITS.CRON)
 
@@ -62,8 +62,13 @@ export async function POST(request: Request) {
       )
     }
 
+    await requireAdmin()
     return await performIntelligentUpdate()
   } catch (error) {
+    if (error instanceof AuthorizationError) {
+      return NextResponse.json({ error: error.message }, { status: error.status })
+    }
+
     logger.error("Manual intelligent update failed", error)
     return NextResponse.json({ error: "Failed to perform intelligent updates" }, { status: 500 })
   }
@@ -74,7 +79,6 @@ async function performIntelligentUpdate() {
 
   logger.info("Starting intelligent update cycle")
 
-  // Get all initiatives with their documents
   const { data: initiatives, error: initiativesError } = await supabase
     .from("initiatives")
     .select("*, documents(*)")
@@ -84,27 +88,22 @@ async function performIntelligentUpdate() {
 
   const updateResults = []
 
-  // Process each initiative
   for (const initiative of initiatives || []) {
     logger.info("Processing initiative", { initiativeId: initiative.id, title: initiative.title })
 
-    // Research latest developments
     const findings = await researchTopic(initiative.title, initiative.tags || [])
 
-    // Analyze initiative progress
     const progressAnalysis = await analyzeInitiativeProgress(
       initiative.title,
       initiative.progress || 0,
       initiative.documents || [],
     )
 
-    // Update each document with new findings
     for (const doc of initiative.documents || []) {
       logger.info("Updating document", { docId: doc.id, title: doc.title })
 
       const update = await generateDocumentUpdate(doc.title, doc.content || "", findings)
 
-      // Create update log entry
       const updateLog = {
         date: new Date().toISOString(),
         findings: update.newFindings,
@@ -113,14 +112,11 @@ async function performIntelligentUpdate() {
         sources: update.sources,
       }
 
-      // Get existing update history
       const existingHistory = doc.update_history || []
       const newHistory = [...existingHistory, updateLog]
 
-      // Append new findings to content
       const updatedContent = `${doc.content}\n\n## Update ${new Date().toLocaleDateString()} 📊\n\n### New Findings\n${update.newFindings.map((f) => `- ${f}`).join("\n")}\n\n### Recommendations\n${update.recommendations.map((r) => `- ${r}`).join("\n")}\n\n---\n`
 
-      // Update document with new content and history
       const { error: updateError } = await supabase
         .from("documents")
         .update({
@@ -141,7 +137,6 @@ async function performIntelligentUpdate() {
       }
     }
 
-    // Update initiative with progress analysis
     const { error: initiativeUpdateError } = await supabase
       .from("initiatives")
       .update({
