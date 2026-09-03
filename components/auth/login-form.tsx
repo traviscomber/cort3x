@@ -3,7 +3,6 @@
 import type React from "react"
 
 import { useState } from "react"
-import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -13,7 +12,9 @@ import { Loader2, Mail, Lock } from "lucide-react"
 import { logger } from "@/lib/logger"
 import { signInWithPassword } from "@/app/auth/login/actions"
 
-function getSafeNextPath(next: string | null) {
+function getSafeNextPath() {
+  const next = new URLSearchParams(window.location.search).get("next")
+
   if (!next || !next.startsWith("/") || next.startsWith("//")) {
     return "/dashboard"
   }
@@ -26,7 +27,6 @@ export function LoginForm() {
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const searchParams = useSearchParams()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -46,7 +46,7 @@ export function LoginForm() {
       }
 
       logger.info("Login successful")
-      window.location.assign(getSafeNextPath(searchParams.get("next")))
+      window.location.assign(getSafeNextPath())
     } catch (err) {
       logger.error("Unexpected login error", err)
       setError("An unexpected error occurred")
