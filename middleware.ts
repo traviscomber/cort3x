@@ -19,11 +19,10 @@ export async function middleware(request: NextRequest) {
     "/auth/sign-up",
   ]
 
+  const pathname = request.nextUrl.pathname
   const isPublicPath = publicPaths.some(
     (path) =>
-      request.nextUrl.pathname === path ||
-      request.nextUrl.pathname.startsWith("/api/") ||
-      request.nextUrl.pathname.startsWith("/_next/"),
+      pathname === path || pathname.startsWith("/api/") || pathname.startsWith("/_next/"),
   )
 
   if (isPublicPath) {
@@ -37,9 +36,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  let supabaseResponse = NextResponse.next({
-    request,
-  })
+  let supabaseResponse = NextResponse.next({ request })
 
   try {
     const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
@@ -49,9 +46,7 @@ export async function middleware(request: NextRequest) {
         },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
-          supabaseResponse = NextResponse.next({
-            request,
-          })
+          supabaseResponse = NextResponse.next({ request })
           cookiesToSet.forEach(({ name, value, options }) => supabaseResponse.cookies.set(name, value, options))
         },
       },
@@ -61,17 +56,35 @@ export async function middleware(request: NextRequest) {
       data: { user },
     } = await supabase.auth.getUser()
 
-    // Redirect to home if not authenticated and accessing protected routes
-    if (
-      !user &&
-      (request.nextUrl.pathname.startsWith("/dashboard") || request.nextUrl.pathname.startsWith("/projects"))
-    ) {
-      const redirectUrl = new URL("/", request.url)
+    const requiresAuthentication =
+      pathname.startsWith("/dashboard") || pathname.startsWith("/projects") || pathname.startsWith("/admin")
+
+    if (!user && requiresAuthentication) {
+      const redirectUrl = new URL("/auth/login", request.url)
+      redirectUrl.searchParams.set("next", pathname)
       return NextResponse.redirect(redirectUrl)
+    }
+
+    if (user && pathname.startsWith("/admin")) {
+      const { data: profile, error: profileError } = await supabase
+        .from("users")
+        .select("role")
+        .eq("id", user.id)
+        .maybeSingle()
+
+      const role = profile?.role ?? user.app_metadata?.role ?? user.user_metadata?.role
+
+      if (profileError || role !== "admin") {
+        return NextResponse.redirect(new URL("/dashboard", request.url))
+      }
     }
 
     return supabaseResponse
   } catch (error) {
+    if (pathname.startsWith("/admin")) {
+      return NextResponse.redirect(new URL("/auth/login", request.url))
+    }
+
     return NextResponse.next()
   }
 }
