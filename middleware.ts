@@ -1,31 +1,22 @@
 import { createServerClient } from "@supabase/ssr"
 import { NextResponse, type NextRequest } from "next/server"
 
+function safeNextPath(value: string | null) {
+  if (!value || !value.startsWith("/") || value.startsWith("//")) {
+    return "/dashboard"
+  }
+
+  if (value.startsWith("/auth/login") || value.startsWith("/auth/signup")) {
+    return "/dashboard"
+  }
+
+  return value
+}
+
 export async function middleware(request: NextRequest) {
-  const publicPaths = [
-    "/",
-    "/docs",
-    "/docs/whitepaper",
-    "/docs/one-pager",
-    "/docs/privacy-security",
-    "/pricing",
-    "/features",
-    "/about",
-    "/journey",
-    "/services",
-    "/onboarding",
-    "/auth/callback",
-    "/auth/login",
-    "/auth/sign-up",
-  ]
-
   const pathname = request.nextUrl.pathname
-  const isPublicPath = publicPaths.some(
-    (path) =>
-      pathname === path || pathname.startsWith("/api/") || pathname.startsWith("/_next/"),
-  )
 
-  if (isPublicPath) {
+  if (pathname.startsWith("/api/") || pathname.startsWith("/_next/")) {
     return NextResponse.next()
   }
 
@@ -61,8 +52,13 @@ export async function middleware(request: NextRequest) {
 
     if (!user && requiresAuthentication) {
       const redirectUrl = new URL("/auth/login", request.url)
-      redirectUrl.searchParams.set("next", pathname)
+      redirectUrl.searchParams.set("next", `${pathname}${request.nextUrl.search}`)
       return NextResponse.redirect(redirectUrl)
+    }
+
+    if (user && (pathname === "/auth/login" || pathname === "/auth/signup")) {
+      const nextPath = safeNextPath(request.nextUrl.searchParams.get("next"))
+      return NextResponse.redirect(new URL(nextPath, request.url))
     }
 
     if (user && pathname.startsWith("/admin")) {
