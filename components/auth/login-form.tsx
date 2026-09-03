@@ -3,20 +3,30 @@
 import type React from "react"
 
 import { useState } from "react"
+import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { createClient } from "@/lib/supabase/client"
 import { Loader2, Mail, Lock } from "lucide-react"
 import { logger } from "@/lib/logger"
+import { signInWithPassword } from "@/app/auth/login/actions"
+
+function getSafeNextPath(next: string | null) {
+  if (!next || !next.startsWith("/") || next.startsWith("//")) {
+    return "/dashboard"
+  }
+
+  return next
+}
 
 export function LoginForm() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const searchParams = useSearchParams()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -26,28 +36,17 @@ export function LoginForm() {
     logger.debug("Login attempt", { email })
 
     try {
-      const supabase = createClient()
+      const result = await signInWithPassword(email, password)
 
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      })
-
-      if (error) {
-        logger.warn("Login failed", { error: error.message, email })
-        setError(error.message)
+      if (!result.ok) {
+        logger.warn("Login failed", { error: result.error, email })
+        setError(result.error)
         setLoading(false)
         return
       }
 
-      if (data.user) {
-        logger.info("Login successful", { userId: data.user.id })
-        window.location.href = "/dashboard"
-      } else {
-        logger.error("No user returned from login")
-        setError("Login failed. Please try again.")
-        setLoading(false)
-      }
+      logger.info("Login successful")
+      window.location.assign(getSafeNextPath(searchParams.get("next")))
     } catch (err) {
       logger.error("Unexpected login error", err)
       setError("An unexpected error occurred")
