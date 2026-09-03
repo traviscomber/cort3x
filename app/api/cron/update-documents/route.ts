@@ -1,12 +1,11 @@
 import { createClient } from "@/lib/supabase/server"
+import { AuthorizationError, requireAdmin } from "@/lib/auth/admin"
 import { NextResponse } from "next/server"
 
 export const runtime = "edge"
 
 // This endpoint runs every Friday at midnight UTC (0 0 * * 5)
-// Can also be triggered manually via POST request
 export async function GET(request: Request) {
-  // Verify the request is from Vercel Cron
   const authHeader = request.headers.get("authorization")
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
@@ -15,19 +14,28 @@ export async function GET(request: Request) {
   return updateDocuments()
 }
 
-export async function POST(request: Request) {
-  return updateDocuments()
+// Manual updates are restricted to authenticated administrators.
+export async function POST() {
+  try {
+    await requireAdmin()
+    return updateDocuments()
+  } catch (error) {
+    if (error instanceof AuthorizationError) {
+      return NextResponse.json({ error: error.message }, { status: error.status })
+    }
+
+    return NextResponse.json({ error: "Authorization check failed" }, { status: 500 })
+  }
 }
 
 async function updateDocuments() {
   try {
     const supabase = await createClient()
 
-    // Update all documents' updated_at timestamp to current time
     const { data, error } = await supabase
       .from("documents")
       .update({ updated_at: new Date().toISOString() })
-      .neq("id", "") // Update all documents
+      .neq("id", "")
       .select("id, title")
 
     if (error) {
