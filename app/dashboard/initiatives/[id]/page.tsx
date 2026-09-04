@@ -1,39 +1,45 @@
 import { createClient } from "@/lib/supabase/server"
 import { redirect, notFound } from "next/navigation"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft } from "lucide-react"
-import { InitiativeDashboard } from "@/components/initiative-dashboard"
 import type { Metadata } from "next"
+import { InitiativeIntelligenceWorkspace } from "@/components/initiative-intelligence-workspace"
 
-interface Document {
+type EvidenceDocument = {
   id: string
   title: string
-  description: string
-  completion_percentage: number
-  status: string
+  description?: string | null
+  completion_percentage: number | null
+  status: string | null
   created_at: string
   updated_at: string
 }
 
-interface Initiative {
+type Initiative = {
   id: string
   title: string
-  description?: string
-  category?: string
-  country?: string
+  description?: string | null
+  category?: string | null
+  country?: string | null
   status: string
-  progress: number
-  budget: number
+  progress: number | null
+  budget: number | null
   created_at: string
   updated_at: string
-  created_by?: string
+  created_by?: string | null
+  project_code?: string | null
+  lead?: string | null
+  start_date?: string | null
+  end_date?: string | null
+  risks?: unknown[] | null
+  milestones?: unknown[] | null
+  objectives?: unknown[] | null
 }
 
 export const metadata: Metadata = {
-  title: "Initiative Dashboard | Impax Cort3x",
-  description: "Individual initiative dashboard with metrics and visualizations",
+  title: "Initiative Intelligence | Cort3x",
+  description: "Evidence, risk and execution context for a Cort3x initiative.",
 }
+
+export const dynamic = "force-dynamic"
 
 export default async function InitiativeDashboardPage({ params }: { params: { id: string } }) {
   const supabase = await createClient()
@@ -43,62 +49,31 @@ export default async function InitiativeDashboardPage({ params }: { params: { id
   } = await supabase.auth.getUser()
 
   if (!user) {
-    redirect("/auth/login")
+    redirect(`/auth/login?next=/dashboard/initiatives/${encodeURIComponent(params.id)}`)
   }
 
-  console.log("[v0] Dashboard params.id:", params.id)
+  const [initiativeResult, documentsResult] = await Promise.all([
+    supabase.from("initiatives").select("*").eq("id", params.id).single(),
+    supabase
+      .from("documents")
+      .select("id,title,description,completion_percentage,status,created_at,updated_at")
+      .eq("initiative_id", params.id)
+      .order("updated_at", { ascending: false }),
+  ])
 
-  // Fetch initiative
-  const { data: initiative, error: initError } = (await supabase
-    .from("initiatives")
-    .select("*")
-    .eq("id", params.id)
-    .single()) as { data: Initiative | null; error: any }
-
-  console.log("[v0] Initiative fetch error:", initError)
-  console.log("[v0] Initiative data:", initiative?.id, initiative?.title)
-
-  if (initError || !initiative) {
-    console.log("[v0] Initiative not found, showing 404")
+  if (initiativeResult.error || !initiativeResult.data) {
+    console.error("Initiative workspace fetch failed", initiativeResult.error)
     notFound()
   }
 
-  // Fetch documents for this initiative
-  const { data: documents, error: docsError } = (await supabase
-    .from("documents")
-    .select("*")
-    .eq("initiative_id", initiative.id)
-    .order("updated_at", { ascending: false })) as { data: Document[] | null; error: any }
-
-  console.log("[v0] Documents fetch error:", docsError)
-  console.log("[v0] Documents count:", documents?.length)
-
-  if (docsError) {
-    console.error("Error fetching documents:", docsError)
+  if (documentsResult.error) {
+    console.error("Initiative evidence fetch failed", documentsResult.error)
   }
 
-  const docs: Document[] = documents || []
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary/5 via-background to-background">
-      {/* Header */}
-      <div className="border-b border-primary/10 bg-background/80 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-6">
-          <Link href="/dashboard">
-            <Button variant="ghost" size="sm" className="mb-2">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Dashboard
-            </Button>
-          </Link>
-          <h1 className="text-3xl font-bold text-foreground">{initiative.title} - Dashboard</h1>
-          <p className="text-muted-foreground mt-1">Detailed metrics and analytics for this initiative</p>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="container mx-auto px-4 py-8">
-        <InitiativeDashboard initiative={initiative} documents={docs} />
-      </div>
-    </div>
+    <InitiativeIntelligenceWorkspace
+      initiative={initiativeResult.data as Initiative}
+      documents={(documentsResult.data || []) as EvidenceDocument[]}
+    />
   )
 }
