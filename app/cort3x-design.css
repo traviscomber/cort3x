@@ -1,0 +1,157 @@
+/* Cort3x canonical identity layer. See /DESIGN.md. */
+
+:root,
+.dark {
+  color-scheme: dark;
+
+  --c3x-void: #070a09;
+  --c3x-ink: #0d1110;
+  --c3x-graphite: #171d1b;
+  --c3x-rule: #29322f;
+  --c3x-mist: #8f9a96;
+  --c3x-bone: #e7e9e2;
+  --c3x-white: #f7f8f4;
+  --c3x-moss: #8c9861;
+  --c3x-signal: #79b7b1;
+  --c3x-amber: #c79a57;
+  --c3x-red: #c96a64;
+  --c3x-green: #6fa47e;
+
+  /* shadcn / Tailwind semantic bridge */
+  --background: 160 18% 3%;
+  --foreground: 77 14% 90%;
+  --card: 165 13% 6%;
+  --card-foreground: 77 14% 90%;
+  --popover: 165 13% 6%;
+  --popover-foreground: 77 14% 90%;
+  --primary: 73 22% 49%;
+  --primary-foreground: 160 18% 3%;
+  --secondary: 160 12% 10%;
+  --secondary-foreground: 77 14% 90%;
+  --muted: 160 12% 10%;
+  --muted-foreground: 158 5% 58%;
+  --accent: 174 30% 60%;
+  --accent-foreground: 160 18% 3%;
+  --destructive: 4 49% 59%;
+  --destructive-foreground: 75 22% 96%;
+  --border: 160 10% 18%;
+  --input: 160 10% 18%;
+  --ring: 174 30% 60%;
+  --chart-1: 73 22% 49%;
+  --chart-2: 174 30% 60%;
+  --chart-3: 36 50% 56%;
+  --chart-4: 137 22% 54%;
+  --chart-5: 158 5% 58%;
+  --radius: 0.25rem;
+  --sidebar-background: 165 13% 6%;
+  --sidebar-foreground: 77 14% 90%;
+  --sidebar-primary: 73 22% 49%;
+  --sidebar-primary-foreground: 160 18% 3%;
+  --sidebar-accent: 160 12% 10%;
+  --sidebar-accent-foreground: 77 14% 90%;
+  --sidebar-border: 160 10% 18%;
+  --sidebar-ring: 174 30% 60%;
+}
+
+html {
+  background: var(--c3x-void);
+  color: var(--c3x-bone);
+}
+
+body {
+  min-height: 100vh;
+  background: var(--c3x-void);
+  color: var(--c3x-bone);
+  text-rendering: optimizeLegibility;
+}
+
+.font-display,
+h1,
+h2,
+h3[data-display="true"] {
+  font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--c3x-signal) 35%, transparent);
+  color: var(--c3x-white);
+}
+
+:focus-visible {
+  outline: 1px solid var(--c3x-signal);
+  outline-offset: 3px;
+}
+
+.c3x-canvas {
+  background: var(--c3x-void);
+  color: var(--c3x-bone);
+}
+
+.c3x-section {
+  border-color: var(--c3x-rule);
+}
+
+.c3x-panel {
+  background: var(--c3x-ink);
+  border: 1px solid var(--c3x-rule);
+  border-radius: 4px;
+}
+
+.c3x-micro {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c3x-mist);
+}
+
+.c3x-trace {
+  position: relative;
+  min-height: 12px;
+}
+
+.c3x-trace::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  right: 5px;
+  top: 50%;
+  height: 1px;
+  background: var(--c3x-rule);
+}
+
+.c3x-trace::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--c3x-signal);
+  transform: translateY(-50%);
+  box-shadow: calc(100% - 10px) 0 0 -1px var(--c3x-void), calc(100% - 10px) 0 0 0 var(--c3x-rule);
+}
+
+.c3x-link {
+  color: var(--c3x-signal);
+  text-decoration-color: color-mix(in srgb, var(--c3x-signal) 45%, transparent);
+  text-underline-offset: 0.2em;
+}
+
+.c3x-link:hover {
+  color: var(--c3x-white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
