@@ -1,7 +1,8 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter, JetBrains_Mono } from "next/font/google"
+import { IBM_Plex_Sans_Condensed, Inter, JetBrains_Mono } from "next/font/google"
 import "./globals.css"
+import "./cort3x-design.css"
 import { SiteNav } from "@/components/site-nav"
 import { logger } from "@/lib/logger"
 import { ErrorBoundary } from "@/components/error-boundary"
@@ -10,6 +11,13 @@ import { TranslationsProvider } from "@/lib/i18n/translations-provider"
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
+  display: "swap",
+})
+
+const ibmPlexSansCondensed = IBM_Plex_Sans_Condensed({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-display",
   display: "swap",
 })
 
@@ -135,7 +143,7 @@ export const metadata: Metadata = {
     "article:author": "Cort3x Team at n3uralia",
     "application-name": "Cort3x",
     "apple-mobile-web-app-title": "Cort3x",
-    "theme-color": "#10b981",
+    "theme-color": "#070A09",
   },
   generator: "v0.app",
 }
@@ -146,7 +154,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html className={`${inter.variable} ${jetbrainsMono.variable}`} lang="en" suppressHydrationWarning>
+    <html
+      className={`${inter.variable} ${ibmPlexSansCondensed.variable} ${jetbrainsMono.variable} dark`}
+      lang="en"
+      suppressHydrationWarning
+    >
       <head>
         <link rel="canonical" href={getSiteUrl()} />
         <link rel="alternate" hrefLang="en" href={`${getSiteUrl()}/en`} />
@@ -159,7 +171,7 @@ export default function RootLayout({
         <meta name="rating" content="General" />
         <meta name="revisit-after" content="7 days" />
       </head>
-      <body className="font-sans">
+      <body className="font-sans antialiased">
         <TranslationsProvider>
           <ErrorBoundary>
             <SiteNav />
