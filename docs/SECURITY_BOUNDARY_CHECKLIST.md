@@ -1,0 +1,11 @@
+- [x] RLS enabled on previously exposed operational tables
+- [x] Anonymous direct table access revoked
+- [x] Public projections read-only
+- [x] Legacy analytics views converted to security invoker
+- [x] Editable user_metadata removed from admin policies
+- [x] Backend cron/tracking writes isolated behind service role
+- [x] Initiative progress narrowed to authenticated RPC
+- [x] Anonymous public landing smoke passes
+- [x] Anonymous direct evidence access denied
+- [x] Authenticated RLS read simulation passes
+- [ ] Merge application branch after explicit repository release authorization
