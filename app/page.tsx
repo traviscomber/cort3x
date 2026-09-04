@@ -32,8 +32,8 @@ export default async function HomePage() {
 
     try {
       const { data: initiativesData, error: initError } = await supabase
-        .from("initiatives")
-        .select("*")
+        .from("public_initiatives")
+        .select("id, title, description, category, status, progress, country, project_code, created_at, updated_at")
         .order("created_at", { ascending: false })
 
       if (initError) {
@@ -47,9 +47,8 @@ export default async function HomePage() {
 
     try {
       const { data: partnersData, error: partnerError } = await supabase
-        .from("partners")
+        .from("public_partners")
         .select("name, logo")
-        .eq("status", "active")
         .limit(5)
 
       if (partnerError) {
@@ -63,8 +62,8 @@ export default async function HomePage() {
 
     try {
       const { data: countriesData, error: countryError } = await supabase
-        .from("countries")
-        .select("*")
+        .from("public_countries")
+        .select("id, name, code, flag_emoji, coordinates, timezone, currency, language")
         .in("code", ["CL", "US", "ID"])
         .order("name")
 

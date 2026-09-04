@@ -1,22 +1,18 @@
 import { NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
+import { createServiceClient } from "@/lib/supabase/service"
 import { AuthorizationError, requireAdmin } from "@/lib/auth/admin"
 import { researchTopic, generateDocumentUpdate, analyzeInitiativeProgress } from "@/lib/document-intelligence"
 import { rateLimit, RATE_LIMITS } from "@/lib/rate-limit"
 import { logger } from "@/lib/logger"
 
-export const maxDuration = 300 // 5 minutes for AI processing
+export const maxDuration = 300
 
 export async function GET(request: Request) {
   try {
     const rateLimitResult = await rateLimit("cron:intelligent-update", RATE_LIMITS.CRON)
-
     if (!rateLimitResult.success) {
       return NextResponse.json(
-        {
-          error: "Rate limit exceeded",
-          retryAfter: rateLimitResult.reset,
-        },
+        { error: "Rate limit exceeded", retryAfter: rateLimitResult.reset },
         {
           status: 429,
           headers: {
@@ -44,13 +40,9 @@ export async function GET(request: Request) {
 export async function POST() {
   try {
     const rateLimitResult = await rateLimit("cron:intelligent-update:manual", RATE_LIMITS.CRON)
-
     if (!rateLimitResult.success) {
       return NextResponse.json(
-        {
-          error: "Rate limit exceeded",
-          retryAfter: rateLimitResult.reset,
-        },
+        { error: "Rate limit exceeded", retryAfter: rateLimitResult.reset },
         {
           status: 429,
           headers: {
@@ -75,8 +67,7 @@ export async function POST() {
 }
 
 async function performIntelligentUpdate() {
-  const supabase = await createClient()
-
+  const supabase = createServiceClient()
   logger.info("Starting intelligent update cycle")
 
   const { data: initiatives, error: initiativesError } = await supabase
@@ -92,7 +83,6 @@ async function performIntelligentUpdate() {
     logger.info("Processing initiative", { initiativeId: initiative.id, title: initiative.title })
 
     const findings = await researchTopic(initiative.title, initiative.tags || [])
-
     const progressAnalysis = await analyzeInitiativeProgress(
       initiative.title,
       initiative.progress || 0,
@@ -101,9 +91,7 @@ async function performIntelligentUpdate() {
 
     for (const doc of initiative.documents || []) {
       logger.info("Updating document", { docId: doc.id, title: doc.title })
-
       const update = await generateDocumentUpdate(doc.title, doc.content || "", findings)
-
       const updateLog = {
         date: new Date().toISOString(),
         findings: update.newFindings,
@@ -111,19 +99,13 @@ async function performIntelligentUpdate() {
         summary: update.updateSummary,
         sources: update.sources,
       }
-
       const existingHistory = doc.update_history || []
       const newHistory = [...existingHistory, updateLog]
-
       const updatedContent = `${doc.content}\n\n## Update ${new Date().toLocaleDateString()} 📊\n\n### New Findings\n${update.newFindings.map((f) => `- ${f}`).join("\n")}\n\n### Recommendations\n${update.recommendations.map((r) => `- ${r}`).join("\n")}\n\n---\n`
 
       const { error: updateError } = await supabase
         .from("documents")
-        .update({
-          content: updatedContent,
-          updated_at: new Date().toISOString(),
-          update_history: newHistory,
-        })
+        .update({ content: updatedContent, updated_at: new Date().toISOString(), update_history: newHistory })
         .eq("id", doc.id)
 
       if (updateError) {

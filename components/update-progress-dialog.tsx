@@ -55,19 +55,12 @@ export function UpdateProgressDialog({
     e.preventDefault()
     setIsSubmitting(true)
 
-    console.log("[v0] Updating progress for initiative:", initiative.id)
-    console.log("[v0] New progress value:", progress)
-
     try {
       const supabase = createClient()
-
-      const { error } = await supabase
-        .from("initiatives")
-        .update({
-          progress,
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", initiative.id)
+      const { error } = await supabase.rpc("update_initiative_progress", {
+        p_initiative_id: initiative.id,
+        p_progress: progress,
+      })
 
       if (error) {
         console.error("[v0] Error updating progress:", error)
@@ -75,7 +68,6 @@ export function UpdateProgressDialog({
         return
       }
 
-      console.log("[v0] Progress updated successfully")
       handleOpenChange(false)
       onSuccess?.()
       router.refresh()

@@ -38,7 +38,7 @@ export function FunnelPageClient() {
             startup_idea: formData.startupIdea,
             source: "funnel_page",
             status: "new",
-            lead_score: formData.startupIdea ? 15 : 0, // Initial score if they provided an idea
+            lead_score: formData.startupIdea ? 15 : 0,
           },
         ])
         .select()
@@ -51,13 +51,13 @@ export function FunnelPageClient() {
           setError("Something went wrong. Please try again.")
         }
       } else {
-        await supabase.from("email_automation_log").insert([
-          {
-            lead_id: leadData.id,
-            email_type: "welcome_canvas",
-            status: "sent",
-          },
-        ])
+        const { error: logError } = await supabase.rpc("log_welcome_email", {
+          p_lead_id: leadData.id,
+        })
+
+        if (logError) {
+          console.error("Failed to create welcome email log", logError)
+        }
 
         setIsSuccess(true)
       }
@@ -122,7 +122,6 @@ export function FunnelPageClient() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 via-background to-background">
-      {/* Hero Section */}
       <section className="relative overflow-hidden py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center space-y-6 mb-16">
@@ -142,9 +141,7 @@ export function FunnelPageClient() {
             </p>
           </div>
 
-          {/* Main Form Card */}
           <div className="grid lg:grid-cols-2 gap-8 items-start">
-            {/* Form */}
             <Card className="p-8 space-y-6">
               <div>
                 <h2 className="text-2xl font-bold mb-2">Get Your Free Innovation Canvas</h2>
@@ -205,7 +202,6 @@ export function FunnelPageClient() {
               </form>
             </Card>
 
-            {/* Benefits */}
             <div className="space-y-6">
               <Card className="p-6 space-y-4">
                 <div className="flex items-start gap-4">
@@ -249,7 +245,6 @@ export function FunnelPageClient() {
                 </div>
               </Card>
 
-              {/* Trust Indicators */}
               <div className="bg-muted/50 rounded-lg p-6 space-y-3">
                 <p className="text-sm font-medium text-foreground">Trusted by innovative organizations:</p>
                 <div className="flex flex-wrap gap-4 items-center justify-center opacity-60">

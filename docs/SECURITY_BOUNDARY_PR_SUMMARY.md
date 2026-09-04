@@ -1,0 +1,1 @@
+PR summary: separate public projections from private operational data, enable RLS, remove anonymous table mutations, harden legacy analytics views, isolate backend writes behind service role, and replace editable user_metadata admin checks.
