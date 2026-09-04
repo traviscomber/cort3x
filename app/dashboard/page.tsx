@@ -1,8 +1,7 @@
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 import type { Metadata } from "next"
-import { DashboardClient } from "@/components/dashboard-client"
-import { DashboardChartsContainer } from "@/components/dashboard-charts-container"
+import { CommandCenter } from "@/components/command-center"
 
 type Initiative = {
   id: string
@@ -10,28 +9,32 @@ type Initiative = {
   description: string | null
   category: string | null
   status: string
-  created_by: string | null
   country: string | null
   project_code: string | null
   progress: number | null
-  location_data: Record<string, unknown> | null // changed from 'unknown' to match DashboardClient interface
-  created_at: string
   updated_at: string
-  risks: unknown[] | null // changed from 'unknown' to 'unknown[] | null' for consistency
-  milestones: unknown[] | null // changed from 'unknown' to 'unknown[] | null' for consistency
-  objectives: unknown[] | null // changed from 'unknown' to 'unknown[] | null' for consistency
-  documents: unknown[] | null // changed from 'unknown' to 'unknown[] | null' for consistency
-  partners: unknown[] | null // changed from 'unknown' to 'unknown[] | null' for consistency
-  budget: number | null // changed from 'unknown' to 'number | null'
-  lead: string | null // changed from 'unknown' to 'string | null'
-  start_date: string | null
-  end_date: string | null
+  created_at: string
+  risks: unknown[] | null
+  milestones: unknown[] | null
+  objectives: unknown[] | null
+  budget: number | null
+}
+
+type EvidenceDocument = {
+  id: string
+  title: string
+  initiative_id: string
+  status: string | null
+  completion_percentage: number | null
+  updated_at: string
 }
 
 export const metadata: Metadata = {
-  title: "Dashboard | Impax Cort3x",
-  description: "Your project dashboard",
+  title: "Command Center | Cort3x",
+  description: "Live innovation intelligence command center across evidence and execution.",
 }
+
+export const dynamic = "force-dynamic"
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -41,49 +44,28 @@ export default async function DashboardPage() {
   } = await supabase.auth.getUser()
 
   if (!user) {
-    redirect("/auth/login")
+    redirect("/auth/login?next=/dashboard")
   }
 
-  const [initiativesResult, allInitiativesResult, leadsResult] = await Promise.all([
-    supabase.from("initiatives").select("*").order("created_at", { ascending: false }),
-    supabase.from("initiatives").select("*"),
-    supabase.from("leads").select("*").order("created_at", { ascending: false }).limit(5),
+  const [initiativesResult, documentsResult] = await Promise.all([
+    supabase.from("initiatives").select("*").order("updated_at", { ascending: false }),
+    supabase
+      .from("documents")
+      .select("id,title,initiative_id,status,completion_percentage,updated_at")
+      .order("updated_at", { ascending: false })
+      .limit(100),
   ])
 
-  const initiatives = (initiativesResult.data || []) as Initiative[]
-  const allInitiatives = (allInitiativesResult.data || []) as Initiative[]
-  const recentLeads = leadsResult.data || []
-
-  const activeCount = allInitiatives.filter((i: Initiative) => i.status === "active").length
-  const completedCount = allInitiatives.filter((i: Initiative) => i.status === "completed").length
-
-  const stats = {
-    totalProjects: allInitiatives.length,
-    activeProjects: activeCount,
-    completedProjects: completedCount,
-    avgProgress:
-      initiatives.length > 0 ? initiatives.reduce((sum, i) => sum + (i.progress || 0), 0) / initiatives.length : 0,
-    totalLeads: recentLeads.length,
-    totalPartnershipSubmissions: 0,
+  if (initiativesResult.error) {
+    console.error("Command Center initiatives fetch failed", initiativesResult.error)
   }
 
-  return (
-    <div className="space-y-8">
-      <DashboardClient
-        initiatives={initiatives}
-        stats={stats}
-        user={user}
-        recentLeads={recentLeads}
-        recentPartnershipSubmissions={[]}
-      />
+  if (documentsResult.error) {
+    console.error("Command Center evidence fetch failed", documentsResult.error)
+  }
 
-      <div className="mt-12 pt-8 border-t">
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-balance">Analytics & Visualizaciones</h2>
-          <p className="text-muted-foreground mt-2">Gráficos detallados de todas las iniciativas en tiempo real</p>
-        </div>
-        <DashboardChartsContainer />
-      </div>
-    </div>
-  )
+  const initiatives = (initiativesResult.data || []) as Initiative[]
+  const documents = (documentsResult.data || []) as EvidenceDocument[]
+
+  return <CommandCenter initiatives={initiatives} documents={documents} />
 }
