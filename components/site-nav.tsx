@@ -46,6 +46,7 @@ export function SiteNav() {
   const [user, setUser] = useState<any>(null)
   const pathname = usePathname()
   const labels = navigationLabels[locale]
+  const isWorkspaceRoute = pathname.startsWith("/dashboard")
 
   useEffect(() => {
     const checkUser = async () => {
@@ -71,6 +72,10 @@ export function SiteNav() {
 
     checkUser()
   }, [])
+
+  if (isWorkspaceRoute) {
+    return null
+  }
 
   const isActive = (path: string) => pathname === path
 
