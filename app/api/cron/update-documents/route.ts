@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server"
+import { createServiceClient } from "@/lib/supabase/service"
 import { AuthorizationError, requireAdmin } from "@/lib/auth/admin"
 import { NextResponse } from "next/server"
 
@@ -30,7 +30,7 @@ export async function POST() {
 
 async function updateDocuments() {
   try {
-    const supabase = await createClient()
+    const supabase = createServiceClient()
 
     const { data, error } = await supabase
       .from("documents")
