@@ -1,281 +1,220 @@
 import type { Metadata } from "next"
-import { Button } from "@/components/ui/button"
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Brain, Target, Rocket, Award, Calculator, MessageSquare, Gauge, Leaf } from "lucide-react"
+import Link from "next/link"
+import {
+  ArrowRight,
+  CircleDot,
+  FileText,
+  Layers3,
+  RadioTower,
+  Scale,
+  Search,
+  ShieldCheck,
+  Target,
+  Workflow,
+} from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Platform Features - Advanced Innovation Tools",
+  title: "Capabilities | Cort3x",
   description:
-    "AI-powered project scoring, ROI calculators, investor matchmaking, collaboration tools, and environmental impact tracking",
+    "Cort3x capabilities for research, evidence, signals, opportunity mapping, prioritization, decisions and execution.",
 }
 
-export default function FeaturesPage() {
-  const features = [
-    {
-      icon: Brain,
-      title: "AI-Powered Project Scoring",
-      description:
-        "Advanced machine learning algorithms analyze your project across market potential, technical feasibility, environmental impact, and competitive positioning",
-      benefits: [
-        "Instant viability assessment in seconds",
-        "Data-driven recommendations for improvement",
-        "Competitive benchmarking framework",
-        "Predictive success metrics",
-      ],
-      color: "from-purple-500 to-indigo-500",
-      badge: "Powered by AI",
-    },
-    {
-      icon: Calculator,
-      title: "ROI & Impact Calculator",
-      description:
-        "Comprehensive financial modeling tools that calculate return on investment, carbon footprint reduction, social impact metrics, and sustainability outcomes",
-      benefits: [
-        "Multi-year financial projections with scenarios",
-        "Carbon emissions reduction calculations",
-        "Social impact quantification metrics",
-        "Investor-ready ROI reports with visuals",
-      ],
-      color: "from-green-500 to-emerald-500",
-      badge: "Data-Driven",
-    },
-    {
-      icon: Target,
-      title: "Business Model Canvas Builder",
-      description:
-        "Interactive digital canvas for visualizing, testing, and iterating your business model with real-time team collaboration and export capabilities",
-      benefits: [
-        "Intuitive drag-and-drop interface",
-        "Real-time team collaboration",
-        "Export to presentations and reports",
-        "Integrated with your project data",
-      ],
-      color: "from-blue-500 to-cyan-500",
-      badge: "Collaborative",
-    },
-    {
-      icon: MessageSquare,
-      title: "Collaboration & Community Hub",
-      description:
-        "Integrated workspace for ideation, feedback collection, and stakeholder engagement with discussion boards, voting systems, and document sharing",
-      benefits: [
-        "Crowdsource ideas from your team",
-        "Built-in voting and prioritization",
-        "Document version control",
-        "Real-time notifications and updates",
-      ],
-      color: "from-pink-500 to-rose-500",
-      badge: "Community-Driven",
-    },
-    {
-      icon: Gauge,
-      title: "Progress Tracking Dashboard",
-      description:
-        "Visual project management dashboard tracking milestones, deliverables, KPIs, and team performance with automated reporting and customizable alerts",
-      benefits: [
-        "Customizable KPI tracking and alerts",
-        "Visual milestone timeline tracking",
-        "Team task assignment and status",
-        "Automated progress reports",
-      ],
-      color: "from-indigo-500 to-purple-500",
-      badge: "Real-Time Insights",
-    },
-    {
-      icon: Leaf,
-      title: "Environmental Impact Tracker",
-      description:
-        "Comprehensive carbon footprint calculator and environmental impact assessment tool with sustainability metrics aligned with global reporting standards",
-      benefits: [
-        "Multi-scope emissions tracking",
-        "Sustainability metrics dashboard",
-        "ESG reporting framework templates",
-        "Carbon reduction roadmap planning",
-      ],
-      color: "from-teal-500 to-green-500",
-      badge: "ESG Focused",
-    },
-  ]
+const canonicalStages = [
+  {
+    index: "01",
+    title: "Research",
+    icon: Search,
+    state: "model",
+    text: "Capture source context, what changed, where it came from and why it may matter before interpretation begins.",
+  },
+  {
+    index: "02",
+    title: "Signals",
+    icon: RadioTower,
+    state: "model",
+    text: "Represent meaningful change as an explicit object with source links, confidence and time context.",
+  },
+  {
+    index: "03",
+    title: "Evidence",
+    icon: FileText,
+    state: "live",
+    text: "Maintain initiative-linked evidence documents inside the authenticated workspace instead of scattering them across disconnected files.",
+  },
+  {
+    index: "04",
+    title: "Opportunities",
+    icon: CircleDot,
+    state: "model",
+    text: "Connect evidence and signals to opportunity hypotheses, assumptions, risks and validation requirements.",
+  },
+  {
+    index: "05",
+    title: "Prioritization",
+    icon: Target,
+    state: "model",
+    text: "Compare alternatives against explicit criteria so ranking is inspectable rather than narrative-driven.",
+  },
+  {
+    index: "06",
+    title: "Decisions",
+    icon: Scale,
+    state: "model",
+    text: "Record what was decided, by whom, with which evidence, assumptions and unresolved uncertainty.",
+  },
+  {
+    index: "07",
+    title: "Execution",
+    icon: Workflow,
+    state: "live",
+    text: "Track initiatives, risks, progress and operational follow-up while preserving the context that led to action.",
+  },
+]
 
+export default function CapabilitiesPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-primary/5 to-white">
-      {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-32 pb-20">
-        <div className="max-w-5xl mx-auto text-center">
-          <Badge className="mb-6 bg-primary text-white border-0 px-6 py-2.5 text-sm font-medium shadow-lg">
-            <Rocket className="h-4 w-4 mr-2 inline" />
-            Platform Features
-          </Badge>
-
-          <h1 className="text-5xl md:text-7xl font-bold mb-8 text-balance text-gray-900">
-            Best-in-Class Innovation Tools
-          </h1>
-
-          <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto text-pretty mb-10">
-            We've analyzed the top innovation platforms and integrated the best features to accelerate your journey from
-            idea to impact
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-10 py-6 shadow-xl">
-              Try Platform Free
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="text-lg px-10 py-6 border-2 border-gray-300 hover:bg-gray-900 hover:text-white hover:border-gray-900 bg-transparent"
-            >
-              Schedule Demo
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="text-center p-6 bg-white rounded-xl shadow-lg border-2 border-primary/20">
-              <div className="text-4xl font-bold text-primary mb-2">120+</div>
-              <div className="text-gray-600">Projects Tracked</div>
+    <main className="min-h-screen bg-[var(--c3x-void)] text-[var(--c3x-bone)]">
+      <section className="border-b border-[var(--c3x-rule)]">
+        <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+          <div className="grid gap-12 lg:grid-cols-[1.2fr_.8fr] lg:items-end">
+            <div>
+              <div className="c3x-micro text-[var(--c3x-signal)]">Capabilities / system model</div>
+              <h1 className="font-display mt-6 max-w-5xl text-[clamp(3.4rem,6.5vw,7rem)] font-normal leading-[0.93] tracking-[-0.035em]">
+                Preserve the chain between evidence and action.
+              </h1>
             </div>
-            <div className="text-center p-6 bg-white rounded-xl shadow-lg border-2 border-primary/20">
-              <div className="text-4xl font-bold text-primary mb-2">6</div>
-              <div className="text-gray-600">Core Features</div>
-            </div>
-            <div className="text-center p-6 bg-white rounded-xl shadow-lg border-2 border-primary/20">
-              <div className="text-4xl font-bold text-primary mb-2">85%</div>
-              <div className="text-gray-600">Project Completion Rate</div>
-            </div>
-            <div className="text-center p-6 bg-white rounded-xl shadow-lg border-2 border-primary/20">
-              <div className="text-4xl font-bold text-primary mb-2">24/7</div>
-              <div className="text-gray-600">Platform Availability</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Grid */}
-      <section className="container mx-auto px-4 py-20">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-8">
-            {features.map((feature, index) => {
-              const Icon = feature.icon
-              return (
-                <Card
-                  key={index}
-                  className="border-2 border-gray-200 hover:border-primary/50 bg-white hover:shadow-2xl transition-all duration-300 group overflow-hidden"
+            <div className="border-l border-[var(--c3x-rule)] pl-6">
+              <p className="max-w-xl text-base leading-7 text-[var(--c3x-mist)]">
+                Cort3x is organized around decision context, not a catalogue of generic SaaS features. Each capability strengthens traceability from research through execution and learning.
+              </p>
+              <div className="mt-6 flex gap-3">
+                <Link
+                  href="/auth/login?next=/dashboard"
+                  className="flex min-h-11 items-center gap-3 bg-[var(--c3x-signal)] px-5 text-sm font-medium text-[var(--c3x-void)] transition-colors duration-150 hover:bg-[var(--c3x-white)]"
                 >
-                  <div className={`h-2 bg-gradient-to-r ${feature.color}`} />
-                  <CardHeader className="p-8 space-y-6">
-                    <div className="flex items-start justify-between">
-                      <div
-                        className={`h-16 w-16 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}
-                      >
-                        <Icon className="h-8 w-8 text-white" />
+                  Open workspace
+                  <ArrowRight className="h-4 w-4" strokeWidth={1.6} />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-[var(--c3x-rule)]">
+        <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
+          <div className="flex flex-col gap-3 border-b border-[var(--c3x-rule)] pb-8 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <div className="c3x-micro text-[var(--c3x-signal)]">Canonical loop</div>
+              <h2 className="font-display mt-4 text-[clamp(2.2rem,4vw,4rem)] font-normal leading-[1]">Seven stages. One persistent context.</h2>
+            </div>
+            <div className="font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--c3x-mist)]">
+              LIVE = current operational foundation · MODEL = next canonical object
+            </div>
+          </div>
+
+          <div className="mt-8 grid border-l border-t border-[var(--c3x-rule)] md:grid-cols-2 xl:grid-cols-4">
+            {canonicalStages.map((stage) => {
+              const Icon = stage.icon
+              const live = stage.state === "live"
+              return (
+                <div key={stage.title} className="min-h-[270px] border-b border-r border-[var(--c3x-rule)] bg-[var(--c3x-ink)] p-6">
+                  <div className="flex items-start justify-between">
+                    <Icon className={live ? "h-4 w-4 text-[var(--c3x-signal)]" : "h-4 w-4 text-[var(--c3x-mist)]"} strokeWidth={1.6} />
+                    <div className="text-right">
+                      <div className="font-mono text-[9px] text-[var(--c3x-mist)]">{stage.index}</div>
+                      <div className={`mt-2 font-mono text-[8px] uppercase tracking-[0.12em] ${live ? "text-[var(--c3x-green)]" : "text-[var(--c3x-moss)]"}`}>
+                        {live ? "live" : "model"}
                       </div>
-                      <Badge className="bg-primary/10 text-primary border-primary/20">{feature.badge}</Badge>
                     </div>
-
-                    <div>
-                      <CardTitle className="text-2xl text-gray-900 mb-3 group-hover:text-primary transition-colors">
-                        {feature.title}
-                      </CardTitle>
-                      <CardDescription className="text-base text-gray-600 leading-relaxed mb-6">
-                        {feature.description}
-                      </CardDescription>
-                    </div>
-
-                    <div className="space-y-3">
-                      <div className="font-semibold text-gray-900 text-sm uppercase tracking-wide">Key Benefits</div>
-                      <ul className="space-y-2">
-                        {feature.benefits.map((benefit, idx) => (
-                          <li key={idx} className="flex items-start gap-2 text-gray-700">
-                            <Award className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                            <span className="text-sm">{benefit}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </CardHeader>
-                </Card>
+                  </div>
+                  <h3 className="font-display mt-16 text-3xl font-normal">{stage.title}</h3>
+                  <p className="mt-4 max-w-sm text-sm leading-6 text-[var(--c3x-mist)]">{stage.text}</p>
+                </div>
               )
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* Competitive Advantage Section */}
-      <section className="container mx-auto px-4 py-20 bg-gradient-to-br from-primary/10 to-primary/5 rounded-3xl my-16">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">Why We're Different</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Focused on actionable tools that deliver real results for your green innovation projects
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-              <div className="h-16 w-16 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center mx-auto mb-4">
-                <Brain className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900">AI-Powered Analysis</h3>
-              <p className="text-gray-600">
-                Our AI evaluates your project against proven innovation frameworks and provides actionable insights
-              </p>
-            </div>
-
-            <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-              <div className="h-16 w-16 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center mx-auto mb-4">
-                <Leaf className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900">Sustainability-First</h3>
-              <p className="text-gray-600">
-                Track environmental impact with built-in carbon footprint calculations and ESG reporting tools
-              </p>
-            </div>
-
-            <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-              <div className="h-16 w-16 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center mx-auto mb-4">
-                <MessageSquare className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900">Collaborative Platform</h3>
-              <p className="text-gray-600">
-                Work with your team in real-time with built-in collaboration, voting, and feedback tools
+            <div className="min-h-[270px] border-b border-r border-[var(--c3x-rule)] p-6">
+              <div className="font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--c3x-signal)]">08 / Learning</div>
+              <h3 className="font-display mt-16 text-3xl font-normal">Close the loop</h3>
+              <p className="mt-4 max-w-sm text-sm leading-6 text-[var(--c3x-mist)]">
+                Outcomes become new evidence. The system should learn from what happened after a decision, not only from what was predicted before it.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="container mx-auto px-4 py-20">
-        <div className="max-w-4xl mx-auto text-center p-12 bg-gradient-to-br from-primary to-primary/80 rounded-3xl shadow-2xl">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Ready to Experience the Difference?</h2>
-          <p className="text-xl text-white/90 mb-8">
-            Join innovators using our platform to turn ideas into funded, impactful projects
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <Button
-              size="lg"
-              className="bg-white text-primary hover:bg-gray-100 text-lg px-10 py-6 shadow-xl font-bold"
-            >
-              Start Free Trial
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="text-lg px-10 py-6 border-2 border-white text-white hover:bg-white hover:text-primary bg-transparent"
-            >
-              Book Demo Call
-            </Button>
+      <section className="border-b border-[var(--c3x-rule)]">
+        <div className="mx-auto grid max-w-[1440px] gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[.8fr_1.2fr] lg:px-12 lg:py-28">
+          <div>
+            <div className="c3x-micro text-[var(--c3x-signal)]">Current foundation</div>
+            <h2 className="font-display mt-5 text-[clamp(2.4rem,4vw,4.8rem)] font-normal leading-[0.98] tracking-[-0.025em]">
+              The operational layer already exists.
+            </h2>
+          </div>
+
+          <div className="border-t border-[var(--c3x-rule)]">
+            <CapabilityRow
+              icon={FileText}
+              index="01"
+              title="Evidence workspace"
+              text="Authenticated users can access initiative-linked source documents while public surfaces expose only sanitized initiative projections."
+            />
+            <CapabilityRow
+              icon={Layers3}
+              index="02"
+              title="Portfolio context"
+              text="Initiatives, progress, risks and evidence counts form the current operational base of the Command Center."
+            />
+            <CapabilityRow
+              icon={Workflow}
+              index="03"
+              title="Execution visibility"
+              text="Current initiative state remains visible without pretending that unstructured Signals, Opportunities or Decisions already exist."
+            />
+            <CapabilityRow
+              icon={ShieldCheck}
+              index="04"
+              title="Protected internal evidence"
+              text="The public site reads sanitized projections; operational tables and evidence remain behind authenticated access controls."
+            />
           </div>
         </div>
       </section>
+
+      <section>
+        <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+          <div className="grid gap-12 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+            <div>
+              <div className="c3x-micro text-[var(--c3x-signal)]">AI operating contract</div>
+              <h2 className="font-display mt-5 max-w-4xl text-[clamp(2.4rem,4vw,4.8rem)] font-normal leading-[0.98] tracking-[-0.025em]">
+                AI can accelerate judgment without becoming hidden authority.
+              </h2>
+            </div>
+            <div className="border-l border-[var(--c3x-rule)] pl-6 text-sm leading-6 text-[var(--c3x-mist)]">
+              <p>Every AI-assisted conclusion should expose its source basis, uncertainty and relationship to the decision being made.</p>
+              <p className="mt-4">Cort3x should structure, compare, summarize and propose. Consequential decisions remain attributable to people.</p>
+              <Link href="/" className="c3x-link mt-7 inline-flex items-center gap-2 text-xs">
+                Return to product overview
+                <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.6} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  )
+}
+
+function CapabilityRow({ icon: Icon, index, title, text }: { icon: typeof FileText; index: string; title: string; text: string }) {
+  return (
+    <div className="grid gap-4 border-b border-[var(--c3x-rule)] py-6 sm:grid-cols-[48px_180px_1fr] sm:items-start">
+      <Icon className="h-4 w-4 text-[var(--c3x-signal)]" strokeWidth={1.6} />
+      <div>
+        <div className="font-mono text-[8px] text-[var(--c3x-mist)]">{index}</div>
+        <div className="font-display mt-1 text-xl font-normal text-[var(--c3x-bone)]">{title}</div>
+      </div>
+      <p className="max-w-xl text-sm leading-6 text-[var(--c3x-mist)]">{text}</p>
     </div>
   )
 }
