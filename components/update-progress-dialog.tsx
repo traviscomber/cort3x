@@ -25,15 +25,31 @@ interface UpdateProgressDialogProps {
     title: string
     progress: number | null
   }
-  open: boolean
-  onOpenChange: (open: boolean) => void
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  isOpen?: boolean
+  onClose?: () => void
+  onSuccess?: () => void
 }
 
-export function UpdateProgressDialog({ initiative, open, onOpenChange }: UpdateProgressDialogProps) {
+export function UpdateProgressDialog({
+  initiative,
+  open,
+  onOpenChange,
+  isOpen,
+  onClose,
+  onSuccess,
+}: UpdateProgressDialogProps) {
   const [progress, setProgress] = useState(initiative.progress || 0)
   const [notes, setNotes] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
+  const dialogOpen = open ?? isOpen ?? false
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    onOpenChange?.(nextOpen)
+    if (!nextOpen) onClose?.()
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -60,7 +76,8 @@ export function UpdateProgressDialog({ initiative, open, onOpenChange }: UpdateP
       }
 
       console.log("[v0] Progress updated successfully")
-      onOpenChange(false)
+      handleOpenChange(false)
+      onSuccess?.()
       router.refresh()
     } catch (error) {
       console.error("[v0] Error:", error)
@@ -71,7 +88,7 @@ export function UpdateProgressDialog({ initiative, open, onOpenChange }: UpdateP
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Update Progress</DialogTitle>
@@ -117,7 +134,7 @@ export function UpdateProgressDialog({ initiative, open, onOpenChange }: UpdateP
             </div>
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={isSubmitting}>
+            <Button type="button" variant="outline" onClick={() => handleOpenChange(false)} disabled={isSubmitting}>
               Cancel
             </Button>
             <Button type="submit" disabled={isSubmitting} className="bg-primary hover:bg-primary/90">
