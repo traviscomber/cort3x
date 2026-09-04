@@ -8,9 +8,19 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { createClient } from "@/lib/supabase/client"
 import { Loader2, Mail, Lock } from "lucide-react"
 import { logger } from "@/lib/logger"
+import { signInWithPassword } from "@/app/auth/login/actions"
+
+function getSafeNextPath() {
+  const next = new URLSearchParams(window.location.search).get("next")
+
+  if (!next || !next.startsWith("/") || next.startsWith("//")) {
+    return "/dashboard"
+  }
+
+  return next
+}
 
 export function LoginForm() {
   const [email, setEmail] = useState("")
@@ -26,28 +36,17 @@ export function LoginForm() {
     logger.debug("Login attempt", { email })
 
     try {
-      const supabase = createClient()
+      const result = await signInWithPassword(email, password)
 
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      })
-
-      if (error) {
-        logger.warn("Login failed", { error: error.message, email })
-        setError(error.message)
+      if (!result.ok) {
+        logger.warn("Login failed", { error: result.error, email })
+        setError(result.error)
         setLoading(false)
         return
       }
 
-      if (data.user) {
-        logger.info("Login successful", { userId: data.user.id })
-        window.location.href = "/dashboard"
-      } else {
-        logger.error("No user returned from login")
-        setError("Login failed. Please try again.")
-        setLoading(false)
-      }
+      logger.info("Login successful")
+      window.location.assign(getSafeNextPath())
     } catch (err) {
       logger.error("Unexpected login error", err)
       setError("An unexpected error occurred")
