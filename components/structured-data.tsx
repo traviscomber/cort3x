@@ -9,11 +9,11 @@ export function StructuredData({ locale = "en" }: StructuredDataProps) {
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://green-industrial-innovation.vercel.app/#organization",
+    "@id": "https://cort3x.app/#organization",
     name: "Cort3x powered by n3uralia",
     alternateName: ["Cort3x Innovation Accelerator by n3uralia", "Cort3x", "Cortex"],
-    url: "https://green-industrial-innovation.vercel.app",
-    logo: "https://green-industrial-innovation.vercel.app/logo.png",
+    url: "https://cort3x.app",
+    logo: "https://cort3x.app/logo.png",
     description:
       "Cort3x is an AI-assisted strategic innovation platform that combines artificial intelligence with expert human coaching to support decision-making, market analysis, and execution of complex projects. The platform serves enterprises, governments, startups, and innovation labs across LATAM, ASEAN, and emerging markets.",
     foundingDate: "2024",
@@ -143,10 +143,10 @@ export function StructuredData({ locale = "en" }: StructuredDataProps) {
   const chileLocationSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "@id": "https://green-industrial-innovation.vercel.app/#chile",
+    "@id": "https://cort3x.app/#chile",
     name: "Cort3x Chile powered by n3uralia",
     parentOrganization: {
-      "@id": "https://green-industrial-innovation.vercel.app/#organization",
+      "@id": "https://cort3x.app/#organization",
     },
     address: {
       "@type": "PostalAddress",
@@ -169,10 +169,10 @@ export function StructuredData({ locale = "en" }: StructuredDataProps) {
   const usaLocationSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "@id": "https://green-industrial-innovation.vercel.app/#usa",
+    "@id": "https://cort3x.app/#usa",
     name: "Cort3x USA powered by n3uralia",
     parentOrganization: {
-      "@id": "https://green-industrial-innovation.vercel.app/#organization",
+      "@id": "https://cort3x.app/#organization",
     },
     address: {
       "@type": "PostalAddress",
@@ -195,10 +195,10 @@ export function StructuredData({ locale = "en" }: StructuredDataProps) {
   const indonesiaLocationSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "@id": "https://green-industrial-innovation.vercel.app/#indonesia",
+    "@id": "https://cort3x.app/#indonesia",
     name: "Cort3x Indonesia powered by n3uralia",
     parentOrganization: {
-      "@id": "https://green-industrial-innovation.vercel.app/#organization",
+      "@id": "https://cort3x.app/#organization",
     },
     address: {
       "@type": "PostalAddress",
@@ -221,10 +221,10 @@ export function StructuredData({ locale = "en" }: StructuredDataProps) {
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    "@id": "https://green-industrial-innovation.vercel.app/#service",
+    "@id": "https://cort3x.app/#service",
     serviceType: "AI-Assisted Strategic Innovation",
     provider: {
-      "@id": "https://green-industrial-innovation.vercel.app/#organization",
+      "@id": "https://cort3x.app/#organization",
     },
     name: "AI-Powered Strategic Innovation with Expert Coaching",
     description:
@@ -257,9 +257,9 @@ export function StructuredData({ locale = "en" }: StructuredDataProps) {
       "@type": "Offer",
       availability: "https://schema.org/InStock",
       availableAtOrFrom: [
-        { "@id": "https://green-industrial-innovation.vercel.app/#chile" },
-        { "@id": "https://green-industrial-innovation.vercel.app/#usa" },
-        { "@id": "https://green-industrial-innovation.vercel.app/#indonesia" },
+        { "@id": "https://cort3x.app/#chile" },
+        { "@id": "https://cort3x.app/#usa" },
+        { "@id": "https://cort3x.app/#indonesia" },
       ],
     },
     areaServed: [
@@ -282,19 +282,19 @@ export function StructuredData({ locale = "en" }: StructuredDataProps) {
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": "https://green-industrial-innovation.vercel.app/#website",
-    url: "https://green-industrial-innovation.vercel.app",
+    "@id": "https://cort3x.app/#website",
+    url: "https://cort3x.app",
     name: "Cort3x powered by n3uralia",
     description: "AI-Powered Innovation Accelerator with Expert Coaching | Powered by n3uralia (www.n3uralia.com)",
     publisher: {
-      "@id": "https://green-industrial-innovation.vercel.app/#organization",
+      "@id": "https://cort3x.app/#organization",
     },
     inLanguage: ["en", "es", "id"],
     potentialAction: {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: "https://green-industrial-innovation.vercel.app/search?q={search_term_string}",
+        urlTemplate: "https://cort3x.app/search?q={search_term_string}",
       },
       "query-input": "required name=search_term_string",
     },
@@ -309,7 +309,7 @@ export function StructuredData({ locale = "en" }: StructuredDataProps) {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://green-industrial-innovation.vercel.app",
+        item: "https://cort3x.app",
       },
     ],
   }
