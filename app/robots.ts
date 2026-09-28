@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next"
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://impax-cort3x.vercel.app"
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cort3x.app"
 
   return {
     rules: [

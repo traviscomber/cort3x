@@ -21,7 +21,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 const getSiteUrl = () => {
   const envUrl = process.env.NEXT_PUBLIC_SITE_URL
-  const fallbackUrl = "https://green-industrial-innovation.vercel.app"
+  const fallbackUrl = "https://cort3x.app"
 
   if (!envUrl || envUrl.trim() === "") {
     return fallbackUrl
